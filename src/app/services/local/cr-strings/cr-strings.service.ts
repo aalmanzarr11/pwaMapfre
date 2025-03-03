@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class CrStringsService {
   static data = {
     // URL de los servicios
-    // 'servicesURL' : 'https://app1.mapfre.com.pa/panama/webapi',
+    'servicesURL' : environment.urlBase,
     'countryName' : 'COSTA RICA',
     'userTypes' : [
       {

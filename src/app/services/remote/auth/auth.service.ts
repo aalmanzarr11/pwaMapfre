@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ContextService } from '../../infrastructure/context/context.service';
-import { ConstantsService } from '../../infrastructure/constants/constants.service';
-import { AuthService as AuthServiceCa } from 'src/app/services/remote_ca/auth/auth.service';
-import { AuthService as AuthServiceHn } from 'src/app/services/remote_hn/auth/auth.service';
+import { ConstantsService } from '../../infrastructure/constants/constants.service'; 
 import { Observable } from 'rxjs';
-
+import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
+import { TokenService } from '../../infrastructure/token/token.service';
+import { HttpParams } from '@angular/common/http';  
+import { BaseUrl } from 'src/app/shared/baseUrl';
 export class User {
   name: string;
   email: string;
@@ -22,33 +23,118 @@ export class AuthService {
   currentUser: User;
 
   constructor(
-    private authServiceCa: AuthServiceCa,
-    private authServiceHn: AuthServiceHn
+      private httpClient: HttpClientService,
+      private tokenService: TokenService
   ) {}
-
-  private getServiceByCountry() {
-    const countryCode = ContextService.location.country;
-    return countryCode === ConstantsService.HONDURAS_CODE ? this.authServiceHn : this.authServiceCa;
-  }
+ 
 
   public token(credentials): Observable<any> {
-    return this.getServiceByCountry().token(credentials);
+
+    console.log('credentials', credentials);
+
+    if (credentials.email === null || credentials.password === null) {
+      return Observable.throw('Please insert credentials');
+    } else {
+      return Observable.create(observer => {
+        let userType = 'Cliente';
+        switch(credentials.userType) { 
+          case 'P': { 
+            userType = 'Perito';
+             break; 
+          } 
+          case 'I': { 
+            userType = 'Intermediario';
+             break; 
+          }
+        } 
+
+        const body = {
+          "user": btoa(credentials.email),
+          "pass": btoa(credentials.password),
+          "tipo": userType,
+          "grant_type": credentials.grantType 
+        };
+
+        this.httpClient.post(BaseUrl.multipaistoken, body, false).subscribe(
+          data => {
+            observer.next({status: true, data: data.data});
+            observer.complete();
+          }
+        );
+      });
+    }
+  }
+ 
+  public tokenForm(credentials) : Observable<any>{
+
+    return Observable.create(observer => {
+
+      const payload = new HttpParams()
+        .set('Username', btoa(credentials.email))
+        .set('Password', btoa(credentials.password))
+        .set('grant_type', 'password');
+
+      console.log('formData', payload);
+
+      // this.http.post(url, payload);
+
+
+      this.httpClient.postForm(BaseUrl.token, payload).subscribe(
+        data => {
+          observer.next({status: true, data: data.data});
+          observer.complete();
+        }
+      );
+    });
+
   }
 
-  public tokenCliente(): Observable<any> {
-    return this.getServiceByCountry().tokenCliente();
-  }
+  public login(credentials) : Observable<any>{
 
-  public tokenForm(credentials): Observable<any> {
-    return this.getServiceByCountry().tokenForm(credentials);
-  }
+    if (credentials.email === null || credentials.password === null) {
+      return Observable.throw('Please insert credentials');
+    } else {
+      return Observable.create(observer => {
 
-  public login(credentials): Observable<any> {
-    return this.getServiceByCountry().login(credentials);
+        // var body = {
+        //   "login" : {
+        //     "nomUsuario" : credentials.email, //"JPEREZ",
+        //     "txtClaveMd5": CryptoJS.MD5(credentials.password).toString(CryptoJS.enc.Hex), //"7e577f4f49b24ea60483424cd0915474",
+        //     "txtClave": credentials.password,
+        //     "tipUsuario" : credentials.userType
+        //   },
+        //   "token" : this.tokenService.getAuthentication()
+        // };
+
+        const body = {
+          'usuario': credentials.email, // 'JPEREZ',
+          'txtClaveMd5': credentials.password,
+          // 'txtClaveMd5': CryptoJS.MD5(credentials.password).toString(CryptoJS.enc.Hex), //  '7e577f4f49b24ea60483424cd0915474',
+          'tipUsuario': credentials.userType, //  'I',
+          'pais': ContextService.location.country
+        };
+
+        console.log('login body', body);
+
+        this.httpClient.post(BaseUrl.login, body, false).subscribe(
+          data => {
+            observer.next({status: true, data: data.data});
+            observer.complete();
+          }
+        );
+      });
+    }
   }
 
   public register(credentials): Observable<any> {
-    return this.getServiceByCountry().register(credentials);
+    if (credentials.email === null || credentials.password === null) {
+      return Observable.throw('Please insert credentials');
+    } else {
+      return Observable.create(observer => {
+        observer.next(true);
+        observer.complete();
+      });
+    }
   }
 
   public getUserInfo(): User {
@@ -56,6 +142,10 @@ export class AuthService {
   }
 
   public logout(): Observable<any> {
-    return this.getServiceByCountry().logout();
+    return Observable.create(observer => {
+      this.currentUser = null;
+      observer.next(true);
+      observer.complete();
+    });
   }
 }

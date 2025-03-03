@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClientService } from '../http-client/http-client.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,10 @@ export class LocationService {
 
     return Observable.create(observer => {
       
-      // const username = ConfigServiceProvider.geonamesUser;
-      const serviceURL = `https://www.cloudflare.com/cdn-cgi/trace`;
-      console.log("cloudflare serviceURL: ", serviceURL);
+      // const username = ConfigServiceProvider.geonamesUser; 
+      console.log("cloudflare serviceURL: ", environment.cloudflare);
 
-      this.httpClient.get(serviceURL, false, false, {responseType: 'text' as 'json'}).subscribe(
+      this.httpClient.get(environment.cloudflare, false, false, {responseType: 'text' as 'json'}).subscribe(
         data => {
           // alert('cloudflare result: ' + JSON.stringify(data));
 
@@ -29,27 +29,4 @@ export class LocationService {
       );
     });
   }
-
-  // public reverseGeocode_old(lat, long) {
-
-  //   return Observable.create(observer => {
-      
-  //     const username = ConfigServiceProvider.geonamesUser;
-  //     const serviceURL = `http://api.geonames.org/findNearbyJSON?lat=${lat}&lng=${long}&username=${username}`;
-  //     console.log("geonames serviceURL: ", serviceURL);
-
-  //     // const serviceURL = 'http://api.geonames.org/findNearbyJSON?lat=15.141610&lng=-90.641946&username=gtrujillos';
-
-  //     this.httpClient.get(serviceURL, false, false).subscribe(
-  //       data => {
-  //         // console.log(data);
-
-  //         observer.next({status: true, data: data.data});
-  //         observer.complete();
-  //       }
-  //     );
-      
-  //   });
-
-  // }
 }

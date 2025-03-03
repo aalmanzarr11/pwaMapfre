@@ -1,25 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ContextService } from '../../infrastructure/context/context.service';
-import { CarSubpartsService as CarSubpartsServiceCa } from 'src/app/services/remote_ca/car-subparts/car-subparts.service';
-import { CarSubpartsService as CarSubpartsServiceHn } from 'src/app/services/remote_hn/car-subparts/car-subparts.service';
-import { ConstantsService } from '../../infrastructure/constants/constants.service';
+import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
+import { TokenService } from '../../infrastructure/token/token.service';
+import { BaseUrl } from 'src/app/shared/baseUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarSubpartsService {
-  constructor(
-    private carSubpartsServiceCa: CarSubpartsServiceCa,
-    private carSubpartsServiceHn: CarSubpartsServiceHn
-  ) {}
 
-  private getServiceByCountry() {
-    const countryCode = ContextService.location.country;
-    return countryCode === ConstantsService.HONDURAS_CODE ? this.carSubpartsServiceHn : this.carSubpartsServiceCa;
-  }
+  constructor(public httpClient: HttpClientService, private tokenService : TokenService) {}
 
-  public getSubparts(): Observable<any> {
-    return this.getServiceByCountry().getSubparts();
+  public getSubparts() {
+
+    let body = null;
+
+    return Observable.create(observer => {
+
+      this.httpClient.post(BaseUrl.getSubparts, body, false).subscribe(
+        data => {
+          // const inspections = [];
+
+          if (data.status && data.data !== null) {
+
+            const transformedData = data.data.map(item => ({
+              codigo: item.codigo,
+              nombrePieza: item.nombre
+            }));
+
+            observer.next({ status: true, data: transformedData });
+            observer.complete();
+          } else {
+            observer.next({ status: data.status, data: data.error });
+            observer.complete(); 
+          }
+        }
+      );
+    });
   }
 }

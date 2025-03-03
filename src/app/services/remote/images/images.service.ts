@@ -1,49 +1,164 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ContextService } from '../../infrastructure/context/context.service';
-import { ImagesService as ImagesServiceCa } from 'src/app/services/remote_ca/images/images.service';
-import { ImagesService as ImagesServiceHn } from 'src/app/services/remote_hn/images/images.service';
-import { ConstantsService } from '../../infrastructure/constants/constants.service';
+import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
+import { TokenService } from '../../infrastructure/token/token.service';
+import { BaseUrl } from 'src/app/shared/baseUrl';
+import { String } from 'typescript-string-operations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagesService {
-  constructor(
-    private imagesServiceCa: ImagesServiceCa,
-    private imagesServiceHn: ImagesServiceHn
-  ) {}
 
-  private getServiceByCountry() {
-    const countryCode = ContextService.location.country;
-    return countryCode === ConstantsService.HONDURAS_CODE ? this.imagesServiceHn : this.imagesServiceCa;
+  constructor(public httpClient: HttpClientService, private tokenService : TokenService) {}
+
+
+  public sendCarImages(images : any) {
+  
+    var body = images;
+
+    let prefix = ContextService.getPrefixAPI();
+    body = ContextService.getBodyAPI(body);
+
+    return Observable.create(observer => {
+      this.httpClient.post(String.format(BaseUrl.sendCarImages,prefix), body, false).subscribe(
+        data => {
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
+
   }
 
-  public sendCarImages(images: any): Observable<any> {
-    return this.getServiceByCountry().sendCarImages(images);
+  public sendCarDamages(image : any) {
+  
+    var body = [];
+    // image = ContextService.getBodyAPI(image);
+    image = {
+      "numeroCotizacion": image.numeroCotizacion,
+      "pieza": image.pieza,
+      "nivelDaño": image.nivelDano,
+      "valor": image.valor,
+      "byteFoto": image.byteFoto
+    };
+    body.push(image);
+
+    // let prefix = ContextService.getPrefixAPI();
+    
+    return Observable.create(observer => {
+      this.httpClient.post(BaseUrl.sendCarDamages, body, false).subscribe(
+        data => {
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
   }
 
-  public sendCarDamages(image: any): Observable<any> {
-    return this.getServiceByCountry().sendCarDamages(image);
+  public sendCarDocuments(image: any) {
+  
+    var body = [];
+    image = {
+      "numeroCotizacion": image.numeroCotizacion,
+      "tipoDocumento": image.tipoDocumento,
+      "byteFoto": image.byteFoto
+    };
+    body.push(image);
+
+    return Observable.create(observer => {
+      this.httpClient.post(BaseUrl.sendCarDocuments, body, false).subscribe(
+        data => {
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
+
   }
 
-  public sendCarDocuments(image: any): Observable<any> {
-    return this.getServiceByCountry().sendCarDocuments(image);
+  public sendCarAccessories(image : any) {
+  
+    var body = [];
+    image = ContextService.getBodyAPI(image);
+    body.push(image);
+
+    return Observable.create(observer => {
+      this.httpClient.post(BaseUrl.sendCarAccessories, body, false).subscribe(
+        data => {
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
+
   }
 
-  public sendCarAccessories(image: any): Observable<any> {
-    return this.getServiceByCountry().sendCarAccessories(image);
+
+  public uploadImage(image : any) {
+    var body = [];
+    image = {
+      "numeroCotizacion": image.numeroCotizacion,
+      "tipoFoto": image.tipoFoto,
+      "byteFoto": image.byteFoto
+    };
+    body.push(image);
+
+    return Observable.create(observer => {
+      this.httpClient.post(BaseUrl.uploadImage, body, false).subscribe(
+        data => {
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
   }
 
-  public uploadImage(image: any): Observable<any> {
-    return this.getServiceByCountry().uploadImage(image);
+  public uploadImages(images : any) {
+  
+    var body = {  
+      "token" : this.tokenService.getAuthentication(),
+      "foto" : images
+    };
+
+    let prefix = ContextService.getPrefixAPI();
+    body = ContextService.getBodyAPI(body);
+
+    return Observable.create(observer => {
+      this.httpClient.post(String.format(BaseUrl.uploadImages,prefix), body, false).subscribe(
+        data => {
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
+
   }
 
-  public uploadImages(images: any): Observable<any> {
-    return this.getServiceByCountry().uploadImages(images);
-  }
+  public getImages(inspection:any, type:string) {
 
-  public getImages(inspection: any, type: string): Observable<any> {
-    return this.getServiceByCountry().getImages(inspection, type);
+    var body = {  
+      "llaveSetFoto" : {
+        "codCia": "1",
+        "numInsp": inspection.numInsp,
+        "numSecu": "1",
+        "numRiesgo": "1",
+        "tipoFoto": type
+     },
+      "token" : this.tokenService.getAuthentication()
+    };
+
+    let prefix = ContextService.getPrefixAPI();
+    body = ContextService.getBodyAPI(body);
+
+    return Observable.create(observer => {
+      this.httpClient.post(String.format(BaseUrl.getImages,prefix), body, false).subscribe(
+        data => {
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
   }
 }

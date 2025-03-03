@@ -1,29 +1,42 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ContextService } from '../../infrastructure/context/context.service';
-import { CarBrandsService as CarBrandsServiceCa } from 'src/app/services/remote_ca/car-brands/car-brands.service';
-import { CarBrandsService as CarBrandsServiceHn } from 'src/app/services/remote_hn/car-brands/car-brands.service';
-import { ConstantsService } from '../../infrastructure/constants/constants.service';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { ContextService } from "../../infrastructure/context/context.service";
+import { HttpClientService } from "../../infrastructure/http-client/http-client.service";
+import { TokenService } from "../../infrastructure/token/token.service";
+import { BaseUrl } from "src/app/shared/baseUrl";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CarBrandsService {
   constructor(
-    private carBrandsServiceCa: CarBrandsServiceCa,
-    private carBrandsServiceHn: CarBrandsServiceHn
+    public httpClient: HttpClientService,
+    private tokenService: TokenService
   ) {}
 
-  private getServiceByCountry() {
-    const countryCode = ContextService.location.country;
-    return countryCode === ConstantsService.HONDURAS_CODE ? this.carBrandsServiceHn : this.carBrandsServiceCa;
+  public getCarBrands(countryCode: string) {
+    var body = null;
+
+    return Observable.create((observer) => {
+      this.httpClient
+        .post(BaseUrl.getCarBrands, body, true)
+        .subscribe((data) => {
+          observer.next(data);
+          observer.complete();
+        });
+    });
   }
 
-  public getCarBrands(countryCode: string): Observable<any> {
-    return this.getServiceByCountry().getCarBrands(countryCode);
-  }
+  public getCarBrandLines(brandCode: string, countryCode: string) {
+    var body = {
+      codMarca: brandCode
+    };
 
-  public getCarBrandLines(brandCode: string, countryCode: string): Observable<any> {
-    return this.getServiceByCountry().getCarBrandLines(brandCode, countryCode);
+    return Observable.create((observer) => {
+      this.httpClient.post(BaseUrl.getCarBrandLines, body, true).subscribe((data) => {
+        observer.next(data);
+        observer.complete();
+      });
+    });
   }
 }

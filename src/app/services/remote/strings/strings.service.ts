@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { from } from 'rxjs';
-import { ConfigService } from '../../infrastructure/config/config.service';
-import { ConstantsService } from '../../infrastructure/constants/constants.service';
+import { ConfigService } from '../../infrastructure/config/config.service'; 
 import { ContextService } from '../../infrastructure/context/context.service';
 import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
 import { TokenService } from '../../infrastructure/token/token.service';
-import { CrStringsService } from '../../local/cr-strings/cr-strings.service';
-import { GtStringsService } from '../../local/gt-strings/gt-strings.service';
-import { HnStringsService } from '../../local/hn-strings/hn-strings.service';
-import { NiStringsService } from '../../local/ni-strings/ni-strings.service';
-import { PaStringsService } from '../../local/pa-strings/pa-strings.service';
-import { SvStringsService } from '../../local/sv-strings/sv-strings.service';
+import { CrStringsService } from '../../local/cr-strings/cr-strings.service'; 
+import { environment } from 'src/environments/environment';
+import { BaseUrl } from 'src/app/shared/baseUrl';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +24,7 @@ export class StringsService {
 
     // https://sgo.mapfre.com.co/servicios/rest/trnAutoInspecciones/ws/leeParametrosAPPV2
     return Observable.create(observer => {
-      this.httpClient.post('leeParametrosAPPV2', body, true).subscribe(
+      this.httpClient.post(BaseUrl.getStrings, body, true).subscribe(
         data => {
           observer.next(data);
           observer.complete();
@@ -41,7 +37,7 @@ export class StringsService {
     const body = {};
 
     return Observable.create(observer => {
-      this.httpClient.getTests('https://maps.googleapis.com/maps/api/geocode/xml?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&sensor=false', true).subscribe(
+      this.httpClient.getTests(environment.googleMaps, true).subscribe(
         data => {
           observer.next(data);
           observer.complete();
@@ -55,38 +51,15 @@ export class StringsService {
   // }
 
   public getStringsStatic(countryCode: string) {
-
+    console.log(countryCode," CODE")
       let data = null;
 
-      if (countryCode === ConstantsService.PANAMA_CODE) {
-        data = PaStringsService.data;
-      } 
-      else if (countryCode === ConstantsService.GUATEMALA_CODE) {
-        data = GtStringsService.data;
-      }
-      else if (countryCode === ConstantsService.ELSALVADOR_CODE) {
-        data = SvStringsService.data;
-      }
-      else if (countryCode === ConstantsService.HONDURAS_CODE) {
-        data = HnStringsService.data; 
-      }
-      else if (countryCode === ConstantsService.COSTARICA_CODE) {
-        data = CrStringsService.data;
-      }
-      else if (countryCode === ConstantsService.NICARAGUA_CODE) {
-        data = NiStringsService.data; 
-      }
-
-      console.log("getStringsStatic data", data, countryCode);
-
-      if(data != null) {
-        data.servicesURL = ConfigService.apiUrl; //'https://app1.mapfre.com.pa/panama/webapi';
-      }
-      
-
-      ContextService.location.country = countryCode;
+      data = CrStringsService.data;
+ 
+      ContextService.location.country = 506;
       ConfigService.strings = data;
 
+      console.log(ConfigService.strings," DATA") 
       return Observable.create(observer => {
         observer.next({ status: true, data: data});
       });
@@ -94,23 +67,11 @@ export class StringsService {
 
   }
 
-  public getConfig(countryCode: string) {
+  public getConfig() {
 
-    // TODO: fix path
-    var configPath = 'assets/config.json';
-
-    if (countryCode === ConstantsService.HONDURAS_CODE) {
-      configPath = 'assets/hn_config.json';
-    }
-
-    return from(fetch(configPath).then(res=>res.json()).then(json=>{
-
-      console.log("OUTPUT: ", json);
-
-      ConfigService.apiUrl = json.servicesURL;
-      // ConfigServiceProvider.geonamesUser = json.geonamesUser;
-
-    }));
+    
+    console.log("OUTPUT: ",  environment.urlBase);
+    ConfigService.apiUrl = environment.urlBase; 
     
   }
 

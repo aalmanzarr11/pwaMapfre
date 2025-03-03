@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
 import { JsonUtilsService } from '../../infrastructure/json-utils/json-utils.service';
 import { TokenService } from '../../infrastructure/token/token.service';
+import { BaseUrl } from 'src/app/shared/baseUrl';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class CarAccessoriesService {
     };
 
     return Observable.create(observer => {
-      this.httpClient.post("listaCodigosAccesorios", body, true).subscribe(
+      this.httpClient.post(BaseUrl.getAccessoryCodes, body, true).subscribe(
         data => {
           observer.next(data);
           observer.complete();
@@ -34,7 +35,7 @@ export class CarAccessoriesService {
     };
 
     return Observable.create(observer => {
-      this.httpClient.post("creaModificaAccesorio", body, false).subscribe(
+      this.httpClient.post(BaseUrl.uploadAccessory, body, false).subscribe(
         data => {
           observer.next(data);
           observer.complete();
@@ -56,7 +57,7 @@ export class CarAccessoriesService {
     };
 
     return Observable.create(observer => {
-      this.httpClient.post("consultarAccesorios", body, false).subscribe(
+      this.httpClient.post(BaseUrl.getAccessories, body, false).subscribe(
         data => {
 
           console.log(data);

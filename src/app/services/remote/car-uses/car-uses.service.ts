@@ -1,25 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ContextService } from '../../infrastructure/context/context.service';
-import { CarUsesService as CarUsesServiceCa } from 'src/app/services/remote_ca/car-uses/car-uses.service';
-import { CarUsesService as CarUsesServiceHn } from 'src/app/services/remote_hn/car-uses/car-uses.service';
-import { ConstantsService } from '../../infrastructure/constants/constants.service';
+import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
+import { TokenService } from '../../infrastructure/token/token.service';
+import { BaseUrl } from 'src/app/shared/baseUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarUsesService {
-  constructor(
-    private carUsesServiceCa: CarUsesServiceCa,
-    private carUsesServiceHn: CarUsesServiceHn
-  ) {}
 
-  private getServiceByCountry() {
-    const countryCode = ContextService.location.country;
-    return countryCode === ConstantsService.HONDURAS_CODE ? this.carUsesServiceHn : this.carUsesServiceCa;
+  constructor(public httpClient: HttpClientService, private tokenService : TokenService) {}
+
+  public getCarUses(countryCode: string) {
+
+    var body = null;
+
+    return Observable.create(observer => {
+      this.httpClient.post(BaseUrl.getCarUses, body, true).subscribe(
+        data => {
+
+          data.data = data.data.filter(item => item.codigo === 1 || item.codigo === 2);
+
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
   }
 
-  public getCarUses(countryCode: string): Observable<any> {
-    return this.getServiceByCountry().getCarUses(countryCode);
-  }
 }

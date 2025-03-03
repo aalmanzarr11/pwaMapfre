@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ContextService } from '../../infrastructure/context/context.service';
-import { StatesService as StatesServiceCa } from 'src/app/services/remote_ca/states/states.service';
-import { StatesService as StatesServiceHn } from 'src/app/services/remote_hn/states/states.service';
-import { ConstantsService } from '../../infrastructure/constants/constants.service';
+import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
+import { TokenService } from '../../infrastructure/token/token.service';
+import { BaseUrl } from 'src/app/shared/baseUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatesService {
-  constructor(
-    private statesServiceCa: StatesServiceCa,
-    private statesServiceHn: StatesServiceHn
-  ) {}
 
-  private getServiceByCountry() {
-    const countryCode = ContextService.location.country;
-    return countryCode === ConstantsService.HONDURAS_CODE ? this.statesServiceHn : this.statesServiceCa;
+  constructor(public httpClient: HttpClientService, private tokenService : TokenService) {}
+  public getStates(countryCode: string) {
+
+    var body = null;
+
+    return Observable.create(observer => {
+      this.httpClient.post(BaseUrl.getStates, body, true).subscribe(
+        data => {
+          observer.next(data);
+          observer.complete();
+        }
+      );
+    });
   }
 
-  public getStates(countryCode: string): Observable<any> {
-    return this.getServiceByCountry().getStates(countryCode);
-  }
 }

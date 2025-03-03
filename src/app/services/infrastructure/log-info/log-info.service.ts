@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ContextService } from '../context/context.service';
 import { HttpClientService } from '../http-client/http-client.service';
 import { TokenService } from '../token/token.service';
+import { BaseUrl } from 'src/app/shared/baseUrl';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class LogInfoService  {
     };
   
       return Observable.create(observer => {
-        this.httpClient.post("grabaLog", body, false).subscribe(
+        this.httpClient.post(BaseUrl.grabaLog, body, false).subscribe(
           data => {
             observer.next(data);
             observer.complete();

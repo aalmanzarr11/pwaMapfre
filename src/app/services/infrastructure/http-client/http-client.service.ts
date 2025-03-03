@@ -24,16 +24,9 @@ export class HttpClientService {
     private connectionService: ConnectionService
   ) {}
 
-  public get(endPoint: string, cached: boolean = false, useBase: boolean = true, responseType = null) {
+  public get(url: string, cached: boolean = false, useBase: boolean = true, responseType = null) {
     return Observable.create(observer => {
-
-      let url = '';
-
-      if (useBase) {
-        url = ConfigService.apiUrl + endPoint;
-      } else {
-        url = endPoint;
-      }
+ 
 
       const cacheKey = url;
       // const request = this.httpClient.get(url, {responseType: 'text'}).timeout(HttpClientProvider.TIME_OUT);
@@ -102,15 +95,14 @@ export class HttpClientService {
     });
   }
 
-  public post(endPoint: string, body: any, cached: boolean = false) {
+  public post(url: string, body: any, cached: boolean = false) {
     return Observable.create(observer => {
 
       // const url =
       //   endPoint !== 'leeParametrosAPPV2'
       //     ? ConfigServiceProvider.apiUrl + endPoint
       //     : ConfigServiceProvider.staticApiUrl + endPoint;
-
-      const url = ConfigService.apiUrl + endPoint;
+ 
       const cacheKey = url;
 
       // console.log('ContextServiceProvider.apiToken', url, ContextServiceProvider.apiToken);

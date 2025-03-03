@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
 import { TokenService } from '../../infrastructure/token/token.service';
+import { BaseUrl } from 'src/app/shared/baseUrl';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class CustomerService {
       }
 
       return Observable.create(observer => {
-        this.httpClient.post("consultarCliente", body, false).subscribe(
+        this.httpClient.post(BaseUrl.getCustomer, body, false).subscribe(
           data => {
             observer.next(data);
             observer.complete();
