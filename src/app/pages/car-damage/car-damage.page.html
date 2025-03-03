@@ -1,0 +1,104 @@
+<ion-header class="theme-red no-background">
+
+  <ion-toolbar fill="clear">
+
+      <ion-buttons slot="start">
+          <ion-button ion-button class="cancel-icon" (click)="back()"></ion-button>
+      </ion-buttons>
+      
+      <ion-title>
+          <span class="title-logo-img"></span>
+      </ion-title>
+
+      <ion-buttons slot="end">
+          <ion-button (click)="capture()"  *ngIf="base64Image" 
+                  style="height: 20px;" class="camera-button camera-button-on"></ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="theme-red" overflow-scroll="true" style="height: 100%;">
+
+  <div class="internal-title-container">
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+            <span class="title-mini" stacked>Auto inspección</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+          <ion-col>
+              <span class="title-huge">Foto {{title}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="center-vertical">
+      <ion-grid>
+
+        <ion-row style="margin-bottom: 10px;">
+          <ion-col>
+              <span class="body-paragraph">Indique si el vehículo presenta daños en sus piezas, partes exteriores o interiores. Ej.: abollón puerta delantera izquierda, golpe en el parachoques delantero.</span>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <div style="text-align:center;width: 100%;">
+            <img [src]="'data:image/jpeg;base64,' + base64Image" *ngIf="base64Image" />
+          </div> 
+        </ion-row>
+    
+        <ion-row style="margin-right:60px;margin-left:50px;margin-top:20px;">
+            
+          <!-- <ion-item color="primary" class="no-border" style="margin-top: 3px;width: 100%;"> -->
+
+            <ion-label class="label-input" (click)="openList($event, this, 'subparts', carSubparts, callbackList, true)" stacked>
+              {{carSubpartName}}
+            </ion-label>
+            
+          <!-- </ion-item> -->
+
+          <ion-item lines="none" color="primary" class="no-border" style="margin-top: 3px;width: 100%;">
+            <!-- <ion-label color="secondary" stacked style="display:none;">Nivel de daño...</ion-label> -->
+            <ion-select style="color: white;" [(ngModel)]="damageLevel" okText="Aceptar" stacked cancelText="Cancelar" placeholder="Nivel de daño...">
+              <!-- <ion-option value="" selected>Nivel de daño...</ion-option> -->
+              <ion-select-option *ngFor="let carDamageLevel of carDamageLevels" [value]="carDamageLevel" stacked>
+                {{carDamageLevel.descDano}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item color="primary" *ngIf="getUserType() != ''" style="width: 100%;">
+            <ion-input [(ngModel)]="damageValue" placeholder="Valor"
+                      (keyup)="cleanField($event)" (blur)="cleanField($event)" (focus)="cleanField($event)"
+                      minLength="0" maxLength="15"></ion-input>
+          </ion-item>
+
+        </ion-row>
+
+      </ion-grid>
+    </div>
+
+  </div>   
+
+</ion-content>
+
+<ion-footer class="theme-red no-pull">
+  <div style="text-align:center;width: 100%;">
+      <div>
+          <!-- <button ion-button class="take-picture-icon" (click)="setPicture()"></button> -->
+          <input type='file' id="dan" accept="image/*" (change)="takePicture($event)" capture='camera' 
+          style="display:none;"/>
+          <button (click)="capture()" *ngIf="!base64Image" style="width: 50px;height: 50px;"
+                  class="camera-button camera-button-on camera-button-top"></button>
+
+          <button *ngIf="base64Image" ion-button class="white-check-icon" 
+                  (click)="setPicture()"></button>
+
+      </div>
+  </div> 
+</ion-footer>

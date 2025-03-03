@@ -1,0 +1,63 @@
+<ion-header class="theme-red">
+    <ion-menu-toggle>
+      <ion-button fill="clear">
+        <ion-icon name="menu" color="light"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
+    <ion-title>
+        <span class="title-logo-img"></span>
+    </ion-title>
+</ion-header>
+
+<ion-content class="theme-white">
+ 
+  <div class="internal-title-container">
+
+      <ion-row>
+        <ion-col>
+            <span class="title-mini" stacked>{{strings.generalLabelTitle}}</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+          <ion-col>
+              <span class="title-huge">{{strings.inspectionListTitle}}</span>
+        </ion-col>
+      </ion-row>
+  </div>
+
+
+    <ion-row>
+
+      <!--
+        <ion-col style="position: initial;">
+
+            <ion-list>
+                <ion-item *ngFor="let grocery of inspections">{{grocery}}</ion-item>
+            </ion-list>
+
+        </ion-col>
+      -->
+
+        <ion-grid class="table-list">
+            <ion-row *ngFor="let inspection of inspections" (click)="selectInspection(inspection)"> 
+                <ion-col col-10 style="text-align: left;">
+                    <div *ngIf="inspection.numeroCotizacion"> <strong>Número cotización:</strong> {{inspection.numeroCotizacion}} </div>
+                    <div *ngIf="inspection.cotizacionCliente"> <strong>Cotización cliente:</strong> {{inspection.cotizacionCliente}} </div>
+                    <div *ngIf="inspection.placa"> <strong>Placa:</strong> {{inspection.placa}} </div>
+                    <div *ngIf="inspection.poliza"> <strong>Póliza:</strong> {{inspection.poliza}} </div>
+                </ion-col>
+                <!--
+                <ion-col col-2 style="text-align: center;">
+                    <div class="list-item-download-icon"></div>
+                </ion-col>
+                -->
+                <!-- <ion-col col-2 style="text-align: right;">
+                    <div class="list-item-done-icon"></div>
+                </ion-col> -->
+            </ion-row>
+        </ion-grid>
+
+    </ion-row>
+  
+</ion-content>

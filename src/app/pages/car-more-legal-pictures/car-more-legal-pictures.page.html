@@ -1,0 +1,121 @@
+<ion-header class="theme-red">
+  <ion-menu-toggle>
+    <ion-button fill="clear">
+      <ion-icon name="menu" color="light"></ion-icon>
+    </ion-button>
+  </ion-menu-toggle>
+  <ion-title>
+      <span class="title-logo-img"></span>
+  </ion-title>
+</ion-header>
+
+<ion-content class="theme-white" overflow-scroll="true" style="height: 100%;">
+
+  <div class="internal-title-container">
+    <ion-row>
+      <ion-col>
+        <label class="title-mini" stacked>{{strings.generalLabelTitle}}</label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <label class="title-huge">{{strings.docMorePicsTitle}}</label>
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+  <div>
+    <ion-row class="car-buttons-container">
+      <ion-col>
+        
+        <button block class="new-car-image-button disable-button" (click)="setCarType(0)">
+          <img src="assets/imgs/option_car_new_on.png" class="camera-icon" *ngIf="currentCarType == 0">
+          <img src="assets/imgs/option_car_new_off.png" class="camera-icon" *ngIf="currentCarType == 1">
+          <ion-label stacked [class.label-disabled]="currentCarType == 1">Auto nuevo</ion-label>
+        </button>
+
+      </ion-col>
+
+      <ion-col>
+        <button block class="used-car-image-button" (click)="setCarType(1)">
+          <img src="assets/imgs/option_Car_on.png" class="camera-icon" *ngIf="currentCarType == 1">
+          <img src="assets/imgs/option_Car_off.png" class="camera-icon" *ngIf="currentCarType == 0">
+          <ion-label stacked [class.label-disabled]="currentCarType == 0">Auto usado</ion-label>
+        </button>
+
+      </ion-col>
+    </ion-row>  
+  </div>
+
+  <ion-grid class="images-list-container">
+
+
+    <ion-row *ngFor="let part of carDocuments; let i = index;">
+      <ion-col>
+          <button block class="add-image-button" (click)="takePicture(part.codParte)" *ngIf="!checkLegalImage(part.codParte)" [disabled]="isDisabled()">
+            <img src="assets/imgs/Add_photo_icon.png" class="camera-icon">
+            <!-- <ion-label color="secondary" stacked>{{part.descParte}}</ion-label> -->
+            <div [innerHtml]="part.descParte" class="label-md label-md-secondary"></div>
+          </button>
+
+          <button block class="add-image-button" (click)="takePicture(part.codParte)" *ngIf="checkLegalImage(part.codParte)">
+            <img [src]="getLegalImage(part.codParte)" style="width: 150px;">
+            <!-- <ion-label color="secondary" stacked>{{part.descParte}}</ion-label> -->
+            <div [innerHtml]="part.descParte" class="label-md label-md-secondary"></div>
+          </button>
+      </ion-col>
+    </ion-row>
+    <label>&nbsp;</label>
+
+    <ion-row style="margin-top: 15px;text-align: center;">
+      <ion-col class="pictures-col">
+        <ion-button class="big-submit-btn" color="primary" shape="round" (click)="next()">{{strings.generalButtonOk}}</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
+
+<!-- <div class="theme-red">
+    <ion-pullup #pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState" maxHeight="300">
+      
+        <ion-toolbar>
+            <ion-row>
+              <ion-col col-33 (click)="back()">
+                <button ion-button clear class="footer-back-button" strong="true">
+                  {{strings.generalButtonBack}}
+                </button>
+              </ion-col>
+              <ion-col col-34>
+              <button class="bottom-menu-button" (click)="toggleFooter()">
+                  <ion-icon name="menu"></ion-icon>
+                  <ion-label class="page-count" stacked>{{strings.generalLabelStep}} {{currentPage}}/{{footerMenuOptions.length}}</ion-label>
+              </button>
+              </ion-col>
+              <ion-col col-33 (click)="next()">
+                <button ion-button color="primary" class="footer-next-button" strong="true" round>
+                    {{strings.generalButtonNext}}
+                </button>
+            </ion-col>
+            </ion-row>
+        </ion-toolbar>
+        
+        <div class="steps-list" *ngIf="footerState">
+            
+            <button ion-item detail-none no-lines *ngFor="let footerMenuOption of footerMenuOptions; let i = index">
+                <div class="label-col">
+                {{i + 1}}. {{footerMenuOption.title}}
+                </div>
+                <div class="icon-col">
+                <span [class.list-item-progress-icon]="footerMenuOption.status == 1" 
+                        [class.list-item-done-icon]="footerMenuOption.status == 2"></span>
+                </div>
+            </button>
+    
+        </div>
+    
+    </ion-pullup>
+</div> -->

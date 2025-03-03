@@ -1,0 +1,49 @@
+<ion-header class="theme-red">
+  <!-- <ion-navbar hideBackButton> -->
+
+      <ion-buttons left>
+          <ion-button ion-button class="back-arrow" (click)="back()"></ion-button>
+      </ion-buttons>
+
+      <ion-title>
+          <span class="title-logo-img"></span>
+      </ion-title>
+
+  <!-- </ion-navbar> -->
+</ion-header>
+
+<ion-content class="theme-white">
+
+  <div class="internal-title-container">
+
+    <ion-row>
+      <ion-col>
+        <span class="title-huge">{{strings.generalLabelSelect}} {{listDisplayName}}</span>
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+  <ion-searchbar
+    color="light"
+    placeholder="Buscar"
+    [(ngModel)]="searchTerm"
+    showCancelButton="never"
+    (ionChange)="onInputSearch($event)"
+    (ionClear)="onCancelSearch($event)"
+    >
+  </ion-searchbar>
+
+  <ion-row>
+
+    <ion-grid class="table-list">
+      <ion-row *ngFor="let item of itemListFiltered" (click)="selectItem(item)">
+        <ion-col style="text-align: left;">
+          <div>{{getItemLabel(item)}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-row>
+
+</ion-content>

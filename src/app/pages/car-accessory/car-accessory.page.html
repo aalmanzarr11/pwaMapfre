@@ -1,0 +1,94 @@
+<ion-header class="theme-red no-background">
+
+  <ion-toolbar fill="clear">
+
+      <ion-buttons slot="start">
+          <ion-button ion-button class="cancel-icon" (click)="back()"></ion-button>
+      </ion-buttons>
+      
+      <ion-title>
+          <span class="title-logo-img"></span>
+      </ion-title>
+
+      <ion-buttons slot="end">
+          <ion-button (click)="capture()"  *ngIf="base64Image" 
+                  style="height: 20px;" class="camera-button camera-button-on"></ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="theme-red" overflow-scroll="true" style="height: 100%;">
+
+<div class="internal-title-container">
+
+
+      <ion-grid>
+      <ion-row>
+        <ion-col>
+          <label class="title-mini" stacked>{{strings.generalLabelTitle}}</label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <label class="title-huge">{{strings.accesoryTitle}}</label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="center-vertical">
+      <ion-grid>
+
+        <ion-row>
+          <div style="text-align:center;width: 100%;">
+            <img [src]="'data:image/jpeg;base64,' + base64Image" style="height: 350px;" *ngIf="base64Image" />
+          </div>
+        </ion-row>
+
+        <!-- <ion-row style="margin-right:60px;margin-left:50px;margin-top:20px;"> -->
+        <ion-row style="margin-right:60px;margin-left:50px;margin-top:20px;">
+
+          <!-- 
+          <ion-item class="no-border" style="margin-top: 3px;">
+            <ion-label class="label-input" (tap)="openList(this, 'accessories', carAccessories, callbackList, false)" stacked>
+              {{carAccessoryName}}
+            </ion-label>
+          </ion-item> 
+          -->
+
+          <ion-item color="primary" style="width: 100%;">
+            <ion-input [(ngModel)]="carAccessoryName" placeholder="Tipo de accesorio"
+                      minLength="0" maxlength="255"></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="getUserType() != ''" color="primary"  style="width: 100%;">
+            <ion-input [(ngModel)]="accessoryValue" placeholder="Valor" (input)='cleanField($event)'
+              (keyup)="cleanField($event)"  (blur)="cleanField($event)" (focus)="cleanField($event)" autocomplete="false"
+              minLength="0" maxlength="15"></ion-input>
+          </ion-item>
+
+        </ion-row>
+
+      </ion-grid>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer class="theme-red no-pull">
+  <div style="text-align:center;width: 100%;">
+      <div>
+          <!-- <button ion-button class="take-picture-icon" (click)="setPicture()"></button> -->
+          <input type='file' id="cap" accept="image/*" (change)="takePicture($event)" capture='camera' 
+          style="display:none;"/>
+          <button (click)="capture()" *ngIf="!base64Image" style="width: 50px;height: 50px;"
+                  class="camera-button camera-button-on camera-button-top"></button>
+
+          <button *ngIf="base64Image" ion-button class="white-check-icon" 
+                  (click)="setPicture()"></button>
+      </div>
+  </div> 
+</ion-footer>

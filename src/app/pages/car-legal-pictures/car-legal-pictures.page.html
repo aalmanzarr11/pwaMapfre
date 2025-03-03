@@ -1,0 +1,97 @@
+<ion-header class="theme-red">
+  <ion-menu-toggle>
+    <ion-button fill="clear">
+      <ion-icon name="menu" color="light"></ion-icon>
+    </ion-button>
+  </ion-menu-toggle>
+  <ion-title>
+      <span class="title-logo-img"></span>
+  </ion-title>
+</ion-header>
+
+<ion-content class="theme-white" overflow-scroll="true" style="height: 80%;">
+
+  <div class="internal-title-container">
+    <ion-row>
+      <ion-col>
+        <label class="title-mini" stacked>{{strings.generalLabelTitle}}</label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <label class="title-huge">{{strings.docPicsTitle}}</label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <label class="title-mini" stacked>{{strings.docPicsBody}}</label>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-grid class="images-list-container">
+    
+    <ion-row *ngFor="let part of carDocuments; let i = index;">
+      <ion-col>
+          <div class="add-image-button" (click)="isDisabled() ? null : takePicture(part.codParte)" *ngIf="!checkLegalImage(part.codParte)">
+            <img src="assets/imgs/Add_photo_icon.png" class="camera-icon">
+            <!-- <ion-label color="secondary" stacked text-wrap>{{part.descParte}}</ion-label> -->
+            <!-- <div class="item-text-wrap">{{part.descParte}}</div> -->
+            <div [innerHtml]="part.descParte" class="label-image"></div>
+          </div>
+
+          <div class="add-image-button" (click)="takePicture(part.codParte)" *ngIf="checkLegalImage(part.codParte)">
+            <img [src]="getLegalImage(part.codParte)" style="width: 150px;">
+            <div [innerHtml]="part.descParte" class="label-image"></div>
+          </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
+
+<div class="theme-red">
+  <lib-ionic-pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" 
+  [(state)]="footerState" [toolbarTopMargin]="150">
+
+      <ion-toolbar>
+          <ion-row>
+              <ion-col col-33 (click)="back()">
+                  <ion-button fill="clear" class="footer-back-button" strong="true" color="light"
+                         >{{strings.generalButtonBack}}</ion-button>
+              </ion-col>
+              <ion-col col-34>
+
+                  <div class="bottom-menu-button" fill="clear" (click)="toggleFooter()">
+                      <ion-icon name="menu"></ion-icon>
+                      <ion-label class="page-count" stacked>{{strings.generalLabelStep}} {{currentPage}}/{{footerMenuOptions.length}}</ion-label>
+                  </div>
+
+              </ion-col>
+              <ion-col col-33 (click)="next()">
+                  <ion-button color="light" class="footer-next-button" strong="true" shape="round">
+                      {{strings.generalButtonNext}}
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+      </ion-toolbar>
+
+      <div class="steps-list" *ngIf="footerState">
+
+          <ion-button fill="clear" detail-none no-lines *ngFor="let footerMenuOption of footerMenuOptions; let i = index">
+              <div class="label-col">
+                  {{i + 1}}. {{footerMenuOption.title}}
+              </div>
+              <div class="icon-col">
+                  <span [class.list-item-progress-icon]="footerMenuOption.status == 1" 
+                  [class.list-item-done-icon]="footerMenuOption.status == 2"></span>
+              </div>
+          </ion-button>
+
+      </div>
+
+  </lib-ionic-pullup>
+</div>

@@ -1,0 +1,74 @@
+<ion-header class="theme-red">
+  <ion-menu-toggle>
+    <ion-button fill="clear">
+      <ion-icon name="menu" color="light"></ion-icon>
+    </ion-button>
+  </ion-menu-toggle>
+  <ion-title>
+      <span class="title-logo-img"></span>
+  </ion-title>
+</ion-header>
+
+
+<ion-content class="theme-white" style="height: 90%;">
+ 
+  <div class="internal-title-container">
+
+      <ion-row>
+        <ion-col>
+            <span class="title-mini" stacked>{{strings.generalLabelTitle}}</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+          <ion-col>
+              <span class="title-huge">{{strings.acceptTitle}}</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+            <span class="body-paragraph" stacked>{{strings.generalLabelInspection}} #{{getInspectionNum()}}</span>
+        </ion-col>
+      </ion-row>
+
+  </div>
+
+  <form #mainForm="ngForm" [formGroup]="formGroup" novalidate> 
+
+    <ion-row>
+      <ion-col style="position: initial;"> 
+
+          <ion-item color="primary" *ngIf="getUserType() === 'P' && !isCurrentCountryPA()">
+            <ion-label color="secondary" position="stacked">{{strings.acceptLabelResult}}</ion-label>
+            <ion-select formControlName="inspectionStatus" [(ngModel)]="currentInspection.tipSituInsp" 
+                        okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}">
+              <ion-select-option *ngFor="let status of statusList" [value]="status.tipSituInsp">
+                {{status.nomSituInsp}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item color="primary">
+            <ion-label color="secondary" position="stacked">{{strings.acceptLabelNotes}}</ion-label>
+            <ion-textarea placeholder="" rows="5" formControlName="inspectionNotes"  
+                       [(ngModel)]="currentInspection.notes"></ion-textarea>
+          </ion-item>
+
+
+      </ion-col>
+    </ion-row>
+
+  </form>
+  
+</ion-content>
+
+<ion-footer class="theme-white no-pull">  
+  <div style="text-align:center;width: 100%;padding: 20px;background-color: white;">
+    <div>
+      <ion-button style="width: 200px;" class="submit-btn" color="primary" shape="round" (click)="next()">
+        {{strings.acceptButtonSend}}
+      </ion-button>
+    </div>
+  </div>
+</ion-footer>

@@ -1,0 +1,106 @@
+ion-content{
+    text-align: center;
+}
+
+.form-box{
+    margin-top: 50px;
+    margin-bottom: 150px;
+}
+
+.plate-input{
+    font-size: 2.9rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px 8px;
+    color: var(--ion-color-light-contrast);
+    --placeholder-color: var(--ion-color-secondary);
+}
+
+// .text-input, .text-input-md{
+//     text-align: center;
+//     margin: 0px 8px;
+// }
+
+.item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+.item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    // border-bottom-color: color($colors, secondary, base);
+    // -webkit-box-shadow: inset 0 -1px 0 0 color($colors, secondary, base);
+    // box-shadow: inset 0 -1px 0 0 color($colors, secondary, base);
+
+    // border-bottom-color: var(--ion-color-secondary);
+    // -webkit-box-shadow: inset 0 -1px 0 0 var(--ion-color-secondary);
+    // box-shadow: inset 0 -1px 0 0 var(--ion-color-secondary);
+}
+
+.plate-item{
+    // background-color: yellowgreen;
+
+    // .item-native, 
+    // .item-inner {
+    //     border-color: var(--ion-color-primary);
+    //     --border-color: var(--ion-color-primary);
+    //     border-style: unset !important;
+    // }
+
+    .item-inner {
+        border: 5px solid red;
+    }
+
+}
+
+
+ion-item {
+    // border-color: var(--ion-color-dark-shade);
+    // --border-color: var(--ion-color-primary);
+    // background-color: blue;
+    // --border-color: var(--ion-color-primary);
+    // border-style: unset !important;
+
+
+    // .item-native, 
+    // .item-inner {
+    //     border-color: var(--ion-color-primary);
+    //     --border-color: var(--ion-color-primary);
+    //     border-style: unset !important;
+    // }
+
+
+    // border-width: var(--border-width);
+    // border-style: var(--border-style);
+    // border-color: var(--ion-color-primary);
+
+    // --border-color: var(--ion-color-danger, #f1453d);
+
+    // --border-color: white; // default underline color
+    // --highlight-color-invalid: red; // invalid underline color
+    --highlight-color-valid: red; // valid underline color
+
+}
+
+.ios ion-item.plate-item{
+    border-bottom: 1px solid var(--ion-color-dark-shade);;
+}
+
+// ion-item{ --border-color: #F00; }
+
+// .plate-item.item-interactive.item-input.item-has-placeholder.item-has-value.ion-color.ion-color-primary.item.md.item-fill-none.hydrated.ion-pristine.ion-valid.ion-touched{
+
+// }
+
+// .plate-item.item-interactive.item-input.item-has-focus{
+//     border: 1px solid red;
+// }
+
+
+ion-item.plate-item::part(native),
+.ios ion-item.plate-item::part(native) {
+    border-width: var(--border-width);
+    border-style: var(--border-style);
+    border-color: var(--ion-color-light-shade);
+}
+
+// ion-item.plate-item.item-interactive.item-input.item-has-focus::part(native) {
+//     border-width: var(--border-width);
+//     border-style: var(--border-style);
+//     border-color: var(--ion-color-dark-shade);
+// }

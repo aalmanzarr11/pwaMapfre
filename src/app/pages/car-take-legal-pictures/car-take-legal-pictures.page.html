@@ -1,0 +1,65 @@
+<ion-header class="theme-red no-background">
+
+  <ion-toolbar fill="clear">
+
+      <ion-buttons slot="start">
+          <ion-button ion-button class="cancel-icon" (click)="back()"></ion-button>
+      </ion-buttons>
+      
+      <ion-title>
+          <span class="title-logo-img"></span>
+      </ion-title>
+
+      <ion-buttons slot="end">
+          <ion-button (click)="capture()"  *ngIf="base64Image" 
+                  style="height: 20px;" class="camera-button camera-button-on"></ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="theme-red" overflow-scroll="true">
+
+  <div class="internal-title-container" style="height:100%;">
+
+      <ion-grid style="height: 70px;">
+          <ion-row>
+          <ion-col>
+              <span class="title-mini" stacked>{{strings.generalLabelTitle}}</span>
+          </ion-col>
+          </ion-row>
+  
+          <ion-row>
+              <ion-col>
+                  <div [innerHtml]="strings.takePic + ' ' + title" class="title-huge"></div>
+          </ion-col>
+          </ion-row>
+      </ion-grid>
+
+      <ion-grid class="center-vertical" style="height: 90%;"> 
+          <ion-row style="overflow: hidden;">
+              <div style="text-align:center;width: 100%;">
+                  <img style="width: 100%;" [src]="'data:image/jpeg;base64,' + base64Image" *ngIf="base64Image" />
+              </div> 
+          </ion-row>
+      </ion-grid>
+
+  </div>   
+
+</ion-content>
+
+<ion-footer class="theme-red no-pull" fill="clear">
+  <div style="text-align:center;width: 100%;">
+      <div>
+          <input type='file' id="cap" accept="image/*" (change)="takePicture($event)" capture='camera' 
+          style="display:none;"/>
+
+          <ion-button fill="clear" (click)="capture()" style="width: 50px;height: 50px;" 
+            class="camera-button camera-button-on camera-button-top" *ngIf="!base64Image" [disabled]="isDisabled()"></ion-button>
+
+          <ion-button fill="clear" *ngIf="base64Image" ion-button class="white-check-icon" 
+                  (click)="setPicture()" [disabled]="isDisabled()"></ion-button>
+      </div>
+  </div> 
+</ion-footer>

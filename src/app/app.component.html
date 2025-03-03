@@ -1,0 +1,69 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" class="theme-red" type="overlay" *ngIf="isMenuVisible()">
+      <ion-header class="theme-red no-background">
+
+        <ion-menu-toggle>
+          <ion-button fill="clear">
+            <ion-icon name="menu" color="light"></ion-icon>
+          </ion-button>
+        </ion-menu-toggle>
+
+        <ion-title>
+          <span class="title-logo-img"></span>
+        </ion-title>
+
+      </ion-header>
+
+      
+
+      <ion-content class="theme-red" fill="clear">
+
+        <ion-list fill="clear" style="background-color: transparent;">
+          
+          <ion-item>
+            <ion-label style="padding-left: 10px;" class="menu-label">Bienvenido {{getUserFullName()}}</ion-label>
+          </ion-item>
+        
+          <ion-item style="margin-bottom: 29px;" *ngIf="getInspectionNum() != ''">
+              <ion-label style="padding-left: 10px;" class="menu-label">Auto inspección #{{getInspectionNum()}}</ion-label>
+          </ion-item>
+    
+          
+          <!-- <ion-item>
+            <button menuClose ion-item (click)="gotoInspections()" *ngIf="getUserType() != ''">
+              Mis inspecciones
+            </button>
+          </ion-item> -->
+    
+          <!-- (click)="getUserType() != '' ? gotoSearchInspection() : gotoEnterCar()" -->
+          <ion-item>
+            <ion-button fill="clear" (click)="gotoEnterCar()">
+                Buscar inspección
+            </ion-button>
+          </ion-item>
+    
+          <ion-item>
+            <a class="menu-btn" href="assets/docs/Politica_privacidad_MAPFRE_Guatemala.pdf" (click)="menuController.close()" target="_blank">
+              Términos y condiciones</a>
+            <!-- <button menuClose ion-item>
+                Términos y condiciones
+            </button> -->
+          </ion-item>
+          
+          <ion-item>
+            <ion-button fill="clear" menuClose 
+                    style="margin-top: 0px;" (click)="logout()" *ngIf="getUsername() != ''">
+                {{getUserType() != '' ? 'Cerrar sesión' : 'Salir'}} 
+            </ion-button>
+          </ion-item>
+
+          
+        </ion-list>
+
+      </ion-content>
+      
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

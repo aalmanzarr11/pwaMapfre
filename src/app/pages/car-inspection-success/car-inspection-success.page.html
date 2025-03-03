@@ -1,0 +1,74 @@
+<ion-header class="theme-red no-background">
+  <ion-menu-toggle>
+    <ion-button fill="clear">
+      <ion-icon name="menu" color="light"></ion-icon>
+    </ion-button>
+  </ion-menu-toggle>
+  <ion-title>
+      <span class="title-logo-img"></span>
+  </ion-title>
+</ion-header>
+
+
+<ion-content class="theme-red">
+
+  <div class="internal-title-container" style="margin-right: 30px; margin-left: 30px; height: 100%;">
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <span class="title-mini" stacked>{{strings.generalLabelTitle}}</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top: 40px;">
+        <ion-col>
+          <img src="assets/imgs/complete_icon_white.png" style="width: 40px;">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="center-vertical" style="height: 70%;">
+      <ion-row>
+        <ion-col>
+          <h1 style="font-size: 34px; text-align: left;">
+              {{strings.uploadSuccess}}
+          </h1>
+          <h2 style="font-size: 25px; text-align: left;color: white;margin-top: 20px;">
+            Código: {{this.getInspectionNum()}}
+          </h2>
+
+         <!-- If getUserType() returns a value different from 'P' -->
+         <span *ngIf="getUserType() !== 'P'" class="title-mini" style="font-size: 14px; text-align: left;">
+          {{ strings.uploadSuccessBody }}
+         </span>
+
+         <!-- If getUserType() returns 'P' -->
+         <ng-container *ngIf="getUserType() === 'P'">
+          <!-- If getInspectionStatus() returns 1 -->
+          <span *ngIf="getInspectionStatus() === '1'" class="title-mini" style="font-size: 14px; text-align: left;">
+            {{ strings.uploadSuccessAcceptBody }}
+          </span>
+
+          <!-- If getInspectionStatus() returns 0 -->
+          <span *ngIf="getInspectionStatus() === '0'" class="title-mini" style="font-size: 14px; text-align: left;">
+            {{ strings.uploadSuccessRejectBody }}
+          </span>
+         </ng-container>
+
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+  </div>
+
+</ion-content>
+
+<ion-footer class="theme-red no-pull">
+  <div style="text-align: center;width: 100%;padding: 20px;">
+    <div>
+      <ion-button style="width: 200px;" ion-button class="submit-btn" color="light" shape="round" (click)="next()">{{strings.generalButtonOk}}</ion-button>
+    </div>
+  </div>
+</ion-footer>

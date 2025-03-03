@@ -1,0 +1,82 @@
+<ion-content class="login-content" padding>
+
+  <div class="internal-title-container" style="height:100%;">
+
+    <ion-row style="height: 90%;">
+      <ion-grid class="login-box">
+        <form [formGroup]="formGroup" novalidate style="width: 100%;">
+
+          <ion-row class="logo-row"> 
+            <ion-col>
+              <img height="30" src="assets/imgs/Logo_blanco.png">
+            </ion-col>
+          </ion-row>
+
+          <ion-row style="width: 100%;">
+            <ion-col>
+              <ion-item color="primary">
+                <ion-label color="light" position="stacked">{{strings.loginLabelUserType}}:</ion-label>
+                <ion-select name="userType" [(ngModel)]="registerCredentials.userType" class="custom-options"
+                  okText="{{strings.generalButtonOk}}" formControlName="userType" cancelText="{{strings.generalButtonCancel}}">
+                  <ion-select-option *ngFor="let userType of userTypes" [value]="userType.id">
+                    {{userType.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item *ngIf="registerCredentials.userType != 'C'" color="primary">
+                <ion-label color="light" position="stacked">{{strings.loginLabelUsername}}:</ion-label>
+                <ion-input type="text" placeholder="" name="email" #emailInput formControlName="email" autocapitalize="none" autocorrect="none" position="stacked"
+                  autocomplete="none" spellcheck="none" minLength="0" maxLength="50" [(ngModel)]="registerCredentials.email" (keyup.enter)="onKeyupEnter($event)"></ion-input>
+              </ion-item>
+
+              <ion-item *ngIf="registerCredentials.userType != 'C'" color="primary">
+                <ion-label color="light"  position="stacked">{{strings.loginLabelPassword}}:</ion-label>
+                <ion-input type="password" placeholder="" name="password" #passwordInput formControlName="password" position="stacked"
+                minLength="0" maxLength="50" [(ngModel)]="registerCredentials.password"
+                  (keyup.enter)="onKeyupEnter($event)"></ion-input>
+              </ion-item>
+
+            </ion-col>
+          </ion-row>
+          
+        </form>
+
+        <ion-row style="margin-top: 15px;">
+          <ion-col class="signup-col">
+              <!-- (tap)="login()" android alternative -->
+              <!-- (tap) ios alternative -->
+              <!-- BOTON LOGIN --> 
+            <ion-button class="submit-btn" color="light" shape="round" (click)="submitForm()">{{strings.loginButtonLogin}}</ion-button>
+            <br />
+
+
+            <a class="register-btn" href="{{termsFile}}" target="_blank">{{strings.loginLabelTerms}}</a>
+            
+            <!-- <button ion-button class="register-btn" block clear (tap)="openTerms()">{{strings.loginLabelTerms}}</button> -->
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="registerCredentials.userType != 'C' && userTypes.length > 2">
+        <ion-col>
+          <ion-label color="light" stacked>
+            Si eres cliente selecciona realizar auto inspección
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+      </ion-grid>
+    </ion-row>
+
+
+
+  </div>
+
+</ion-content>
+
+
+<ion-footer translucent="true" class="theme-white" *ngIf="registerCredentials.userType != 'C' && userTypes.length > 2">
+  <ion-button style="width: 100%;" strong="true" color="primary" fill="clear" (click)="submitFormClient();">
+    {{strings.loginButtonAutoInspection}}
+  </ion-button>
+</ion-footer>

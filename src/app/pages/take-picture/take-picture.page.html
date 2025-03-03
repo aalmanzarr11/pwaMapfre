@@ -1,0 +1,137 @@
+<ion-header class="theme-red no-background">
+
+  <ion-toolbar fill="clear">
+
+      <ion-buttons slot="start">
+          <ion-button ion-button class="cancel-icon" (click)="back()"></ion-button>
+      </ion-buttons>
+      
+      <ion-title>
+          <span class="title-logo-img"></span>
+      </ion-title>
+
+      <ion-buttons slot="end">
+          <ion-button (click)="capture()"  *ngIf="base64Image" 
+                  style="height: 20px;" class="camera-button camera-button-on"></ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="theme-red" overflow-scroll="true" style="height: 100%;">
+
+  <div class="internal-title-container" style="height:100%;">
+
+      <ion-grid style="height: 70px;">
+          <ion-row>
+              <ion-col>
+                  <span class="title-mini" stacked>{{strings.generalLabelTitle}}</span>
+              </ion-col>
+          </ion-row>
+  
+          <ion-row>
+              <ion-col>
+                  <span class="title-huge">{{strings.takePic}} {{title}}</span>
+           </ion-col>
+          </ion-row>
+
+          
+
+      </ion-grid>
+      
+      <div class="center-vertical">
+        <ion-grid class="" style="height: 90%; display: block;">
+
+            <ion-row *ngIf="!base64Image" style="margin-top: 20px;">
+                <ion-col>
+                    <span class="title-mini">
+                        Ubica la cámara en la posición y ángulo como lo indica la imagen de referecia a continuación:
+                    </span>
+                </ion-col>
+            </ion-row>
+
+            <ion-row style="height: 80%;overflow: hidden;" class="center-vertical">
+                <div style="text-align:center;width: 70%;">
+                    <img [src]="'data:image/jpeg;base64,' + base64Image" *ngIf="base64Image" />
+                    <img [src]="'assets/imgs/picture_guide_' + picIndex + '.png'" 
+                        style="width: 70%;" 
+                        [style.width.%]="picIndex != 11 ? '100' : '70'"
+                        *ngIf="!base64Image" />
+                </div> 
+            </ion-row>
+        
+            <ion-row style="text-align: center;width: 100%;margin-top: 10px;color: white;padding-bottom: 10px;height: 75px;" *ngIf="base64Image">
+
+                <ion-col width-20>
+                    <div class="round-thumb-button" *ngIf="checkDamage(0)">
+                        <div class="round-thumb" >
+                            <img [src]="getDamageImage(0)" (click)="openDamage(0)" *ngIf="getDamageImage(0)">
+                        </div>
+                        <label>{{getDamageLevel(0)}}</label>
+                        <div class="remove-thumb" (click)="removeDamage(0)"></div> 
+                    </div>
+                </ion-col>
+                
+                <ion-col width-20>
+                    <div class="round-thumb-button" *ngIf="checkDamage(1)">
+                        <div class="round-thumb" >
+                            <img [src]="getDamageImage(1)" (click)="openDamage(1)" *ngIf="getDamageImage(1)">
+                        </div>
+                        <label>{{getDamageLevel(1)}}</label>
+                        <div class="remove-thumb" (click)="removeDamage(1)"></div> 
+                    </div>
+                </ion-col>
+
+                <ion-col width-20>
+                    
+                    <button ion-button class="text-icon-button" (click)="addDamage()" [disabled]="isDisabled()">
+                        <ion-icon class="add-icon"></ion-icon><br />
+                        <label>Adicionar daño</label>
+                    </button>
+
+                </ion-col>
+                
+                <ion-col width-20>
+                    <div class="round-thumb-button" *ngIf="checkDamage(2)">
+                        <div class="round-thumb">
+                            <img [src]="getDamageImage(2)" (click)="openDamage(2)" *ngIf="getDamageImage(2)">
+                        </div>
+                        <label>{{getDamageLevel(2)}}</label>
+                        <div class="remove-thumb" (click)="removeDamage(2)"></div> 
+                    </div>
+                </ion-col>
+
+                <ion-col width-20>
+                    <div class="round-thumb-button" *ngIf="checkDamage(3)">
+                        <div class="round-thumb">
+                            <img [src]="getDamageImage(3)" (click)="openDamage(3)" *ngIf="getDamageImage(3)">
+                        </div>
+                        <label>{{getDamageLevel(3)}}</label>
+                        <div class="remove-thumb" (click)="removeDamage(3)"></div> 
+                    </div>
+                </ion-col>
+
+            </ion-row>
+
+        </ion-grid>
+    </div>
+
+
+  </div>   
+
+</ion-content>
+
+<ion-footer class="theme-red no-pull">
+  <div style="text-align:center;width: 100%;">
+      <div>
+          <input type='file' id="cap" accept="image/*" (change)="takePicture($event)" capture='camera' 
+              style="display:none;"/>
+          <button (click)="capture()" *ngIf="!base64Image" style="width: 50px;height: 50px;" [disabled]="isDisabled()" 
+                  class="camera-button camera-button-on camera-button-top"></button>
+
+          <button *ngIf="base64Image" ion-button class="white-check-icon" [disabled]="isDisabled()" 
+                  (click)="setPicture()"></button>
+      </div>
+  </div> 
+</ion-footer>

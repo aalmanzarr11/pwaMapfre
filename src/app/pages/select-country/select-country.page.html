@@ -1,0 +1,42 @@
+<ion-content class="login-content" padding color="translucent">
+  
+  <ion-row class="logo-row">
+    <ion-col>
+        <img height="30" src="assets/imgs/Logo_blanco.png">
+    </ion-col>
+  </ion-row>
+
+  <div class="center-vertical" style="height: 65%;">
+    <ion-grid class="login-box">
+
+        <ion-row style="width: 100%;">
+          <ion-col>
+              <ion-item color="primary">
+                <ion-label color="light" position="stacked">Seleccione su país:</ion-label>
+                <ion-select name="userType" class="custom-options"
+                            [(ngModel)]="countryCode" required 
+                            okText="Aceptar" cancelText="Cancelar">
+                  
+                            <ion-select-option value="{{getPanamaCode()}}">Panamá</ion-select-option>
+                            <ion-select-option value="{{getGuatemalaCode()}}">Guatemala</ion-select-option>
+                            <ion-select-option value="{{getHondurasCode()}}">Honduras</ion-select-option>
+                            <ion-select-option value="{{getElSalvadorCode()}}">El Salvador</ion-select-option>
+                            <ion-select-option value="{{getCostaRicaCode()}}">Costa Rica</ion-select-option>
+                            <ion-select-option value="{{getNicaraguaCode()}}">Nicaragua</ion-select-option>
+
+                </ion-select>
+              </ion-item>
+              
+          </ion-col>
+        </ion-row>
+        
+        <ion-row style="margin-top: 45px;">
+          <ion-col class="signup-col">
+              <ion-button style="width: 200px;" class="submit-btn" color="light" shape="round" (click)="next()">Continuar</ion-button>
+          </ion-col>
+        </ion-row>
+        
+    </ion-grid>
+  </div>
+
+</ion-content>

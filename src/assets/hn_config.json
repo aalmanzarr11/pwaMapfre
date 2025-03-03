@@ -1,0 +1,5 @@
+{
+  "servicesURL_PROD": "https://app.mapfre.com.hn/ws/inspeccion/v1",
+  "servicesURL":"https://pruebas.mapfre.com.hn/ws/inspeccion/pruebas",
+  "servicesURL_LOCAL":"https://localhost:44352"
+}

@@ -1,0 +1,137 @@
+<ion-header class="theme-white">
+    <ion-menu-toggle>
+        <ion-button fill="clear">
+            <ion-icon name="menu"></ion-icon>
+        </ion-button>
+    </ion-menu-toggle>
+    <ion-title>
+        <span class="title-logo-img"></span>
+    </ion-title>
+</ion-header>
+
+<ion-content class="theme-white" fullscreen="true">
+    
+  <div class="form-box">
+      <form #mainForm="ngForm" [formGroup]="formGroup" novalidate> 
+          <ion-row>
+              <ion-col>
+                  <span class="title-mini" stacked>{{strings.generalLabelTitle}}</span>
+              </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col>
+                  <span class="title-huge">{{strings.enterCarLabelDocument}}</span>
+              </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col style="position: initial;">
+                  <ion-item color="primary" class="plate-item">
+                      <ion-input type="text" placeholder="{{strings.enterCarDocument}}" name="document"
+                                 formControlName="document" (ionFocus)="onFocusInput()" #documentInput
+                                 [(ngModel)]="currentInspection.numDocumento" class="plate-input"  
+                                 minLength="0" maxlength="35"
+                                 (keyup.enter)="onKeyupEnter($event)"></ion-input>
+                  </ion-item>
+              </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="!isCountry([constantsProvider.HONDURAS_CODE])">
+              <ion-col>
+                  <span class="title-huge">{{strings.enterCarLabelPlate}}</span>
+              </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="!isCountry([constantsProvider.HONDURAS_CODE])">
+              <ion-col style="position: initial;">
+                  <ion-item color="primary" class="plate-item">
+                      <ion-input [(ngModel)]="currentInspection.placa" (ionFocus)="onFocusInput()" #plateInput
+                                 formControlName="plate" type="text" class="plate-input" placeholder="{{strings.enterCarPlate}}"
+                                 (ngModelChange)="currentInspection.placa = $event.toLocaleUpperCase()"
+                                 name="plate" minLength="0" maxlength="15" (keyup.enter)="onKeyupEnter($event)"></ion-input>
+                  </ion-item>
+              </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="showPolicyField()">
+              <ion-col>
+                  <span class="title-huge">{{strings.enterCarLabelPolicy}}</span>
+              </ion-col>
+          </ion-row> 
+
+          <ion-row *ngIf="showPolicyField()">
+              <ion-col style="position: initial;">
+                <ion-item color="primary" class="plate-item">
+                      <!-- <ion-input pattern="[0-9]*" type="tel" placeholder="{{strings.enterCarPolicy}}" name="policy"
+                                 formControlName="policy" (ionFocus)="onFocusInput()" #inspectionInput
+                                 [(ngModel)]="currentInspection.numeroCotizacion" class="plate-input" 
+                                 minLength="0" maxlength="15" inputmode="numeric" 
+                                 (keyup.enter)="onKeyupEnter($event)"></ion-input>  -->
+                      <ion-input placeholder="{{strings.enterCarPolicy}}" name="policy"
+                                 formControlName="policy" (ionFocus)="onFocusInput()" #inspectionInput
+                                 [(ngModel)]="currentInspection.numeroCotizacion" class="plate-input" 
+                                 minLength="0" maxlength="35"
+                                 (keyup.enter)="onKeyupEnter($event)"></ion-input> 
+                  </ion-item>
+              </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col>
+                  <span class="body-paragraph">
+                      {{strings.enterCarPlateBody}}
+                  </span>
+              </ion-col>
+          </ion-row>
+
+      </form>
+  </div>
+
+</ion-content>
+
+
+<div class="theme-white">
+
+    <!-- [toolbarTopMargin]="450" -->
+
+  <lib-ionic-pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()"  [(state)]="footerState" [toolbarTopMargin]="150">
+
+      <ion-toolbar>
+          <ion-row>
+              <ion-col col-33 >
+                  <!-- <ion-button fill="clear" class="footer-back-button" strong="true" 
+                         >{{strings.generalButtonBack}}</ion-button> -->
+              </ion-col>
+              <ion-col col-34>
+
+                  <div class="bottom-menu-button" fill="clear" (click)="toggleFooter()">
+                      <ion-icon name="menu"></ion-icon>
+                      <ion-label class="page-count" stacked>{{strings.generalLabelStep}} {{currentPage}}/{{footerMenuOptions.length}}</ion-label>
+                  </div>
+
+              </ion-col>
+              <ion-col col-33 (click)="next()">
+                  <ion-button color="primary" class="footer-next-button" color="primary" strong="true" shape="round">
+                      {{strings.generalButtonNext}}
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+      </ion-toolbar>
+
+      <div class="steps-list" *ngIf="footerState">
+
+          <ion-button fill="clear" detail-none no-lines *ngFor="let footerMenuOption of footerMenuOptions; let i = index">
+              <div class="label-col">
+                  {{i + 1}}. {{footerMenuOption.title}}
+              </div>
+              <div class="icon-col">
+                  <span [class.list-item-progress-icon]="footerMenuOption.status == 1" 
+                  [class.list-item-done-icon]="footerMenuOption.status == 2"></span>
+              </div>
+          </ion-button>
+
+      </div>
+
+  </lib-ionic-pullup>
+</div>

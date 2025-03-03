@@ -1,0 +1,1355 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+h1{
+    color: var(--ion-color-light);
+}
+
+.theme-red ion-toolbar ion-title,
+.theme-white ion-toolbar ion-title{
+    // margin-right: 50px;
+    text-align: center;
+}
+
+.bar-button-menutoggle{
+    width: 50px;
+}
+
+.ion-page {
+    background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed center; 
+//     -webkit-background-size: cover;
+//     -moz-background-size: cover;
+//     background-size: cover;
+}
+
+// ion-content.background{
+//     --background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed center; 
+// }
+
+.ios body {
+    // --ion-background-image: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed center; 
+    // --ion-background-color: red;
+    // --ion-background-color-rgb: 0,0,0;
+    // --background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed center; 
+    // -webkit-background-size: cover;
+    // -moz-background-size: cover;
+    // background-size: cover;
+}
+
+
+html {
+    font-size: 62.5%;
+}
+
+// .lib-ionic-pullup {
+    ion-button {
+        text-transform: none;
+        --box-shadow:none;
+    }
+// }
+
+
+// .footer-back-button{
+//     .button-native{
+//         font-weight: bold;
+//     }
+// }
+
+// .footer-next-button{
+    .button-native{
+        font-weight: bold;
+        padding: 10px;
+    }
+// }
+
+// ion-content.login-content{
+//     // background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed center; 
+//     --background-color: transparent;
+//     --ion-color-base: transparent !important;
+// }
+
+// :host {
+//     ion-content {
+//         // --background: url('assets/imgs/BG_Rojo_Home.jpg');
+//         // --background-color: transparent;
+//     }
+// }
+
+// :host {
+//     ion-content {
+//       --background: url('assets/imgs/BG_Rojo_Home.jpg') no-repeat center center / cover;
+//     }
+//   }
+
+ion-menu-toggle{
+    z-index: 9999;
+}
+
+ion-toolbar{
+    --background-color: transparent;
+    --ion-color-base: transparent !important;
+    // --background:var(--ion-color-primary);
+    // background-color: transparent;
+}
+
+ion-header {
+    background-color: transparent; 
+    --background-color: transparent;
+    --ion-color-base: transparent !important;
+    // display: flex;
+    // min-height: 56px;
+    // padding: 4px;
+
+    // --background-color: transparent;
+    // --ion-color-base: transparent !important;
+}
+
+ion-label{
+    font-size: 1.2rem;
+}
+
+scroll-content{
+    overflow-y: auto;
+}
+
+// ion-content{
+//     overflow: auto;
+// }
+
+::-webkit-scrollbar, *::-webkit-scrollbar {
+    display: none;
+}
+
+ion-select{
+    max-width: 100%;
+}
+
+
+.toolbar-ios, .toolbar-md {
+    ion-title{
+        padding: 0px;
+    }
+    
+}
+
+.title-logo-img { 
+    height: 30px;
+    width: 180px;
+    display: inline-block;
+    background-repeat: NO-REPEAT;
+    background-position: center;
+    background-size: contain;
+}
+
+.title-huge{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+    display: block;
+}
+
+.title-mini{
+    font-size: 14px;
+    margin: 5px;
+    margin: 5px;
+    display: block;
+}
+
+.internal-title-container{
+    text-align: center;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+    .col{
+        padding: 0px;
+    }
+}
+
+.center-vertical{
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchbar-input.sc-ion-searchbar-md{
+    color: var(--ion-color-dark);
+}
+
+ion-select {
+    /* Applies to the value and placeholder color */
+    // color: #545ca7;
+  
+    /* Set a different placeholder color */
+    // --placeholder-color: #971e49;
+  
+    /* Set full opacity on the placeholder */
+    --placeholder-opacity: 1;
+}
+
+ion-item {
+    --ion-color-primary: transparent;
+    border-color: transparent;
+    --inner-padding-end: 0px;
+}
+
+
+.ios.title-default {
+    padding: 0px;
+}
+
+// ion-content{
+
+//     --ion-background-color:#111D12;
+// }
+
+.alert-wrapper.ion-overlay-wrapper {
+    // background-color: white;
+    // columns: black;
+    .alert-title{
+        // color: black;
+    }
+}
+
+.alert-radio-group.sc-ion-alert-md{
+    border-top: 1px solid var(--ion-color-step-750, #d9d9d9);
+    border-bottom: 1px solid var(--ion-color-step-750, #d9d9d9);
+}
+
+ion-alert, .select-alert{
+    color: var(--ion-color-dark);
+
+    .alert-title{
+        color: var(--ion-color-dark);
+    }
+
+    .alert-radio-label {
+        color: black;
+    }
+
+    [aria-checked="true"].sc-ion-alert-ios .alert-radio-label.sc-ion-alert-ios,
+    [aria-checked="true"].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+        // color: var(--ion-color-primary);
+    }
+}
+
+.alert-title.sc-ion-alert-ios {
+    color: #000; 
+}
+
+
+
+// .select-alert {
+
+//     .alert-title{
+//         color: var(--ion-color-dark);
+//     }
+
+//     // These widths are pretty arbitrary, so you're use-case(s) could required different widths:
+//     --width: 33vw !important;
+//     --max-width: 66vw !important;
+  
+//     .select-interface-option .alert-radio-label,
+//     .select-interface-option .alert-checkbox-label {
+//       white-space: normal !important;
+//     }
+//   }
+
+.loading-custom-class {
+
+    // color: var(--ion-color-primary);
+    // background-color: var(--ion-color-light);
+
+    --background:var(--ion-color-light);
+    --spinner-color:var(--ion-color-dark);
+    color: var(--ion-color-dark);
+
+    .alert-message{
+        color: var(--ion-color-dark);
+    }
+}
+
+.submit-btn {
+    color: var(--ion-color-primary) !important;
+    font-weight: bold;
+}
+
+.no-border{
+    .item-inner{
+        border: none !important;
+    }
+}
+
+.theme-red.no-background{
+    @at-root {
+        ion-header#{&} {
+            background-image: none;
+            --background: none no-repeat fixed top; 
+        }
+    }
+
+    ion-toolbar{
+        background-image: none;
+        --background: none no-repeat fixed top; 
+    }
+}
+
+
+
+// ion-menu {
+//     // --background: var(--ion-item-background, var(--ion-background-color, #fff));
+//     background-color: transparent;
+// }
+
+ion-split-pane{ 
+    --border: none !important;
+    ion-menu{
+     --background: var(--ion-color-primary) !important; 
+        ion-content{            
+            --background: var(--ion-color-primary) !important; 
+            ion-list-header{ 
+                --background: var(--ion-color-primary) !important;
+                --color: #FFFFFF !important;   
+            }
+            ion-item{
+                --background: var(--ion-color-primary) !important;
+                 --color: #FFFFFF !important;
+                 ion-icon{ 
+                     padding-right: 10px !important; 
+                }
+
+                 ion-button{
+                    color: var(--ion-color-black) !important;
+                    font-size: 16px;
+                    padding: 0px;
+                    font-weight: normal;
+
+                    // --padding-start: 0px;
+                    // --padding-end: 10px;
+                    // --padding-bottom: 10px;
+                    // --padding-top: 10px;
+
+                 }
+            }
+
+            // ion-button {
+            //     --padding-start: 10px;
+            //     --padding-end: 10px;
+            //     --padding-bottom: 10px;
+            //     --padding-top: 10px;
+            //     --background: var(--ion-color-primary) !important;
+            // }
+
+            ion-item::part(native){
+                border-width: var(--border-width);
+                border-style: var(--border-style);
+                border-color: var(--ion-color-primary);
+                padding-left: 0px;
+            }
+        }
+    }
+}
+
+
+.theme-red {
+
+    @at-root {
+        ion-header#{&} {
+            background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed top;
+            // background-color: var(--ion-color-primary);
+            display: flex;
+            min-height: 56px;
+            padding: 4px;
+
+            ion-icon{
+                color: var(--ion-color-primary);
+                font-size: 2.4rem;
+            }
+        }
+
+        ion-content#{&} {
+            --background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat cover center;
+            --background-size: cover;
+
+            // background: url("assets/imgs/BG_Rojo_Home.jpg");
+        }
+    }
+
+    // :host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-native, 
+    // :host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) .item-inner {
+    //     border-color: green;
+    // }
+
+    ion-footer{
+        background-color: transparent;
+    }
+
+    ion-button {
+        --padding-start: 10px;
+        --padding-end: 10px;
+        --padding-bottom: 10px;
+        --padding-top: 10px;
+    }
+
+    ion-select{
+        max-width: 100%;
+        font-size: 12px;
+        color: var(--ion-color-light);
+        border: 1px solid;
+        width: 100%;
+        padding: 9px 8px 5px 16px;
+        border-radius: 15px !important;
+    }
+
+    .label-input{
+        max-width: 100%;
+        font-size: 12px;
+        color: #ffffff;
+        border: 1px solid;
+        width: 100%;
+        padding: 11px 8px 5px 16px;
+        border-radius: 15px !important;
+        height: 36px;
+        text-align: left;
+        white-space: nowrap;
+        // margin-right: 15px;
+        // margin-left: 15px;
+    }
+
+    ion-toolbar {
+        --background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed top; 
+    }
+
+
+    //       --background: url('assets/imgs/BG_Rojo_Home.jpg') no-repeat center center / cover;
+//     }
+//   }
+// ion-toolbar{
+//     --background-color: transparent;
+//     --ion-color-base: transparent !important;
+
+    .alterantive {
+        ion-toolbar{
+            background-image: none;
+        }
+    }
+
+    // ion-header.alterantive{
+    //     background-image: none;
+    // }
+
+    .no-background{
+        background-image: none;
+        --background: none no-repeat fixed top; 
+    }
+
+    .title-logo-img{
+        background-image: url(assets/imgs/Logo_blanco.png);
+    }
+
+    ion-icon{
+        color: var(--ion-color-light);
+    }
+
+    .page-count{
+        color: var(--ion-color-light);
+    }
+
+    .footer-back-button{
+        // color: var(--ion-color-light);
+        width: 100%;
+    }
+    
+    .footer-next-button{
+        // color: var(--ion-color-primary);
+        // background-color: var(--ion-color-light);
+    }
+
+    .title-huge{
+        color: var(--ion-color-light);
+        margin: 5px;
+    }
+    
+    .title-mini{
+        font-size: 14px;
+        color: var(--ion-color-light);
+        margin: 5px;
+    }
+
+    .body-paragraph{
+        color: var(--ion-color-light);
+        font-size: 12px;
+    }
+
+    .cancel-icon{
+        background-image: url(assets/imgs/cancel_icon.png);
+        background-repeat: no-repeat;
+        height: 25px;
+        width: 60px;
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        background-color: transparent;
+    }
+
+    .back-arrow{
+        background-image: url(assets/imgs/Back_icon.png);
+        background-repeat: no-repeat;
+        height: 25px;
+        width: 60px;
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        background-color: transparent;
+    }
+
+    .next-arrow{
+        background-image: url(assets/imgs/next_icon.png);
+        background-repeat: no-repeat;
+        height: 25px;
+        width: 25px;
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        background-color: transparent;
+    }
+
+    .add-icon{
+        background-image: url(assets/imgs/Add_icon.png);
+        background-repeat: no-repeat;
+        height: 25px;
+        width: 25px;
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        background-color: transparent;
+    }
+    
+    .take-picture-icon{
+        background-image: url(assets/imgs/take_picture_icon.png);
+        background-repeat: no-repeat;
+        height: 50px;
+        width: 50px;
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        background-color: transparent;
+    }
+
+    .white-check-icon{
+        background-image: url(assets/imgs/check_icon_white.png);
+        background-repeat: no-repeat;
+        height: 50px;
+        width: 50px;
+        background-size: contain;
+        background-position: center;
+        display: inline-block;
+        background-color: transparent;
+    }
+
+    lib-ionic-pullup{
+        ion-toolbar{
+            background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed top; 
+        }
+    }
+
+    .item-md, .item-ios{
+        background-color:transparent;
+
+        .item-inner{
+            padding-right: 0px;
+            // border-bottom: 1px solid var(--ion-color-light);
+        }
+
+        .text-input{
+            color: var(--ion-color-light);
+        }
+    }
+
+    .text-input::-moz-placeholder {
+        color: white;
+    }
+    
+    .text-input:-ms-input-placeholder {
+        color: white;
+    }
+    
+    .text-input::-webkit-input-placeholder {
+        text-indent: 0;
+        color: white;
+    }
+
+    .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, 
+    .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        // border-bottom-color: #ffffff;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        // border-bottom-color: #ffffff;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .item-md.item-input.item-input-has-focus .item-inner,
+    .item-md.item-input.input-has-focus .item-inner {
+        // border-bottom-color: #ffffff;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+    
+}
+
+.theme-white {
+
+    @at-root {
+        ion-header#{&} {
+            background-color: #ffffff; 
+            display: flex;
+            min-height: 56px;
+            padding: 4px;
+
+            ion-icon{
+                color: var(--ion-color-primary);
+                font-size: 2.4rem;
+            }
+        }
+
+        ion-content#{&} {
+            // color: var(--ion-color-light);
+            background-color: #ffffff; 
+        }
+    }
+
+    ion-textarea{
+        color: var(--ion-color-dark);
+    }
+
+    ion-item {
+        border-color: red;
+    }
+
+    .ios ion-item{
+        border-bottom: 1px solid var(--ion-color-dark-shade);;
+    }
+
+    ion-item::part(native){
+        border-width: var(--border-width);
+        border-style: var(--border-style);
+        border-color: var(--ion-color-light-shade);
+        padding-left: 0px;
+    }
+
+    // ios.ion-item::part(native){
+    //     border-color: var(--ion-color-light-shade);
+    // }
+
+    ion-button {
+        --padding-start: 10px;
+        --padding-end: 10px;
+        --padding-bottom: 10px;
+        --padding-top: 10px;
+    }
+
+    ion-input, ion-select{
+        color: var(--ion-color-dark);
+        font-size: 1.5rem;
+    }
+
+    .label-input{
+        // margin-left: 0 !important;
+        // margin-top: 8px;
+        // margin-bottom: 10px !important;
+        // width: calc(100% - 8px) !important;
+        // // font-size: 1.6rem !important;
+        // height: 20px;
+        // font-size: 1.5rem;
+        border: 1px solid red;
+    }
+
+
+    .md.title-default {
+        padding-left: 0px;
+    }
+
+    .title-logo-img{
+        background-image: url(assets/imgs/Mapfre_Logo_Red.png);
+    }
+
+    ion-icon{
+        color: var(--ion-color-primary);
+
+    }
+
+    .page-count{
+        color: var(--ion-color-secondary);
+    }
+
+    .title-huge{
+        color: var(--ion-color-primary);
+        margin: 5px;
+    }
+    
+    .title-mini{
+        font-size: 14px;
+        color: var(--ion-color-primary);
+        margin: 5px;
+    }
+
+    .internal-title-container{
+        border-bottom: 1px solid var(--ion-color-primary);
+    }
+
+    .body-paragraph{
+        color: var(--ion-color-secondary);
+        font-size: 12px;
+    }
+
+    .item-md, .item-ios{
+        background-color:transparent;
+
+        .item-inner{
+            padding-right: 0px;
+            // border-bottom: 1px solid var(--ion-color-primary);
+        }
+
+        .text-input{
+            color: var(--ion-color-light);
+        }
+    }
+
+    lib-ionic-pullup{
+        ion-toolbar{
+            background-color:var(--ion-color-light);
+        }
+    }
+
+    .submit-btn {
+        color: var(--ion-color-light) !important;
+        font-weight: bold;
+    }
+}
+
+.menu-inner { 
+    width: 100%; 
+    height: 70%;
+}
+
+ion-menu {
+
+    // ion-content{
+    //     background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed top; 
+    // }
+
+    .content-md, .content-ios{
+        padding: 10px;
+    }
+    
+    ion-label{
+        color: var(--ion-color-light) !important;
+    }
+
+    .menu-label{
+        opacity: 0.7;
+    }
+
+    .label-md, .label-ios{
+        margin: 0px;
+    }
+
+    ion-list{
+        border-radius: 0px !important;
+    }
+
+    .item-md, .item-ios {
+        border-radius: 0px !important;
+        background-color: transparent !important;
+        color: var(--ion-color-light) !important;
+        padding-left: 0px;
+    }
+
+    .item-inner, .list-md[inset] .item, .list-ios[inset] .item{
+        border: none !important;
+    }
+
+    button{
+        color: var(--ion-color-light);
+    }
+
+    button{
+        color: var(--ion-color-light) !important;
+    }
+}
+
+
+lib-ionic-pullup{
+    // ion-toolbar{
+    //     text-align: center;
+    //     padding: 4px;
+    // }
+
+    .footer{ 
+        background-color:var(--ion-color-light);
+
+        ion-toolbar {
+            -webkit-box-shadow: 0px -2px 2px var(--ion-color-light);
+            box-shadow: 0px -2px 2px rgba(white, 0.2);
+            text-align: center;
+            padding: 0px;
+            border-top: 1px solid var(--ion-color-light-shade)
+        }
+
+        ion-toolbar.ios {
+            border-top: 1px solid var(--ion-color-dark-shade)
+        }
+    }
+}
+
+ion-footer {
+    background-color:var(--ion-color-light);
+    text-align: center;
+
+    &.footer-md::before {
+        background-image: none;
+    }
+
+    &.no-pull {
+        background-color: transparent;
+    }
+
+
+    // @at-root {
+    //     ion-content#{&} {
+    //         background: url("assets/imgs/BG_Rojo_Home.png") no-repeat fixed top; 
+    //     }
+    // }
+}
+
+ion-toolbar[hidebackbutton] button[menutoggle] {
+    display: block !important;
+}
+
+.info-button{
+    background-image: url(assets/imgs/Info_icon.png);
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+    background-size: contain;
+    background-position: center;
+    display: inline-block;
+    background-color: transparent;
+}
+
+ion-title{
+    text-align: center;
+    padding-left: 0px;
+    padding-right: 20px;
+}
+
+
+form {
+    ion-item{
+        padding:5px !important;
+    }
+}
+
+.swiper-pagination-bullet{
+    width: 10px;
+    height: 10px;
+    background:var(--ion-color-light);
+}
+
+.red-gradient-background{
+    background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed center; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.toolbar-background-md, .toolbar-background-ios, .toolbar-background-wp, .toolbar-background{
+    background-color: transparent;
+}
+
+// .ios .toolbar-background{
+//     border-top: 1px solid black;
+// }
+
+.header-md::after, .header-ios::after, .header-wp::after{
+    background-image: none;
+}
+
+.clear-red-button{
+    color: var(--ion-color-primary);
+    background-color: var(--ion-color-light);
+    border: 1px solid var(--ion-color-primary);
+}
+
+.images-list-container{
+    margin-bottom: 100px;
+    ion-row{
+        border-bottom: 1px solid #9e9e9e;
+        display: block;
+        margin: 0;
+        padding: 10px 0px 10px 0px;
+        text-align: center;
+    }
+}
+
+.add-image-button{
+    background-color: transparent;
+    width: 97%;
+
+    text-align: center;
+    color: var(--ion-color-secondary);;
+    font-size: 1.3rem;
+
+    img.camera-icon {
+        width: 30px;
+    }
+
+    img.plus-icon {
+        width: 30px;
+    }
+}
+
+.car-buttons-container {
+
+    margin-left: 30px;
+    margin-right: 30px;
+
+    button{
+        background-color: transparent;
+        width: 97%;
+    
+        img { 
+            width: 100px;
+            height: 100px;
+        }
+
+        ion-label {
+            color: var(--ion-color-primary);
+            font-weight: bold;
+            font-size: 1.4em !important;
+
+            
+        }
+        
+        ion-label.label-disabled {
+            color: var(--ion-color-secondary) !important;
+        }
+       
+    }
+
+}
+
+ion-item::part(native){
+    border-width: var(--border-width);
+    border-style: var(--border-style);
+    border-color: var(--ion-color-light);
+    padding-left: 0px;
+}
+
+ion-button.bottom-menu-button::part(native) {
+    padding: 0px;
+
+    .button-inner{
+        border: 1px solid;
+    }
+}
+
+ion-item.no-border::part(native) {
+    border-color: transparent;
+    border-width: 0;
+}
+
+// ion-item.ios.no-border::part(native) {
+//     border-color: transparent;
+//     border-width: 0;
+// }
+
+
+
+.bottom-menu-button{
+    display: block;
+    background-color: transparent;
+    height: 100%;
+    // border: 1px solid red;
+
+    // button, 
+    // .button-inner, 
+    // .button-native{
+    //     display: block;
+    //     padding: 0px;
+    // }
+
+    ion-icon{
+        display: inline-block;
+        font-size: 2.3em;
+        width: 100%;
+    }
+
+    ion-label{
+        display: inline-block;
+        width: 100%;
+    }
+
+
+}
+
+.list-item-done-icon{
+    background: url(assets/imgs/complete_icon.png) no-repeat center;
+    width: 25px;
+    display: block;
+    height: 25px;
+    background-size: cover;
+}
+
+.list-item-progress-icon{
+    background: url(assets/imgs/In-Progress_icon.png) no-repeat center;
+    width: 25px;
+    display: block;
+    height: 25px;
+    background-size: cover;
+}
+
+.list-item-download-icon{
+    background: url(assets/imgs/Download_Icon.png) no-repeat center;
+    width: 25px;
+    display: block;
+    height: 25px;
+    background-size: cover;
+}
+
+.label-col{
+    display: block;
+    padding-bottom: 6px;
+    height: 25px;
+    float: left;
+    width: 100%;
+    color: var(--ion-color-secondary);
+    text-align: left;
+    margin-left: 14px;
+}
+
+.icon-col{
+    display: block;
+    height: 25px;
+    width: 25px;
+    float: right;
+    margin-right: 10px;
+}
+
+.steps-list{
+    
+    ion-button{
+        width: 100%;
+    }
+     
+    ion-label{
+        margin: 5px 15px 5px 15px;
+        color: var(--ion-color-secondary);
+        font-size: 14px;
+    }
+}
+
+.error
+{
+    color:var(--ion-color-primary);
+    margin: 0px 0px 0px 0px; 
+    padding: 0px 0px 0px 10px; 
+    font-size: 10px;
+}
+
+
+.item-input-has-focus .label-md[stacked],
+.input-has-focus .label-md[stacked],
+.item-input-has-focus .label-md[floating],
+.input-has-focus .label-md[floating] {
+  color: var(--ion-color-secondary);
+  font-weight: bold;
+}
+
+.item-md.item-input.item-input-has-focus .item-inner,
+.item-md.item-input.input-has-focus .item-inner {
+//   border-bottom-color: var(--ion-color-secondary);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.list-md .item-input.item-input-has-focus:last-child,
+.list-md .item-input.input-has-focus:last-child {
+//   border-bottom-color: var(--ion-color-secondary);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+.item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+//   border-bottom-color: var(--ion-color-secondary);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+.list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
+//   border-bottom-color: var(--ion-color-secondary);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
+.item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    // border-bottom-color: var(--ion-color-secondary);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
+    // border-bottom-color: var(--ion-color-secondary);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.text-icon-button {
+
+    background-color: transparent;
+    padding: 0px;
+
+    .button-inner{
+        display: block;
+        font-size: 10px;
+    }
+}
+
+.round-thumb-button{
+    display: block;
+    font-size: 10px;
+    border: 0px solid black;
+
+    label{
+        display: block;
+    }
+
+    .round-thumb{
+        border: 0px solid white;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+        display: inline-block;
+        border-radius: 20px;
+        overflow: hidden;
+
+        img{
+            // height: 80px;   
+            // height: 80px;   
+           
+            max-width:200%;
+            max-height:200%;
+            object-fit: contain;
+            
+        }
+    }
+
+    .remove-thumb{
+        background: url(assets/imgs/Remove_gray_icon.png) no-repeat center;
+        width: 20px;
+        height: 20px;
+        background-size: contain;
+        position: absolute;
+        top: 0px;
+        right: 3px;
+    }
+}
+
+.table-accessories-list{
+
+    color: var(--ion-color-secondary);
+    border-top: 1px solid var(--ion-color-secondary);
+    font-size: 1.3rem;
+    margin-bottom: 150px;
+
+    .square-image-thumb{
+        width: 80px;
+        height: 80px;
+        overflow: hidden;
+        background-color: #f2f2f2;
+    
+        img{
+            width: 100%;
+            // margin-top: 7px;
+        }
+    }
+
+    .remove-button{
+        font-size: 25px;
+        background-color: transparent;
+    }
+
+    .list-image-col{
+        text-align: center;
+    }
+
+    .list-body-col{
+        text-align: left;
+    }
+
+    .list-remove-col{
+        text-align: right;
+    }
+
+    ion-row{
+        border-bottom: 1px solid var(--ion-color-secondary);
+    }
+
+    ion-col{
+        display: flex;
+        justify-content: left;
+        align-items: center;
+    }
+}
+
+.camera-button{ 
+    height: 27px;
+    width: 46px;
+    margin: 10px 0px 5px 0px;
+    background-color: transparent;
+    background: url(assets/imgs/Camera_icon_off.png) no-repeat center;
+    background-size: contain;
+}
+
+.camera-button-on{
+    background-color: transparent;
+    background: url(assets/imgs/Camera_icon_on.png) no-repeat center;
+    background-size: contain;
+}
+
+.camera-button-top{
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+.table-list{
+
+    color: gray;
+    padding: 0px;
+
+    ion-row{
+        border-bottom: 1px solid #860600
+    }
+
+    ion-col{
+        padding: 13px;
+        max-width: 100%;
+        width: 100%;
+        font-size: 1.4rem;
+    }
+}
+
+.no-padding {
+    padding: 0;
+}
+
+ion-content {
+    // --background: url('assets/imgs/BG_Rojo_Home.jpg') no-repeat 100% 100%;
+}
+
+.login-content {
+    --background: url("assets/imgs/BG_Rojo_Home.jpg") no-repeat fixed center; 
+    // -webkit-background-size: cover;
+    // -moz-background-size: cover;
+    // background-size: cover;
+ 
+    .logo-row {
+      padding-top: 50px;
+      padding-bottom: 20px;
+    }
+ 
+    .login-box {
+      padding: 0px 20px 0px 20px;
+      margin-top: 0px;
+    }
+ 
+    ion-row {
+       align-items: center;
+       text-align: center;
+     }
+
+     ion-list{
+        border-radius: 0px !important;
+     }
+ 
+     ion-item {
+         border-radius: 0px !important;
+         background-color: transparent;
+     }
+
+     ion-item ion-label{
+         opacity: 0.7;
+     }
+ 
+     ion-input{
+        color: var(--ion-color-light);
+     }
+
+     .signup-col {
+       margin: 0px 16px 0px 16px;
+       padding-bottom: 20px;
+     }
+ 
+     .register-btn {
+       color: var(--ion-color-light);
+       font-size: 1.0em;
+       text-decoration: none;
+       font-weight: bold;
+     }
+  }
+
+  .menu-btn {
+    font-size: 16px;
+    color: white; 
+    text-decoration: none;
+    padding-left: 10px;
+  }
+
+  .col {
+    // padding: 5px;
+    position: initial !important;
+    // width: 100%;
+    // margin: 0;
+    // min-height: 1px;
+    // -webkit-flex-basis: 0;
+    // -ms-flex-preferred-size: 0;
+    // flex-basis: 0;
+    // -webkit-box-flex: 1;
+    // -webkit-flex-grow: 1;
+    // -ms-flex-positive: 1;
+    // flex-grow: 1;
+    // max-width: 100%;
+  }

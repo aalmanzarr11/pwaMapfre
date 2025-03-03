@@ -1,0 +1,41 @@
+<ion-header  >
+  <ion-toolbar color="translucent">
+    <ion-title>
+        <img class="header-logo-img" style="height: 30px;" src="assets/imgs/Logo_blanco.png">
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="theme-red login-content" overflow-scroll="false" fullscreen="true">
+
+  <ion-slides pager padding style="height: 90%;">
+    <ion-slide class="intro-slide">
+      <div class="intro-slide1"></div>
+    </ion-slide>
+    <ion-slide class="intro-slide">
+      <div class="intro-slide2"></div> 
+    </ion-slide> 
+    <ion-slide class="intro-slide">
+      <div class="intro-slide3"></div>
+    </ion-slide>
+    <ion-slide class="intro-slide">
+      <div class="intro-slide4"></div>
+    </ion-slide>
+  </ion-slides>
+  
+
+  <ion-row>
+    <ion-col>
+        <ion-label color="light" stacked>Si eres cliente selecciona comenzar auto inspección</ion-label>
+    </ion-col>
+  </ion-row>
+  
+</ion-content>
+
+<ion-footer class="theme-white">
+  <!-- BOTON QUE LLAMA AL EVENTO NEXT-->
+  <ion-button style="width: 100%;" strong="true" color="primary" fill="clear" (click)="next($event)" >
+          Ingresar
+  </ion-button>
+
+</ion-footer>

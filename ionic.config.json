@@ -1,0 +1,7 @@
+{
+  "name": "MapfreAutoinspeccion",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,113 @@
+<ion-header class="theme-red">
+    <ion-menu-toggle>
+        <ion-button fill="clear">
+          <ion-icon name="menu" color="light"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    <ion-title>
+        <span class="title-logo-img"></span>
+    </ion-title>
+</ion-header>
+
+<ion-content class="theme-white" overflow-scroll="true" style="height: 90%;">
+
+  <div class="internal-title-container">
+      <ion-row>
+          <ion-col>
+              <span class="title-mini" stacked>{{strings.generalLabelTitle}}</span>
+          </ion-col>
+      </ion-row>
+
+      <ion-row>
+          <ion-col>
+              <span class="title-huge">{{strings.accesoriesTitle}}</span>
+          </ion-col>
+      </ion-row>
+  </div>
+
+  <ion-grid style="margin-top:10px;">
+      <ion-row justify-content-center align-items-center style="height: 100%">
+          <div class="add-image-button" (click)="isDisabled() ? null : addAccessory()">
+            <div>
+              <img class="plus-icon" src="assets/imgs/Add_gray_icon.png" /> 
+            </div>
+            <div>
+              <ion-label color="secondary" stacked>{{strings.accesoriesButtonAdd}}</ion-label>
+            </div>
+          </div>
+      </ion-row>
+  </ion-grid>
+
+  <ion-grid class="table-accessories-list">
+      <ion-row *ngFor="let accessory of getAccessories(); let i = index;">
+          <ion-col class='list-image-col' col-4>
+              <div class="square-image-thumb" (click)="openAccessory(i)">
+                  <img [src]="getAccessoryImage(accessory)">
+              </div>                
+          </ion-col>
+          <ion-col class='list-body-col' col-6>
+              <div (click)="openAccessory(i)">
+                      <!-- {{accessory.accesorio.obsAccesorio}} -->
+                      {{accessory.referencia}}
+              </div>
+          </ion-col>
+          <ion-col class='list-remove-col' col-2>
+              <!-- <button class="remove-button" (click)="removeAccessory(i)">
+                  <ion-icon name="close"></ion-icon>
+              </button> -->
+
+              <button block class="add-image-button" (click)="openAccessory(i)">
+                  <img src="assets/imgs/Add_photo_icon.png" class="camera-icon">
+                  <!-- <div [innerHtml]="part.descParte" class="label-md label-md-secondary"></div> -->
+              </button>
+
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+
+  
+
+</ion-content>
+
+<div class="theme-red">
+  <lib-ionic-pullup (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" 
+  [(state)]="footerState" [toolbarTopMargin]="150">
+
+      <ion-toolbar>
+          <ion-row>
+              <ion-col col-33 (click)="back()">
+                  <ion-button fill="clear" class="footer-back-button" strong="true" color="light"
+                         >{{strings.generalButtonBack}}</ion-button>
+              </ion-col>
+              <ion-col col-34>
+
+                  <div class="bottom-menu-button" fill="clear" (click)="toggleFooter()">
+                      <ion-icon name="menu"></ion-icon>
+                      <ion-label class="page-count" stacked>{{strings.generalLabelStep}} {{currentPage}}/{{footerMenuOptions.length}}</ion-label>
+                  </div>
+
+              </ion-col>
+              <ion-col col-33 (click)="next()">
+                  <ion-button color="light" class="footer-next-button" strong="true" shape="round">
+                      {{strings.generalButtonNext}}
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+      </ion-toolbar>
+
+      <div class="steps-list" *ngIf="footerState">
+
+          <ion-button fill="clear" detail-none no-lines *ngFor="let footerMenuOption of footerMenuOptions; let i = index">
+              <div class="label-col">
+                  {{i + 1}}. {{footerMenuOption.title}}
+              </div>
+              <div class="icon-col">
+                  <span [class.list-item-progress-icon]="footerMenuOption.status == 1" 
+                  [class.list-item-done-icon]="footerMenuOption.status == 2"></span>
+              </div>
+          </ion-button>
+
+      </div>
+
+  </lib-ionic-pullup>
+</div>
