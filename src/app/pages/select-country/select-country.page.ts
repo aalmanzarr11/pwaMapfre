@@ -116,7 +116,7 @@ export class SelectCountryPage implements OnInit {
       this.alertServiceProvider.show('', 'Debe seleccionar su país');
     } else {
       this.getGlobalStrings(this.countryCode);
-      this.stringsServiceProvider.getConfig(ContextService.location.country);
+      this.stringsServiceProvider.getConfig();
     }
 
   }

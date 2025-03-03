@@ -437,8 +437,8 @@ export class CustomerDataPage implements OnInit {
 
     if(this.getUserType() !== 'C' || ContextService.location.country === ConstantsService.GUATEMALA_CODE){
       const data = this.formGroup.value;
-      const CarAgeMax = parseInt(ConfigService.strings.carMaxAge);
-      const EnterAgeCar = parseInt(data.model);
+      //const CarAgeMax = parseInt(ConfigService.strings.carMaxAge);
+      //const EnterAgeCar = parseInt(data.model);
 
       if(this.isDisabled()){
         ContextService.footerMenuOptions[this.currentPage - 1]['status'] = 2;

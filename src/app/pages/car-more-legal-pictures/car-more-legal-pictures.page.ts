@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'; 
+import { Router } from '@angular/router'; 
 import { NavController } from '@ionic/angular';
 import { IonPullUpFooterState } from 'ionic-pullup';
 import { AlertService } from 'src/app/services/infrastructure/alert/alert.service';

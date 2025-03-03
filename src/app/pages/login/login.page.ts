@@ -230,46 +230,8 @@ export class LoginPage implements OnInit {
       );
     }
     else{
-
-      if (ContextService.location.country === ConstantsService.HONDURAS_CODE){
-        this.loadingServiceProvider.showLoading();
-  
-        this.registerCredentials.grantType = this.strings.grant_type;
-        this.authService.tokenCliente().subscribe(result => {
-    
-          console.log('ContextServiceProvider.location.country', ContextService.location.country);
-          
-          console.log('token result', result);
-          console.log('token result.data.access_token', result.data.access_token);
-    
-    
-          this.loadingServiceProvider.hideLoading();
-    
-          if (result !== null && result.data) {
-    
-            if(result.data.access_token){
-              ContextService.apiToken = result.data.access_token;
-              this.accessSuccess(result);
-            }
-            else{
-              const description = result.data.error_description ? result.data.error_description : "Se presentó un error, por favor intente nuevamente";
-              this.alertServiceProvider.show('Error', description);
-            }
-          }
-          else {
-            this.alertServiceProvider.show('Error', 'Intente nuevamente');
-          }
-  
-        }
-        , error => {
-            this.loadingServiceProvider.hideLoading();
-            this.alertServiceProvider.show('Error', error);
-          }
-        );
-      }
-      else{
-        this.autoInspect();
-      }
+ 
+        this.autoInspect(); 
       
     }
 

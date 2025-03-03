@@ -205,190 +205,47 @@ export class IntroPage implements OnInit {
       // return; 
     }
 
-    // this.getLocation();
-    this.getReverseGeocode();
+    // this.getLocation();  
+    this.getGlobalStrings();
+    this.stringsServiceProvider.getConfig();
   }
 
-  // EVENTO LLAMADO POR GETLOCATION
- public getReverseGeocode() {
-
-    console.log('getReverseGeocode');
-
-    this.loadingServiceProvider.showLoading();
-    // this.loadingServiceProvider.hideLoading();
-
-    this.locationService.reverseGeocode(ContextService.location.lat, ContextService.location.long).subscribe(result => {
-
-        this.loadingServiceProvider.hideLoading();
-        let countryCode = null;
-        
-        if (result.data != null) {
-
-          let resultArray = result.data.split('\n');
-
-          resultArray.forEach(element => {
-            if(element.startsWith('loc=')) {
-              // console.log('element: ', element);
-              countryCode = element.replace('loc=', '');
-            }
-          });
-
-          // DEBUG 
-          if (!EnvironmentService.isProduction) {
-            countryCode = ConstantsService.HONDURAS_CODE_ISO; // ISO
-          }
-
-
-          switch(countryCode) { 
-            case ConstantsService.PANAMA_CODE_ISO: { 
-              countryCode = ConstantsService.PANAMA_CODE;
-              break; 
-            } 
-            case ConstantsService.GUATEMALA_CODE_ISO: { 
-              countryCode = ConstantsService.GUATEMALA_CODE;
-              break; 
-            } 
-            case ConstantsService.COSTARICA_CODE_ISO: { 
-              countryCode = ConstantsService.COSTARICA_CODE;
-              break; 
-            } 
-            case ConstantsService.NICARAGUA_CODE_ISO: { 
-              countryCode = ConstantsService.NICARAGUA_CODE;
-              break; 
-            } 
-            case ConstantsService.HONDURAS_CODE_ISO: { 
-              countryCode = ConstantsService.HONDURAS_CODE;
-              break; 
-            } 
-            case ConstantsService.ELSALVADOR_CODE_ISO: { 
-              countryCode = ConstantsService.ELSALVADOR_CODE;
-              break; 
-            } 
-            default: { 
-              countryCode = null;
-              break; 
-            } 
-          } 
-
-          ContextService.location.country = countryCode;
-          // console.log('countryCode: ' + ContextServiceProvider.location.country);
-          this.getGlobalStrings();
-          this.stringsServiceProvider.getConfig(ContextService.location.country);
-        } 
-        else {
-          // this.navCtrl.push(SelectCountryPage);
-          ContextService.hasSeenIntro = true;
-          return this.router.navigateByUrl('/select-country');
-        }
-
-      }
-      , error => {
-        this.loadingServiceProvider.hideLoading();
-        // this.alertServiceProvider.show('Error', error);
-        // this.navCtrl.push(SelectCountryPage);
-        ContextService.hasSeenIntro = true;
-        return this.router.navigateByUrl('/select-country');
-      }
-
-    );
-
-    // this.nativeGeocoder
-    //   .reverseGeocode(
-    //     ContextServiceProvider.location.lat,
-    //     ContextServiceProvider.location.long,
-    //     options
-    //   )
-    //   .then((result: NativeGeocoderReverseResult[]) => {
-    //     // alert(JSON.stringify(result));
-    //     if (result.length > 0) {
-    //       ContextServiceProvider.location.country = result[0].countryCode;
-    //       // this.countryCode = ContextServiceProvider.location.country;
-    //       // this.getGlobalStrings();
-    //     }
-    //     // else {
-    //     //   // ContextServiceProvider.currentPage.showForm = true;
-    //     // }
-    //     this.loadingServiceProvider.hideLoading();
-    //     // this.navCtrl.push(SelectCountryPage);
-    //   })
-    //   .catch((error: any) => {
-    //     console.log(error);
-    //     // ContextServiceProvider.currentPage.loadingServiceProvider.hideLoading();
-    //     // this.navCtrl.push(SelectCountryPage);
-    //   });
-
-      // }
-    // });
- }
+ 
 
   // CLASE LLAMADA POR GETREVERSEGEOCODE
   public getGlobalStrings() {
-
-    console.log('getGlobalStrings ContextServiceProvider.location.country', ContextService.location.country);
-
+  
     this.loadingServiceProvider.showLoading();
 
     this.stringsServiceProvider 
       .getStringsStatic(ContextService.location.country)
-      .subscribe(result => {
-
+      .subscribe(result => { 
         // console.log('getGlobalStrings result', result);
         this.loadingServiceProvider.hideLoading();
 
         ContextService.hasSeenIntro = true;
         if (ConfigService.strings !== null) {
-
-          // ContextServiceProvider.location.country = countryCode;
-          // ConfigServiceProvider.strings = result.data;
-          // ConfigServiceProvider.apiUrl = ConfigServiceProvider.strings.servicesURL;
-          // DEBUG 
           if (!EnvironmentService.isProduction) {
-            // this.loadingServiceProvider.hideLoading();
-            // this.navCtrl.push(LoginPage);
-
-            // return this.router.navigateByUrl('/instructions');
-            // return this.router.navigateByUrl('/login');
-            // return this.router.navigateByUrl('/enter-car');
-            // return this.router.navigateByUrl('/customer-data');
-            // return this.router.navigateByUrl('/car-legal-pictures');
-            // return this.router.navigateByUrl('/car-take-legal-pictures');
-            // return this.router.navigateByUrl('/car-more-legal-pictures');
-            // return this.router.navigateByUrl('/car-pictures');
-            // return this.router.navigateByUrl('/take-picture');
-            // return this.router.navigateByUrl('/car-damage');
-            // return this.router.navigateByUrl('/car-accessories');
-            // return this.router.navigateByUrl('/car-accessory');
-            // return this.router.navigateByUrl('/accept-inspection');
-            // return this.router.navigateByUrl('/car-inspection-success');
-
-            // ContextService.hasSeenIntro = true;
-            return this.router.navigateByUrl('/login');
-            // return this.router.navigateByUrl('/customer-data');
+             
+            return this.router.navigateByUrl('/login'); 
           }
           else{
-            // this.navCtrl.push(InstructionsPage);
-            // ContextService.hasSeenIntro = true;
-            return this.router.navigateByUrl('/instructions');
-            // return this.router.navigateByUrl('/login');
+           
+            return this.router.navigateByUrl('/instructions'); 
           }
 
+          
 
 
-        } else {
-          // this.alertServiceProvider.show('Error', result.data);
-          // this.loadingServiceProvider.hideLoading();
-          // this.navCtrl.push(SelectCountryPage);
+        } else { 
           ContextService.hasSeenIntro = true;
-          return this.router.navigateByUrl('/select-country');
+          return this.router.navigateByUrl('/instructions'); 
         }
-
-
-        // console.log(ContextServiceProvider.location);
-        // this.loadingServiceProvider.hideLoading();
+ 
       });
 
   }
-
+ 
   // TEST DE CONSUMO DE STRINGSSERVICEPROVIDER
   public restTest() {
     this.loadingServiceProvider.showLoading();
