@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
   isMobile = false; 
   termsFile = ''; 
   registerCredentials :TokenForm=new TokenForm(); 
-
+  currentType=''
 
   constructor( 
     private authService: AuthService, 
@@ -96,10 +96,16 @@ export class LoginPage implements OnInit {
     this.token();
  
   }
- 
+  triggerEvent(){ 
+    if(this.currentType=="C"){ 
+      this.registerCredentials.Username=""
+      this.registerCredentials.Password=""
+    }
+    this.currentType=this.registerCredentials.userType 
+  }
 
   token() {
- 
+    console.log(this.registerCredentials)
     if (!this.formGroup.valid && this.registerCredentials.userType != 'C') {
       this.alertServiceProvider.show('', this.strings.generalFormValidationError);
       return;

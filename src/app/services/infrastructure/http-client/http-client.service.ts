@@ -106,7 +106,7 @@ export class HttpClientService {
 
       let httpOptions = {};
 
-      if (ContextService.userSession.userType !== 'C' && url != BaseUrl.token) {
+      if ( url != BaseUrl.token) {
         httpOptions = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -140,8 +140,9 @@ export class HttpClientService {
               console.log(err)
               observer.next({
                 status: false,
-                data: 'En este momento hay problemas con su conexión a internet, por favor revise la conexión y vuelva a intentar',
-                responseData: err
+                data: 'En este momento hay problemas con su conexión a internet, por favor revise la conexión y vuelva a intentar '+url,
+                responseData: err,
+                error: err.message
               }); 
               observer.complete();
             },

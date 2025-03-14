@@ -17,7 +17,7 @@
               <ion-item color="primary">
                 <ion-label color="light" position="stacked">{{strings.loginLabelUserType}}:</ion-label>
                 <ion-select name="userType" [(ngModel)]="registerCredentials.userType" class="custom-options"
-                  okText="{{strings.generalButtonOk}}" formControlName="userType" cancelText="{{strings.generalButtonCancel}}">
+                  okText="{{strings.generalButtonOk}}" formControlName="userType" cancelText="{{strings.generalButtonCancel}}" (ionChange)="triggerEvent()">
                   <ion-select-option *ngFor="let userType of userTypes" [value]="userType.id">
                     {{userType.name}}
                   </ion-select-option>
