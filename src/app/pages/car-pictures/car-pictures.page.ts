@@ -11,6 +11,8 @@ import { LoadingService } from 'src/app/services/infrastructure/loading/loading.
 import { LogInfoService } from 'src/app/services/infrastructure/log-info/log-info.service';
 import { CarPartsService } from 'src/app/services/remote/car-parts/car-parts.service';
 import { ImagesService } from 'src/app/services/remote/images/images.service';
+import { DamageRequest } from 'src/app/shared/Dtos/Requests/DamageRequest.dto';
+import { VehiclePhotoRequest } from 'src/app/shared/Dtos/Requests/vehiclePhotoRequest.dto';
 
 @Component({
   selector: 'app-car-pictures',
@@ -30,8 +32,8 @@ strings: any = {};
 currentInspection: any = {};
 buttonEnabled: boolean = false;
 
-carImages: any = [];
-carDamages: any = [];
+carImages: VehiclePhotoRequest[] = [];
+carDamages: DamageRequest[] = [];
 
 constructor(public navCtrl: NavController, 
             // public navParams: NavParams, 
@@ -59,7 +61,7 @@ constructor(public navCtrl: NavController,
 
   this.currentInspection = ContextService.currentInspection;
 
-  // console.log(ContextService.carParts);
+  // //console.log(ContextService.carParts);
 
   this.getCarParts();
 }
@@ -69,8 +71,7 @@ ngOnInit() {
   // if (this.emarketInit.Enabled) {
     this.buttonEnabled = true;
   // }
-
-  console.log('ContextService.currentInspection', ContextService.currentInspection);
+ 
 }
 
 ionViewDidEnter() {
@@ -175,13 +176,13 @@ public hasDamages(index){
 
 public takePicture(index){
 
-  console.log(index);
+  //console.log(index);
 
   let part = this.carParts.filter(item => {
     return item['codParte'] === String(index);
   });
 
-  console.log(part);
+  //console.log(part);
 
   if(part.length > 0){
 
@@ -223,7 +224,7 @@ public next(){
 
     if(this.isImageTaken(i)){
 
-      console.log('ContextService.carParts', i, ContextService.carParts[i]);
+      //console.log('ContextService.carParts', i, ContextService.carParts[i]);
 
       // let carPart = ContextService.carParts[i];
 
@@ -240,7 +241,7 @@ public next(){
       if(ContextService.carParts[i]['damages'] != null && ContextService.carParts[i]['damages'].length > 0){
 
         for(let j = 0; j < ContextService.carParts[i]['damages'].length; j++){
-          console.log('ContextService.carParts.damages', j, ContextService.carParts[i]['damages'][j]);
+          //console.log('ContextService.carParts.damages', j, ContextService.carParts[i]['damages'][j]);
         
           let carDamage = ContextService.carParts[i]['damages'][j];
 
@@ -280,13 +281,13 @@ public next(){
 sendCarImages() {
 
   if(this.carImages.length > 0) {
-    //console.log(carPhoto);
-    //console.log("Enviando Fotos")
+    ////console.log(carPhoto);
+    ////console.log("Enviando Fotos")
     this.loadingServiceProvider.showLoading();
 
     this.imagesServiceProviderRemote.sendCarImages(this.carImages).subscribe(result => {
 
-      console.log('sendCarImages', result);
+      //console.log('sendCarImages', result);
 
       this.loadingServiceProvider.hideLoading();
 
@@ -310,13 +311,13 @@ sendCarImages() {
 sendCarDamages() {
 
   if(this.carDamages.length > 0) {
-    //console.log(carPhoto);
-    //console.log("Enviando Fotos")
+    ////console.log(carPhoto);
+    ////console.log("Enviando Fotos")
     this.loadingServiceProvider.showLoading();
 
     this.imagesServiceProviderRemote.sendCarDamages(this.carDamages).subscribe(result => {
 
-      console.log('sendCarDamages', result);
+      //console.log('sendCarDamages', result);
 
       this.loadingServiceProvider.hideLoading();
 
@@ -342,11 +343,11 @@ goToCarAccessories() {
 }
 
 footerExpanded() {
-  // console.log('Footer expanded!');
+  // //console.log('Footer expanded!');
 }
 
 footerCollapsed() {
-  // console.log('Footer collapsed!');
+  // //console.log('Footer collapsed!');
 }
 
 toggleFooter() {
@@ -355,7 +356,7 @@ toggleFooter() {
 }
 
 ionViewDidLoad() {
-  // console.log('ionViewDidLoad CarPicturesPage');
+  // //console.log('ionViewDidLoad CarPicturesPage');
 }
 
 // alertExit(msg:string) {
@@ -366,7 +367,7 @@ ionViewDidLoad() {
 //       {
 //         text: 'Aceptar',
 //         handler: () => {
-//           console.log('Acepted clicked');
+//           //console.log('Acepted clicked');
 //           window.location.replace(this.helperStrings.ReturnURL);
 //         }
 //       },
@@ -374,7 +375,7 @@ ionViewDidLoad() {
 //         text: 'Rechazar',
 //         role: 'cancel',
 //         handler: () => {
-//           console.log('Cancel clicked');
+//           //console.log('Cancel clicked');
 //         }
 //       }
 //     ]
@@ -391,7 +392,7 @@ ionViewDidLoad() {
 //         text: 'Aceptar',
 //         handler: () => {
 //           //this.loadingServiceProvider.hideLoading();
-//           //console.log('Buy clicked');
+//           ////console.log('Buy clicked');
 //         }
 //       }
 //     ]

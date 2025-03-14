@@ -37,13 +37,13 @@
               </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="!isCountry([constantsProvider.HONDURAS_CODE])">
+          <ion-row >
               <ion-col>
                   <span class="title-huge">{{strings.enterCarLabelPlate}}</span>
               </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="!isCountry([constantsProvider.HONDURAS_CODE])">
+          <ion-row >
               <ion-col style="position: initial;">
                   <ion-item color="primary" class="plate-item">
                       <ion-input [(ngModel)]="currentInspection.placa" (ionFocus)="onFocusInput()" #plateInput

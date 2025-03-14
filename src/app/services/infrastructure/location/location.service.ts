@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class LocationService {
 
   constructor(public httpClient: HttpClientService) {
-    // console.log('Hello LocationServiceProvider Provider');
+    // //console.log('Hello LocationServiceProvider Provider');
   }
 
   public reverseGeocode(lat, long) {
@@ -17,7 +17,7 @@ export class LocationService {
     return Observable.create(observer => {
       
       // const username = ConfigServiceProvider.geonamesUser; 
-      console.log("cloudflare serviceURL: ", environment.cloudflare);
+      //console.log("cloudflare serviceURL: ", environment.cloudflare);
 
       this.httpClient.get(environment.cloudflare, false, false, {responseType: 'text' as 'json'}).subscribe(
         data => {

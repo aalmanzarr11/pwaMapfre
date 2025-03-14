@@ -13,6 +13,7 @@ import { LogInfoService } from 'src/app/services/infrastructure/log-info/log-inf
 import { CarAccessoriesService } from 'src/app/services/remote/car-accessories/car-accessories.service';
 import { CarDamageService } from 'src/app/services/remote/car-damage/car-damage.service';
 import { ImagesService } from 'src/app/services/remote/images/images.service';
+import { AccesoryRequest } from 'src/app/shared/Dtos/Requests/AccesoryRequest.dto';
 
 @Component({
   selector: 'app-car-accessories',
@@ -57,8 +58,7 @@ export class CarAccessoriesPage implements OnInit {
     if(ContextService.accessories.length == 0) {
       this.populateList();
     }
-
-    console.log('ContextService.currentInspection', ContextService.currentInspection);
+ 
 
     // if (this.emarketInit.Enabled) {
     //   this.buttonEnabled = true;
@@ -66,50 +66,23 @@ export class CarAccessoriesPage implements OnInit {
   }
 
   populateList() {
-
-    console.log("populateList");
+ 
 
     var defaultValues = [];
 
-    if(this.isCountry([ConstantsService.GUATEMALA_CODE])) {
-      defaultValues = [
-        'Rueda 1', 'Rueda 2', 'Rueda 3', 'Rueda 4',
-        'Cámara de retroceso en el bomper de atrás', 'Sensores de retroceso  en el bomper',
-        'Radio o equipo de audio (ver si es original de fábrica)',
-        'Sillones Delanteros',
-        'Sillones Traseros'
-      ];
-    }
-    else if(this.isCountry([ConstantsService.PANAMA_CODE])) {
-      defaultValues = [];
-    }
-    else if(this.isCountry([ConstantsService.COSTARICA_CODE])) {
-      defaultValues = ['Rueda 1', 'Rueda 2', 'Rueda 3', 'Rueda 4',
+    defaultValues = ['Rueda 1', 'Rueda 2', 'Rueda 3', 'Rueda 4',
       'Pantalla táctil', 'Buffer', 'Amplificador', 'Rack',
       'Cámara de retroceso', 'Sensores de bumper',
       'Rompevientos techo', 'Rompevientos capo',
       'Estribo flotante', 'Defensas', 'Spoiler', 'Barra led delantera', 'Roll back', 'Protector de cama',
       'Manecilla cromada', 'Manoplas (moto)',
       'Furgón', 'Aros especiales', 'Copas'];
-    }
-    else {
-      defaultValues = [
-        'Rueda 1', 'Rueda 2', 'Rueda 3', 'Rueda 4',
-        'Cámara de retroceso en el bomper de atrás', 'Sensores de retroceso  en el bomper',
-        'Radio o equipo de audio (ver si es original de fábrica)'
-      ];
-    }
-
+    
     for(var i = 0; i < defaultValues.length; i++) {
-
-      ContextService.accessories.push({
-        "numeroCotizacion":"",
-        "marca":"",
-        "referencia": defaultValues[i], // "Radio Desmontable",
-        "valor":"",
-        "byteFoto":"",
-        "pais":""
-      });
+      
+      ContextService.accessories.push(
+        new AccesoryRequest("","",defaultValues[i],0,"") 
+      );
         
 
       // ContextService.accessories.push({
@@ -146,11 +119,11 @@ export class CarAccessoriesPage implements OnInit {
   }
 
   footerExpanded() {
-    // console.log("Footer expanded!");
+    // //console.log("Footer expanded!");
   }
 
   footerCollapsed() {
-    // console.log("Footer collapsed!");
+    // //console.log("Footer collapsed!");
   }
 
   toggleFooter() {
@@ -161,7 +134,7 @@ export class CarAccessoriesPage implements OnInit {
   }
 
   ionViewDidLoad() {
-    // console.log("ionViewDidLoad CarAccessoriesPage");
+    // //console.log("ionViewDidLoad CarAccessoriesPage");
   }
 
   public back() {
@@ -173,17 +146,14 @@ export class CarAccessoriesPage implements OnInit {
   // }
 
   public next() {
-
-    console.log('ContextService.accessories', ContextService.accessories);
+ 
 
     let accessoriesImages = [];
 
     for (let i = 0; i < ContextService.accessories.length; i++) { 
 
       let accessory = ContextService.accessories[i];
-
-      console.log("accessory", accessory); 
-
+ 
       if(accessory['byteFoto'] != null && accessory['byteFoto'].length > 0){
         accessoriesImages.push(
           {
@@ -192,7 +162,7 @@ export class CarAccessoriesPage implements OnInit {
             "referencia": accessory['referencia'],
             "valor": accessory['valor'],
             "byteFoto": accessory['byteFoto'],
-            "pais": ContextService.location.country // this.strings.countryName //
+            //"pais": ContextService.location.country // this.strings.countryName //
           }        
         );
       }
@@ -232,7 +202,7 @@ export class CarAccessoriesPage implements OnInit {
   } 
 
   public getAccessories(){
-    // console.log(ContextService.accessories);=
+    // //console.log(ContextService.accessories);=
     return ContextService.accessories;
   }
 
@@ -272,7 +242,7 @@ export class CarAccessoriesPage implements OnInit {
 
   public getAccessoryImage(accessory:any){
 
-    // console.log("accessory", accessory.byteFot);
+    // //console.log("accessory", accessory.byteFot);
 
     return accessory && accessory.byteFoto && accessory.byteFoto.length > 0 ? 
            'data:image/jpeg;base64,' + accessory.byteFoto : 'assets/imgs/Camera_icon.png';
@@ -322,7 +292,7 @@ export class CarAccessoriesPage implements OnInit {
         
   //           this.carDamageProvider.uploadDamage(damage.dano).subscribe(result => {
         
-  //             // console.log(result);
+  //             // //console.log(result);
 
   //             if (result && result.status) {
         
@@ -348,7 +318,7 @@ export class CarAccessoriesPage implements OnInit {
     
   //       this.carAccessoriesProvider.uploadAccessory(accessory.accesorio).subscribe(result => {
     
-  //         // console.log(result);
+  //         // //console.log(result);
 
   //         if (result && result.status) {
     
@@ -394,7 +364,7 @@ export class CarAccessoriesPage implements OnInit {
 
   //   this.imagesServiceProvider.uploadImage(carPhoto).subscribe(result => {
 
-  //     // console.log(result);
+  //     // //console.log(result);
 
   //     if (result && result.status) {
 
@@ -420,7 +390,7 @@ export class CarAccessoriesPage implements OnInit {
   //       {
   //         text: 'Aceptar',
   //         handler: () => {
-  //           console.log('Acepted clicked');
+  //           //console.log('Acepted clicked');
   //           window.location.replace(this.helperStrings.ReturnURL);
   //         }
   //       },
@@ -428,7 +398,7 @@ export class CarAccessoriesPage implements OnInit {
   //         text: 'Rechazar',
   //         role: 'cancel',
   //         handler: () => {
-  //           console.log('Cancel clicked');
+  //           //console.log('Cancel clicked');
   //         }
   //       }
   //     ]
@@ -445,7 +415,7 @@ export class CarAccessoriesPage implements OnInit {
   //         text: 'Aceptar',
   //         handler: () => {
   //           //this.loadingServiceProvider.hideLoading();
-  //           //console.log('Buy clicked');
+  //           ////console.log('Buy clicked');
   //         }
   //       }
   //     ]
@@ -457,20 +427,6 @@ export class CarAccessoriesPage implements OnInit {
   //   return ContextService.location.country === ConstantsService.PANAMA_CODE;
   // }
 
-  public isCountry(list) {
-
-    let exist = false;
-
-    if(list && list.length > 0){
-      list.forEach(element => {
-        if(ContextService.location.country === element){
-          exist = true;
-        }
-      });
-    }
-
-    return exist;
-    // return ContextService.location.country === ConstantsService.GUATEMALA_CODE;
-  }
+ 
 
 }

@@ -39,7 +39,7 @@
     <ion-row>
       <ion-col style="position: initial;"> 
 
-          <ion-item color="primary" *ngIf="getUserType() === 'P' && !isCurrentCountryPA()">
+          <ion-item color="primary" *ngIf="getUserType() === 'P'">
             <ion-label color="secondary" position="stacked">{{strings.acceptLabelResult}}</ion-label>
             <ion-select formControlName="inspectionStatus" [(ngModel)]="currentInspection.tipSituInsp" 
                         okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}">

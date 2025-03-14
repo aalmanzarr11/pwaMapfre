@@ -27,7 +27,7 @@ export class SelectCountryPage implements OnInit {
     private router: Router) {
 
     // let backAction =  platform.registerBackButtonAction(() => {
-    //   console.log("second");
+    //   //console.log("second");
     //   // this.navCtrl.pop();
     //   // backAction();
     // }, 2);
@@ -98,8 +98,8 @@ export class SelectCountryPage implements OnInit {
 
     //     if (ContextServiceProvider.location.lat != 0 || ContextServiceProvider.location.long != 0) {
     //       // this.loadingServiceProvider.showLoading();
-    //       // console.log(this);
-    //       // console.log(position);
+    //       // //console.log(this);
+    //       // //console.log(position);
     //     }
 
     //   },
@@ -110,34 +110,34 @@ export class SelectCountryPage implements OnInit {
 
   next() {
 
-    console.log(this.countryCode);
+    //console.log(this.countryCode);
 
     if (!this.countryCode || this.countryCode.length == 0) {
       this.alertServiceProvider.show('', 'Debe seleccionar su país');
     } else {
-      this.getGlobalStrings(this.countryCode);
+      this.getGlobalStrings( );
       this.stringsServiceProvider.getConfig();
     }
 
   }
 
-  private getGlobalStrings(countryCode: string) {
+  private getGlobalStrings( ) {
 
     this.loadingServiceProvider.showLoading();
 
-    this.stringsServiceProvider.getStringsStatic(countryCode)
+    this.stringsServiceProvider.getStringsStatic( )
       .subscribe(result => {
 
-        console.log('getGlobalStrings result:', result);
+        //console.log('getGlobalStrings result:', result);
         this.loadingServiceProvider.hideLoading();
 
         // if (result.status && result.data != null) {
         //   ContextServiceProvider.location.country = countryCode;
         //   ConfigServiceProvider.strings = result.data;
-        //   // console.log(ConfigServiceProvider.strings.carMaxAge);
+        //   // //console.log(ConfigServiceProvider.strings.carMaxAge);
         //   ConfigServiceProvider.apiUrl = ConfigServiceProvider.strings.servicesURL;
         //   // // this.helperStrings.carmaxage = parseInt(result.data.carMaxAge);
-        //   // //console.log(this.helperStrings.carmaxage);
+        //   // ////console.log(this.helperStrings.carmaxage);
           // this.navCtrl.push(InstructionsPage);
           return this.router.navigateByUrl('/instructions');
 

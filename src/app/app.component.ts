@@ -7,8 +7,7 @@ import { ConnectionService } from './services/infrastructure/connection/connecti
 import { ContextService } from './services/infrastructure/context/context.service';
 import { HelperStringsService } from './services/infrastructure/helper-strings/helper-strings.service';
 import { InspectionService } from './services/remote/inspection/inspection.service';
-import { LoadingService } from './services/infrastructure/loading/loading.service';
-import { StorageService } from './services/infrastructure/storage/storage.service';
+import { LoadingService } from './services/infrastructure/loading/loading.service'; 
 import { StringsService } from './services/remote/strings/strings.service';
 import { UserinfoWebService } from './services/remote/userinfo-web/userinfo-web.service';
 import dateFormat from 'dateformat';
@@ -66,12 +65,9 @@ export class AppComponent {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
           /* Check networkStatus */
-      // this.connectionService.initializeNetworkEvents()
-      // this.events.subscribe('network:offline', () => {
-      //   console.log('network:offline ==> ' + this.connectionService.getNetworkType())
+      // this.connectionService.initializeNetworkEvents()  
       // })
-      // this.events.subscribe('network:online', () => {
-      //   console.log('network:online ==> ' + this.connectionService.getNetworkType())
+      // this.events.subscribe('network:online', () => { 
       // }) 
 
       this.getCurrentLocation();
@@ -85,12 +81,9 @@ export class AppComponent {
 
   async GetParameters() {
 
-    // this.stringsServiceProvider.GetConsulta().subscribe(res => {
-    //   console.log(res);
-    //   if (res.status && res.data !== null){
-    //     console.log(res.data);
-    //     this.stringsServiceProvider.PostConsulta(res.data).subscribe(data => {
-    //       console.log(data);
+    // this.stringsServiceProvider.GetConsulta().subscribe(res => { 
+    //   if (res.status && res.data !== null){ 
+    //     this.stringsServiceProvider.PostConsulta(res.data).subscribe(data => { 
     //       if (data.status && data.data !== null) {
     //         sessionStorage.setItem("entry", JSON.stringify(data.data));
     //         this.session();
@@ -103,18 +96,14 @@ export class AppComponent {
   public session() {
     // const entry = sessionStorage.getItem("entry");
     // if (entry) {
-    //  let StringValues = JSON.parse(entry);
-    //  console.log(StringValues);
+    //  let StringValues = JSON.parse(entry); 
 
     //  const emarketurl=sessionStorage.getItem('emarket');
     //  this.helperStrings.ReturnURL = emarketurl;
 
-    //  this.emarketInject.Descifrar(StringValues.nonce, StringValues.cifrado, StringValues.init_vector).then(res =>{
-    //   console.log(res);
-    //   var respose = JSON.parse(JSON.stringify(res))
-    //   console.log(respose);
-    //   if (respose.status && respose.data !== null) {
-    //     console.log(this.emarketModel);
+    //  this.emarketInject.Descifrar(StringValues.nonce, StringValues.cifrado, StringValues.init_vector).then(res =>{ 
+    //   var respose = JSON.parse(JSON.stringify(res)) 
+    //   if (respose.status && respose.data !== null) { 
     //     if (this.EMarketModel.cod_placa === undefined || this.emarketModel.cod_docum === undefined) {
     //       return;
     //     }
@@ -131,9 +120,7 @@ export class AppComponent {
     this.stringsServiceProvider
       .getStrings(countryCode)
       .subscribe(result => {
-        if (result.status && result.data != null) {
-          console.log("countryCode result", result);
-          ContextService.location.country = countryCode;
+        if (result.status && result.data != null) { 
           ConfigService.strings = result.data;
           ConfigService.apiUrl = ConfigService.strings.servicesURL;
 
@@ -193,16 +180,14 @@ export class AppComponent {
   getCurrentLocation() {
     // this.geolocation
     //   .getCurrentPosition()
-    //   .then(() => {
-    //       // console.log("getCurrentPosition:" + JSON.stringify(resp));
+    //   .then(() => { 
     //       ContextServiceProvider.location = {
     //         'country': ConstantsProvider.PANAMA_CODE,
     //         'lat': 0,
     //         'long': 0
     //       };
     //     })
-    //   .catch(error => {
-    //     console.log("error:" + JSON.stringify(error));
+    //   .catch(error => { 
     //   });
   }
 
@@ -269,8 +254,7 @@ export class AppComponent {
   }
 
   public getInspectionNum() {
-
-    // console.log('getInspectionNum ContextServiceProvider.numeroCotizacion', ContextServiceProvider.currentInspection.numeroCotizacion);
+ 
 
    return ContextService.currentInspection != null && ContextService.currentInspection.numeroCotizacion ?
    ContextService.currentInspection.numeroCotizacion :
@@ -285,13 +269,15 @@ export class AppComponent {
   //     buttons: [
   //       {
   //         text: 'Aceptar',
-  //         handler: () => {
-  //           console.log('Buy clicked');
+  //         handler: () => { 
   //         }
   //       }
   //     ]
   //   });
   //   alert.present();
   // }
+  public getTermsConditions(){
+    return 'assets/docs/' + ConfigService.strings.privacy_file;
+  }
 
 }

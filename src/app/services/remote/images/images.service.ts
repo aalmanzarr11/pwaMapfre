@@ -5,6 +5,10 @@ import { HttpClientService } from '../../infrastructure/http-client/http-client.
 import { TokenService } from '../../infrastructure/token/token.service';
 import { BaseUrl } from 'src/app/shared/baseUrl';
 import { String } from 'typescript-string-operations';
+import { VehiclePhotoRequest } from 'src/app/shared/Dtos/Requests/vehiclePhotoRequest.dto';
+import { DocumentationRequest } from 'src/app/shared/Dtos/Requests/DocumentationRequest.dto';
+import { DamageRequest } from 'src/app/shared/Dtos/Requests/DamageRequest.dto';
+import { AccesoryRequest } from 'src/app/shared/Dtos/Requests/AccesoryRequest.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +18,11 @@ export class ImagesService {
   constructor(public httpClient: HttpClientService, private tokenService : TokenService) {}
 
 
-  public sendCarImages(images : any) {
-  
-    var body = images;
-
-    let prefix = ContextService.getPrefixAPI();
-    body = ContextService.getBodyAPI(body);
+  public sendCarImages(images : VehiclePhotoRequest[]) {
+   
 
     return Observable.create(observer => {
-      this.httpClient.post(String.format(BaseUrl.sendCarImages,prefix), body, false).subscribe(
+      this.httpClient.post(BaseUrl.sendCarImages, images, false).subscribe(
         data => {
           observer.next(data);
           observer.complete();
@@ -32,23 +32,13 @@ export class ImagesService {
 
   }
 
-  public sendCarDamages(image : any) {
-  
-    var body = [];
-    // image = ContextService.getBodyAPI(image);
-    image = {
-      "numeroCotizacion": image.numeroCotizacion,
-      "pieza": image.pieza,
-      "nivelDaño": image.nivelDano,
-      "valor": image.valor,
-      "byteFoto": image.byteFoto
-    };
-    body.push(image);
+  public sendCarDamages(image : DamageRequest[]) {
+   
 
     // let prefix = ContextService.getPrefixAPI();
     
     return Observable.create(observer => {
-      this.httpClient.post(BaseUrl.sendCarDamages, body, false).subscribe(
+      this.httpClient.post(BaseUrl.sendCarDamages, image, false).subscribe(
         data => {
           observer.next(data);
           observer.complete();
@@ -57,14 +47,9 @@ export class ImagesService {
     });
   }
 
-  public sendCarDocuments(image: any) {
+  public sendCarDocuments(image: DocumentationRequest) {
   
-    var body = [];
-    image = {
-      "numeroCotizacion": image.numeroCotizacion,
-      "tipoDocumento": image.tipoDocumento,
-      "byteFoto": image.byteFoto
-    };
+    var body = []; 
     body.push(image);
 
     return Observable.create(observer => {
@@ -78,10 +63,9 @@ export class ImagesService {
 
   }
 
-  public sendCarAccessories(image : any) {
+  public sendCarAccessories(image : AccesoryRequest) {
   
-    var body = [];
-    image = ContextService.getBodyAPI(image);
+    var body = []; 
     body.push(image);
 
     return Observable.create(observer => {
@@ -96,13 +80,8 @@ export class ImagesService {
   }
 
 
-  public uploadImage(image : any) {
-    var body = [];
-    image = {
-      "numeroCotizacion": image.numeroCotizacion,
-      "tipoFoto": image.tipoFoto,
-      "byteFoto": image.byteFoto
-    };
+  public uploadImage(image : VehiclePhotoRequest) {
+    var body = []; 
     body.push(image);
 
     return Observable.create(observer => {
@@ -114,28 +93,8 @@ export class ImagesService {
       );
     });
   }
-
-  public uploadImages(images : any) {
-  
-    var body = {  
-      "token" : this.tokenService.getAuthentication(),
-      "foto" : images
-    };
-
-    let prefix = ContextService.getPrefixAPI();
-    body = ContextService.getBodyAPI(body);
-
-    return Observable.create(observer => {
-      this.httpClient.post(String.format(BaseUrl.uploadImages,prefix), body, false).subscribe(
-        data => {
-          observer.next(data);
-          observer.complete();
-        }
-      );
-    });
-
-  }
-
+ 
+/*
   public getImages(inspection:any, type:string) {
 
     var body = {  
@@ -160,5 +119,5 @@ export class ImagesService {
         }
       );
     });
-  }
+  }*/
 }

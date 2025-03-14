@@ -12,6 +12,7 @@ import { CarAccessoriesService } from 'src/app/services/remote/car-accessories/c
 import { CarDamageService } from 'src/app/services/remote/car-damage/car-damage.service';
 import { ImagesService } from 'src/app/services/remote/images/images.service';
 import { InspectionStatusService } from 'src/app/services/remote/inspection-status/inspection-status.service';
+import { sendResponseRequest } from 'src/app/shared/Dtos/Requests/sendResponseRequest.dto';
 
 @Component({
   selector: 'app-accept-inspection',
@@ -46,16 +47,9 @@ export class AcceptInspectionPage implements OnInit {
     this.getStatusList();
 
     this.currentInspection = ContextService.currentInspection;
-    this.strings = ConfigService.strings;
-
-    // console.log('this.currentInspection', this.currentInspection);
-    // console.log('ContextService.currentInspection', ContextService.currentInspection);
-    // console.log('ContextService.userSession', ContextService.userSession);
+    this.strings = ConfigService.strings; 
   }
-
-  ionViewDidLoad() {
-    // console.log('ionViewDidLoad AcceptInspectionPage');
-  }
+ 
 
   private getStatusList() {
 
@@ -90,24 +84,15 @@ export class AcceptInspectionPage implements OnInit {
   }
 
   public next(){
-
-    // console.log("currentInspection.tipSituInsp:", this.currentInspection.tipSituInsp);
-    // console.log("currentInspection.notes:", this.currentInspection.notes);
+ 
 
     var validForm = true;
 
-    if(this.isCurrentCountryPA()){
-      // if(this.getUserType() === 'P' && !this.currentInspection.tipSituInsp) {
-      //   validForm = false;
-      // }
+    if(this.getUserType() === 'P' && (!this.currentInspection.tipSituInsp || !this.currentInspection.notes)) {
+      validForm = false;
     }
-    else{
-      if(this.getUserType() === 'P' && (!this.currentInspection.tipSituInsp || !this.currentInspection.notes)) {
-        validForm = false;
-      }
-      else if(!this.currentInspection.notes) {
-        validForm = false;
-      }
+    else if(!this.currentInspection.notes) {
+      validForm = false;
     }
 
     if(!validForm){
@@ -132,38 +117,26 @@ export class AcceptInspectionPage implements OnInit {
   public uploadInspection(){
     this.loadingServiceProvider.showLoading();
 
-    const body = {
-      "usuario": ContextService.userSession.nomUsuario ? ContextService.userSession.nomUsuario : 'cliente',
-      "numeroCotizacion":this.currentInspection.numeroCotizacion,
-      "resultado": this.currentInspection.tipSituInsp ? this.currentInspection.tipSituInsp : 'Pendiente',
-      "comentarios": this.currentInspection.notes,
-      "controlesTecnicos": [],
-      "pais": ContextService.location.country // this.strings.countryName
-    };
-
-    console.log('uploadInspection body', body);
+    var request = new sendResponseRequest(
+      ContextService.userSession.nomUsuario ? ContextService.userSession.nomUsuario : 'cliente',
+      this.currentInspection.numeroCotizacion,
+      this.currentInspection.nomSituInsp ? this.currentInspection.nomSituInsp : 'Pendiente',
+      this.currentInspection.notes,
+      []
+    ) 
+    const body:sendResponseRequest[]=[request]
 
     this.inspectionProvider.uploadInspection(body).subscribe(result => {
 
       this.loadingServiceProvider.hideLoading();
 
       if (result && result.status) {
-
-        // this.loadingServiceProvider.controller = this;
-        // this.loadingServiceProvider.callback = this.uploadInspectionCallback;
-
-        // this.navCtrl.push(CarInspectionSuccessPage); 
-        return this.router.navigateByUrl('/car-inspection-success');
-
-        // this.uploadDamages();
-        // this.uploadAccessories();
-        // this.syncPhotos();
+ 
+        return this.router.navigateByUrl('/car-inspection-success'); 
       } 
       else {
         this.alertServiceProvider.show("Error", result.data);
-      }
-
-      // this.loadingServiceProvider.hideLoading();
+      } 
 
     });
   }
@@ -198,9 +171,9 @@ export class AcceptInspectionPage implements OnInit {
       if(accessory){
         this.loadingServiceProvider.showLoading();
     
-        this.carAccessoriesProvider.uploadAccessory(accessory.accesorio).subscribe(result => {
+        this.carAccessoriesProvider.uploadAccessory(accessory).subscribe(result => {
     
-          // console.log(result);
+          // //console.log(result);
 
           if (result && result.status) {
     
@@ -235,9 +208,10 @@ export class AcceptInspectionPage implements OnInit {
     }
 
     for (let accessory of ContextService.accessories) {
-      if(accessory && accessory.foto && accessory.foto.bytes && accessory.foto.bytes.length > 0){
+      //console.log("todo") 
+     /* if(accessory && accessory.byteFoto && accessory.foto.bytes && accessory.foto.bytes.length > 0){
         this.uploadPhotos(accessory.foto);
-      }
+      }*/
     }
   }
 
@@ -246,7 +220,7 @@ export class AcceptInspectionPage implements OnInit {
 
     this.imagesServiceProvider.uploadImage(carPhoto).subscribe(result => {
 
-      // console.log(result);
+      // //console.log(result);
 
       if (result && result.status) {
 
@@ -268,9 +242,6 @@ export class AcceptInspectionPage implements OnInit {
   public getUserType(){
     return ContextService.userSession.userType;
   }
-
-  public isCurrentCountryPA() {
-    return ContextService.location.country === ConstantsService.PANAMA_CODE;
-  }
+ 
 
 }

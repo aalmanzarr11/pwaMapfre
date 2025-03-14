@@ -53,7 +53,7 @@ export class TakePicturePage implements OnInit {
     this.picIndex = ContextService.SelectedCarPicture ? ContextService.SelectedCarPicture.picIndex : 1; // navParams.get('picIndex');
     this.title = ContextService.SelectedCarPicture ? ContextService.SelectedCarPicture.title : 'Title'; // navParams.get('title');
 
-    console.log("ContextService.currentInspection", ContextService.currentInspection);
+    //console.log("ContextService.currentInspection", ContextService.currentInspection);
 
 
     if(ContextService.currentInspection){
@@ -63,8 +63,7 @@ export class TakePicturePage implements OnInit {
         this.currentImage = {
           "numeroCotizacion": ContextService.currentInspection.numeroCotizacion,
           "tipoFoto": this.title.replace('<br />', ''),
-          "byteFoto": "",
-          "pais": ContextService.location.country
+          "byteFoto": "", 
         };
 
         ContextService.carParts[this.picIndex] = {  
@@ -110,26 +109,10 @@ export class TakePicturePage implements OnInit {
       
       this.updateDamages();
     }, 500);
-
-    this.getCurrentLocation();
+ 
 
   }
-
-  getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-
-        // ContextService.location = {
-        //   'lat' : position.coords.latitude,
-        //   'long' : position.coords.longitude
-        // };
-        ContextService.location["lat"] = position.coords.latitude;
-        ContextService.location["long"] = position.coords.longitude;
-
-      }, 
-      function (error) { }
-    );
-  }
+ 
 
   public updateDamages(){
     if(ContextService.carParts != null && 
@@ -167,17 +150,17 @@ export class TakePicturePage implements OnInit {
     reader.readAsDataURL(file);
     reader.onload = () => {
       var base64 = reader.result;
-      console.log("Base64 Original");
-      console.log(base64);
+      //console.log("Base64 Original");
+      //console.log(base64);
       compressImage(base64, file).then(compressed => {
         this.loadingServiceProvider.showLoading();
         var resizedBase64 = compressed as string;
         this.base64Image = resizedBase64.split(',')[1];
         this.savePending = true;
-        console.log("Base64 comprimido");
-        console.log(resizedBase64);
-        console.log("Base64 final");
-        console.log(this.base64Image);
+        //console.log("Base64 comprimido");
+        //console.log(resizedBase64);
+        //console.log("Base64 final");
+        //console.log(this.base64Image);
         this.loadingServiceProvider.hideLoading();
       })
     }
@@ -191,7 +174,7 @@ export class TakePicturePage implements OnInit {
           imageCompression.getExifOrientation(file).then(data => {
             const canvas = document.createElement('canvas');
 
-            console.log('Tamaño original: ' + img.width + 'x' + img.height);
+            //console.log('Tamaño original: ' + img.width + 'x' + img.height);
 
            //nuevo tamaño
           
@@ -210,7 +193,7 @@ export class TakePicturePage implements OnInit {
             var newHeight = img.height*0.15;
           } 
 
-        console.log('Tamaño nuevo: ' + newWidth + 'x' + newHeight);
+        //console.log('Tamaño nuevo: ' + newWidth + 'x' + newHeight);
         
         switch (data) {
           case 2: canvas.height = newHeight; canvas.width = newWidth; break;
@@ -224,8 +207,8 @@ export class TakePicturePage implements OnInit {
         }
 
         const ctx = canvas.getContext('2d');
-        console.log("Orientacion de la imagen");
-        console.log(data);
+        //console.log("Orientacion de la imagen");
+        //console.log(data);
         
         switch (data) {
           case 2: ctx.transform(-1, 0, 0, 1, newWidth, 0); ctx.drawImage(img, 0, 0, newWidth, newHeight); break;
@@ -251,7 +234,7 @@ export class TakePicturePage implements OnInit {
     
     /*this.loadingServiceProvider.showLoading();
     let image = event.target.files[0];
-      //console.log(image);
+      ////console.log(image);
       this.ng2PicaService.resize([image], 700, 500).subscribe(url =>{
 
         fileToBase64(url).then( img => {
@@ -260,7 +243,7 @@ export class TakePicturePage implements OnInit {
             result => {
               this.base64Image = result.split(',')[1];
               this.savePending = true;
-              //console.log(this.base64Image);
+              ////console.log(this.base64Image);
               this.loadingServiceProvider.hideLoading();
             }
           );
@@ -272,9 +255,9 @@ export class TakePicturePage implements OnInit {
   //   reader.readAsDataURL(file);
   //   reader.onload = () => {
   //     this.imgURI = reader.result;
-  //     console.log(this.imgURI);
+  //     //console.log(this.imgURI);
   //     this.base64Image = this.imgURI.split(',')[1];
-  //     console.log(this.base64Image);
+  //     //console.log(this.base64Image);
   //     this.savePending = true;
   //     this.loadingServiceProvider.hideLoading();
   //   };
@@ -305,7 +288,7 @@ export class TakePicturePage implements OnInit {
 
   public setPicture() {
 
-    // console.log("ContextService.carParts", this.picIndex, ContextService.carParts);
+    // //console.log("ContextService.carParts", this.picIndex, ContextService.carParts);
 
     if(this.base64Image == '' || this.base64Image == null){
       // this.alertServiceProvider.show('', 'Debe tomar una foto');
@@ -331,7 +314,7 @@ export class TakePicturePage implements OnInit {
   // Envio de fotos al servicio
 
   public syncPhotos(){
-    console.log("Sincronizando Fotos");
+    //console.log("Sincronizando Fotos");
        
     this.uploadPhotos(this.currentImage);
     
@@ -343,8 +326,8 @@ export class TakePicturePage implements OnInit {
   }
 
   public uploadPhotos(carPhoto: any) {
-    //console.log(carPhoto);
-    //console.log("Enviando Fotos")
+    ////console.log(carPhoto);
+    ////console.log("Enviando Fotos")
     this.loadingServiceProvider.showLoading();
 
     this.images.uploadImage(carPhoto).subscribe(result => {
@@ -369,7 +352,7 @@ export class TakePicturePage implements OnInit {
   //         text: 'Aceptar',
   //         handler: () => {
   //           //this.loadingServiceProvider.hideLoading();
-  //           //console.log('Buy clicked');
+  //           ////console.log('Buy clicked');
   //         }
   //       }
   //     ]
@@ -420,8 +403,8 @@ export class TakePicturePage implements OnInit {
 
   public getDamageLevel(index) {
 
-// console.log(this.damages[index]);
-// console.log(this.damages[index]['foto']);
+// //console.log(this.damages[index]);
+// //console.log(this.damages[index]['foto']);
 
     if (this.damages[index] && this.damages[index]) {
       return this.damages[index]['observaciones'];

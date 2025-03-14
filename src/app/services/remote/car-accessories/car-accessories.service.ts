@@ -4,6 +4,7 @@ import { HttpClientService } from '../../infrastructure/http-client/http-client.
 import { JsonUtilsService } from '../../infrastructure/json-utils/json-utils.service';
 import { TokenService } from '../../infrastructure/token/token.service';
 import { BaseUrl } from 'src/app/shared/baseUrl';
+import { AccesoryRequest } from 'src/app/shared/Dtos/Requests/AccesoryRequest.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,11 @@ export class CarAccessoriesService {
     });
   }
 
-  public uploadAccessory(accessory : any) {
-  
-    var body = {  
-      "token" : this.tokenService.getAuthentication(),
-      "accesorio" : accessory
-    };
+  public uploadAccessory(accessory : AccesoryRequest) {
+   
 
     return Observable.create(observer => {
-      this.httpClient.post(BaseUrl.uploadAccessory, body, false).subscribe(
+      this.httpClient.post(BaseUrl.uploadAccessory, accessory, false).subscribe(
         data => {
           observer.next(data);
           observer.complete();
@@ -44,7 +41,7 @@ export class CarAccessoriesService {
     });
   }
 
-  public getAccessories(inspection:any) {
+  public getAccessories(inspection:any):Observable<any> {
 
     var body = {  
       "llaveInspeccion" : {
@@ -60,7 +57,7 @@ export class CarAccessoriesService {
       this.httpClient.post(BaseUrl.getAccessories, body, false).subscribe(
         data => {
 
-          console.log(data);
+          //console.log(data);
 
           if(data.status && data !== null && data.data !== null && data.data.accesorios !== null){
             data.data.accesorios.forEach(element => {
@@ -68,7 +65,7 @@ export class CarAccessoriesService {
             });
           }
 
-          console.log(data);
+          //console.log(data);
 
           observer.next(data);
           observer.complete();

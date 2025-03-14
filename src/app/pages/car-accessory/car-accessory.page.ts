@@ -62,26 +62,9 @@ export class CarAccessoryPage implements OnInit {
     //     this.capture();
     //   }, 500);
     // }
-
-    this.getCurrentLocation();
+ 
   }
-
-  getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-
-        // ContextService.location = {
-        //   'lat' : position.coords.latitude,
-        //   'long' : position.coords.longitude
-        // };
-
-        ContextService.location["lat"] = position.coords.latitude;
-        ContextService.location["long"] = position.coords.longitude;
-
-      }, 
-      function () { }
-    );
-  }
+ 
 
   ngOnInit() {
     // this.getAccessoryCodes();
@@ -125,18 +108,12 @@ export class CarAccessoryPage implements OnInit {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      var base64 = reader.result;
-      console.log("Base64 Original");
-      console.log(base64);
+      var base64 = reader.result; 
       compressImage(base64, file).then(compressed => {
         this.loadingServiceProvider.showLoading();
         var resizedBase64 = compressed as string;
         this.base64Image = resizedBase64.split(',')[1];
-        this.savePending = true;
-        console.log("Base64 comprimido");
-        console.log(resizedBase64);
-        console.log("Base64 final");
-        console.log(this.base64Image);
+        this.savePending = true; 
         this.loadingServiceProvider.hideLoading();
       })
     }
@@ -149,8 +126,7 @@ export class CarAccessoryPage implements OnInit {
 
           imageCompression.getExifOrientation(file).then(data => {
             const canvas = document.createElement('canvas');
-           
-            console.log('Tamaño original: ' + img.width + 'x' + img.height);
+            
             
             //nuevo tamaño
           
@@ -168,8 +144,7 @@ export class CarAccessoryPage implements OnInit {
               var newWidth = img.width*0.15;
               var newHeight = img.height*0.15;
             } 
-
-          console.log('Tamaño nuevo: ' + newWidth + 'x' + newHeight);
+ 
           
           switch (data) {
             case 2: canvas.height = newHeight; canvas.width = newWidth; break;
@@ -182,10 +157,7 @@ export class CarAccessoryPage implements OnInit {
             default: canvas.height = newHeight; canvas.width = newWidth; break;
           }
 
-          const ctx = canvas.getContext('2d');
-          console.log("Orientacion de la imagen");
-          console.log(data);
-          
+          const ctx = canvas.getContext('2d'); 
           switch (data) {
             case 2: ctx.transform(-1, 0, 0, 1, newWidth, 0); ctx.drawImage(img, 0, 0, newWidth, newHeight); break;
             case 3: ctx.transform(-1, 0, 0, -1, newWidth, newHeight); ctx.drawImage(img, 0, 0, newWidth, newHeight); break;
@@ -211,9 +183,9 @@ export class CarAccessoryPage implements OnInit {
   //   reader.readAsDataURL(file);
   //   reader.onload = () => {
   //     this.imgURI = reader.result;
-  //     console.log(this.imgURI);
+  //     //console.log(this.imgURI);
   //     this.base64Image = this.imgURI.split(',')[1];
-  //     console.log(this.base64Image);
+  //     //console.log(this.base64Image);
   //     this.savePending = true;
   //     this.loadingServiceProvider.hideLoading();
   //   };
@@ -294,11 +266,7 @@ export class CarAccessoryPage implements OnInit {
     // }
 
     // if(!this.base64Image || !this.carAccessoryId){
-    if(!this.base64Image || !this.carAccessoryName || 
-      (!this.accessoryValue && !this.isCountry([ConstantsService.COSTARICA_CODE, ConstantsService.NICARAGUA_CODE, ConstantsService.ELSALVADOR_CODE]))) {
-      this.alertServiceProvider.show('', this.strings.generalFormValidationError);
-      return;
-    }
+ 
 
     if(!this.accessoryValue || this.accessoryValue === undefined || this.accessoryValue == ''){
       this.accessoryValue = '0';
@@ -310,7 +278,7 @@ export class CarAccessoryPage implements OnInit {
       "referencia": this.carAccessoryName, // "Radio Desmontable",
       "valor": String(this.accessoryValue),
       "byteFoto": this.base64Image,
-      "pais": ContextService.location.country
+      //"pais": ContextService.location.country
     };
 
     // this.loadingServiceProvider.showLoading();
@@ -346,8 +314,8 @@ export class CarAccessoryPage implements OnInit {
     //  }
     // };
 
-    // console.log("accessory", accessory);
-    // console.log("this.accessoryIndex", this.accessoryIndex);
+    // //console.log("accessory", accessory);
+    // //console.log("this.accessoryIndex", this.accessoryIndex);
 
 
     
@@ -387,12 +355,12 @@ export class CarAccessoryPage implements OnInit {
 }
 
 public uploadPhotos(carPhoto: any) {
-  //console.log(carPhoto);
-  //console.log("Enviando Fotos")
+  ////console.log(carPhoto);
+  ////console.log("Enviando Fotos")
   this.loadingServiceProvider.showLoading();
 
   this.images.sendCarAccessories(carPhoto).subscribe(result => {
-    //console.log(result);
+    ////console.log(result);
     this.loadingServiceProvider.hideLoading();
     if (result.status) {
       // this.storageService.saveAccessories();
@@ -421,7 +389,7 @@ public uploadPhotos(carPhoto: any) {
 //         text: 'Aceptar',
 //         handler: () => {
 //           //this.loadingServiceProvider.hideLoading();
-//           //console.log('Buy clicked');
+//           ////console.log('Buy clicked');
 //         }
 //       }
 //     ]
@@ -451,20 +419,6 @@ public uploadPhotos(carPhoto: any) {
     }.bind(this), 50);
   }
 
-  public isCountry(list) {
-
-    let exist = false;
-
-    if(list && list.length > 0){
-      list.forEach(element => {
-        if(ContextService.location.country === element){
-          exist = true;
-        }
-      });
-    }
-
-    return exist;
-    // return ContextService.location.country === ConstantsService.GUATEMALA_CODE;
-  }
+ 
 
 }

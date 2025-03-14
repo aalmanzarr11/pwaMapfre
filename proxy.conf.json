@@ -1,0 +1,9 @@
+{
+    "/api/*": {
+      "target": "https://appqa.mapfrecr.com/AutoInspeccion",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  

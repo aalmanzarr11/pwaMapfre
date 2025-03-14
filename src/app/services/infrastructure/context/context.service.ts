@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EnvironmentService } from '../environment/environment.service';
+import { InspectionData } from 'src/app/shared/Dtos/Responses/inspectionsData.dto';
+import { AccesoryRequest } from 'src/app/shared/Dtos/Requests/AccesoryRequest.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +13,6 @@ export class ContextService {
   public NombreCliente: string = null;
   public NombreUsuario: string = null;
 
-  public static location : any = {
-    'country' : '',
-    'lat' : 0,
-    'long' : 0
-  };
   public static hasInternet: boolean = false;
   public static isMenuVisible: boolean = false;
 
@@ -68,80 +65,6 @@ export class ContextService {
     "color": "OTRO"
   };
 
-  // EL_SALVADOR
-  public static currentInspection_DEV_EL_SALVADOR: any = {
-    "numeroCotizacion": "", // 3011800127205, 
-    "tipoDocumento": "",
-    "numDocumento": "",
-    "nombres": " ",
-    "apellidoPaterno": "",
-    "apellidoMaterno": "",
-    "telefono": "",
-    "email": "",
-    "ciudad": "",
-    "direccion": "",
-    "placa": "P898456", // P909911
-    "marca": "",
-    "linea": "",
-    "version": "",
-    "modelo": "",
-    "codFase": "",
-    "motor": "",
-    "chasis": "",
-    "serie": "",
-    "uso": "",
-    "color": ""
-  };
-
-  // HONDURAS
-  public static currentInspection_DEV_HONDURAS: any = {
-    "numeroCotizacion": "", // E1-TG-20-4110
-    "tipoDocumento": "",
-    "numDocumento": "0801-1975-02848",
-    "nombres": " ",
-    "apellidoPaterno": "",
-    "apellidoMaterno": "",
-    "telefono": "",
-    "email": "",
-    "ciudad": "",
-    "direccion": "",
-    "placa": "",
-    "marca": "",
-    "linea": "",
-    "version": "",
-    "modelo": "",
-    "codFase": "",
-    "motor": "",
-    "chasis": "",
-    "serie": "",
-    "uso": "",
-    "color": ""
-  };
-
-  // NICARAGUA
-  public static currentInspection_DEV_NICARAGUA: any = {
-    "numeroCotizacion": "", //2130100000028 "2130100000490", "2130100134623"
-    "tipoDocumento": "",
-    "numDocumento": "",
-    "nombres": " ",
-    "apellidoPaterno": "",
-    "apellidoMaterno": "",
-    "telefono": "",
-    "email": "",
-    "ciudad": "",
-    "direccion": "",
-    "placa": "CH 24791",
-    "marca": "",
-    "linea": "",
-    "version": "",
-    "modelo": "",
-    "codFase": "",
-    "motor": "",
-    "chasis": "",
-    "serie": "",
-    "uso": "",
-    "color": ""
-  };
 
   // COSTA_RICA
   public static currentInspection_DEV_COSTA_RICA: any = {
@@ -167,37 +90,14 @@ export class ContextService {
     "uso": "",
     "color": ""
   };
-
-  public static currentInspection_DEV_GUATEMALA: any = {
-    "numeroCotizacion": "",// 4281
-    "tipoDocumento": "",
-    "numDocumento": "",
-    "nombres": " ",
-    "apellidoPaterno": "",
-    "apellidoMaterno": "",
-    "telefono": "",
-    "email": "",
-    "ciudad": "",
-    "direccion": "",
-    "placa": "555FFF",
-    "marca": "",
-    "linea": "",
-    "version": "",
-    "modelo": "",
-    "codFase": "",
-    "motor": "",
-    "chasis": "",
-    "serie": "",
-    "uso": "",
-    "color": ""
-  };
+ 
 
   public static footerMenuOptions : any = [];
   public static carParts : any = [];
   public static carDocuments : any = [];
   public static carDamages : any = [];
-  public static accessories : any = []; 
-  public static currentInspection :any = null;
+  public static accessories : AccesoryRequest[] = []; 
+  public static currentInspection :InspectionData = null;
   public static currentPage :any = null;
   public static inspectionList: any;
   public static ModalSelectParametes: any;
@@ -209,7 +109,7 @@ export class ContextService {
   
   public static init(){
 
-    console.log("ContextService init");
+    //console.log("ContextService init");
 
     // ContextService.currentInspection = JSON.parse(
     //   JSON.stringify(
@@ -245,7 +145,7 @@ export class ContextService {
 
   public static getBodyAPI(body: any) {
 
-    console.log('getBodyAPI', ContextService.userSession.userType);
+    //console.log('getBodyAPI', ContextService.userSession.userType);
 
     let data  = body;
 
@@ -267,8 +167,8 @@ export class ContextService {
 
       var monthDay = monthName + dayMonth + random;
 
-      console.log('random', random);
-      console.log('monthDay', monthDay);
+      //console.log('random', random);
+      //console.log('monthDay', monthDay);
 
       data['tok'] = btoa(monthDay);
       data['tik'] = btoa(random + ''); 

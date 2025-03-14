@@ -22,7 +22,7 @@ export class IntroPage implements OnInit {
   OSName = 'Unknown OS';
   isMobile = false;
 
-  constructor( 
+  constructor(
     public navCtrl: NavController,
     // public navParams: NavParams,
     // public geolocation: Geolocation,
@@ -34,7 +34,7 @@ export class IntroPage implements OnInit {
     private connectionService: ConnectionService,
     private locationService: LocationService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     ContextService.currentPage = this;
@@ -43,12 +43,12 @@ export class IntroPage implements OnInit {
     this.platform.backButton.subscribeWithPriority(10, () => {
       alert('back');
     });
-    
+
 
     // DEBUG
     if (!EnvironmentService.isProduction) {
 
-      setTimeout(function(){
+      setTimeout(function () {
         this.getReverseGeocode();
       }.bind(this), 1000);
 
@@ -62,38 +62,38 @@ export class IntroPage implements OnInit {
     this.DetectOS();
 
     let params = window.location.search;
-    if(params.startsWith('?')){
+    if (params.startsWith('?')) {
       params = params.substring(1);
     }
 
-    console.log('params', params.toString());
+    //console.log('params', params.toString());
     let inspectionParam = decodeURIComponent(params.toString());
-    console.log('inspectionParam', inspectionParam.toString());
+    //console.log('inspectionParam', inspectionParam.toString());
 
     let urlParams = new URLSearchParams(inspectionParam);
     let numcot = urlParams.get("numcot");
     ContextService.numeroCotizacionFromURL = null;
 
-    if(numcot && numcot.length > 0) {
+    if (numcot && numcot.length > 0) {
       ContextService.numeroCotizacionFromURL = numcot;
     }
 
-    // console.log('decryptInspection params', );
+    // //console.log('decryptInspection params', );
 
   }
 
   DetectOS() {
 
-    console.log(navigator.userAgent);
-    console.log(navigator.platform);
-    if ( /Mobile|Android|iPhone/i.test(navigator.userAgent) ) {
-       if (navigator.platform.indexOf('Android') != -1) { this.OSName = 'Android', this.isMobile = true; }
-       if (navigator.platform.indexOf('Linux') != -1) { this.OSName = 'Android', this.isMobile = true; }
-       if (navigator.platform.indexOf('null') != -1) { this.OSName = 'Android', this.isMobile = true; }
-       if (navigator.platform.indexOf('iPhone') != -1) { this.OSName = 'iOS', this.isMobile = true; }
+    //console.log(navigator.userAgent);
+    //console.log(navigator.platform);
+    if (/Mobile|Android|iPhone/i.test(navigator.userAgent)) {
+      if (navigator.platform.indexOf('Android') != -1) { this.OSName = 'Android', this.isMobile = true; }
+      if (navigator.platform.indexOf('Linux') != -1) { this.OSName = 'Android', this.isMobile = true; }
+      if (navigator.platform.indexOf('null') != -1) { this.OSName = 'Android', this.isMobile = true; }
+      if (navigator.platform.indexOf('iPhone') != -1) { this.OSName = 'iOS', this.isMobile = true; }
 
-      console.log(this.isMobile);
-      console.log('Your OS: ' + this.OSName);
+      //console.log(this.isMobile);
+      //console.log('Your OS: ' + this.OSName);
     }
   }
 
@@ -108,7 +108,7 @@ export class IntroPage implements OnInit {
     //       'long' : position.coords.longitude
     //     };
     //     // alert(JSON.stringify(ContextServiceProvider.location));
-    //     // console.log(ContextServiceProvider.location);
+    //     // //console.log(ContextServiceProvider.location);
     //   },
 
     //   function (error) {
@@ -125,11 +125,11 @@ export class IntroPage implements OnInit {
     this.connectionService.getNetworkStatus().subscribe(status => {
 
 
-      console.log('getNetworkStatus', status);
+      //console.log('getNetworkStatus', status);
 
       if (status === ConnectionStatus.Offline) {
 
-        this.alertServiceProvider.show('Error', 'No hay conexión a internet' )
+        this.alertServiceProvider.show('Error', 'No hay conexión a internet')
         // observer.next({ status: false, data: "No hay conexión a internet" });
         // observer.complete();
       } else {
@@ -153,7 +153,7 @@ export class IntroPage implements OnInit {
 
     //     // alert(position);
 
-    //     console.log('position', position);
+    //     //console.log('position', position);
     //     // alert(JSON.stringify(position));
 
     //     ContextService.location = {
@@ -210,48 +210,48 @@ export class IntroPage implements OnInit {
     this.stringsServiceProvider.getConfig();
   }
 
- 
+
 
   // CLASE LLAMADA POR GETREVERSEGEOCODE
   public getGlobalStrings() {
-  
-    this.loadingServiceProvider.showLoading();
+    if (ConfigService.strings !== null) {
+      ContextService.hasSeenIntro = true;
+      if (!EnvironmentService.isProduction) {
 
-    this.stringsServiceProvider 
-      .getStringsStatic(ContextService.location.country)
-      .subscribe(result => { 
-        // console.log('getGlobalStrings result', result);
-        this.loadingServiceProvider.hideLoading();
+        return this.router.navigateByUrl('/login');
+      }
+      else {
 
-        ContextService.hasSeenIntro = true;
-        if (ConfigService.strings !== null) {
-          if (!EnvironmentService.isProduction) {
-             
-            return this.router.navigateByUrl('/login'); 
-          }
-          else{
-           
-            return this.router.navigateByUrl('/instructions'); 
-          }
-
-          
+        return this.router.navigateByUrl('/instructions');
+      }
 
 
-        } else { 
+
+
+    }
+    else {
+      this.loadingServiceProvider.showLoading();
+      this.stringsServiceProvider
+        .getStringsStatic( )
+        .subscribe(result => {
+          //console.log('getGlobalStrings result', result);
+          this.loadingServiceProvider.hideLoading();
+
           ContextService.hasSeenIntro = true;
-          return this.router.navigateByUrl('/instructions'); 
-        }
- 
-      });
+          return this.router.navigateByUrl('/instructions');
+
+        });
+    }
+
 
   }
- 
+
   // TEST DE CONSUMO DE STRINGSSERVICEPROVIDER
   public restTest() {
     this.loadingServiceProvider.showLoading();
 
     this.stringsServiceProvider.restTest().subscribe(result => {
-      console.log(JSON.stringify(result));
+      //console.log(JSON.stringify(result));
 
       alert(JSON.stringify(result));
 

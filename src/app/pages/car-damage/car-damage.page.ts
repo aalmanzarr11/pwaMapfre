@@ -11,6 +11,8 @@ import { CarDamageService } from 'src/app/services/remote/car-damage/car-damage.
 import { CarSubpartsService } from 'src/app/services/remote/car-subparts/car-subparts.service';
 import { ImagesService } from 'src/app/services/remote/images/images.service';
 import { UserinfoWebService } from 'src/app/services/remote/userinfo-web/userinfo-web.service';
+import { DamageRequest } from 'src/app/shared/Dtos/Requests/DamageRequest.dto';
+import { Part } from 'src/app/shared/Dtos/Responses/partsResponse.dto';
 
 @Component({
   selector: 'app-car-damage',
@@ -34,8 +36,8 @@ export class CarDamagePage implements OnInit {
 
   public savePending: boolean = false;
   public carDamageLevels = [];
-  public carSubparts = [];
-  public selectedDamage:any;
+  public carSubparts :Part[]= [];
+  public selectedDamage:DamageRequest;
   public srcorientation: any;
 
   constructor(
@@ -71,27 +73,10 @@ export class CarDamagePage implements OnInit {
     //     this.takePicture();
     //   }, 500);
     // }
-
-    this.getCurrentLocation();
+ 
   }
 
-  getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-
-        // ContextService.location = {
-        //   'lat' : position.coords.latitude,
-        //   'long' : position.coords.longitude
-        // };
-
-        ContextService.location["lat"] = position.coords.latitude;
-        ContextService.location["long"] = position.coords.longitude;
-
-      }, 
-      function (error) { }
-    );
-  }
-
+ 
   ngOnInit() {
     this.strings = ConfigService.strings;
 
@@ -105,7 +90,7 @@ export class CarDamagePage implements OnInit {
     this.title = ContextService.SelectedCarDamage ? ContextService.SelectedCarDamage.title : 'title'; // this.navParams.get('title');
     this.damageIndex = ContextService.SelectedCarDamage ? ContextService.SelectedCarDamage.damageIndex : null; //. this.navParams.get('damageIndex');
 
-    // console.log('ContextService.carParts: ', ContextService.carParts);
+    // //console.log('ContextService.carParts: ', ContextService.carParts);
     if(!ContextService.carParts[this.picIndex]){
       ContextService.carParts[this.picIndex] = {};
     }
@@ -114,34 +99,30 @@ export class CarDamagePage implements OnInit {
       ContextService.carParts[this.picIndex]['damages'] = [];
     }
 
-    // console.log('ContextService.carParts', ContextService.carParts);
-    // console.log('this.damageIndex', this.damageIndex);
+    // //console.log('ContextService.carParts', ContextService.carParts);
+    // //console.log('this.damageIndex', this.damageIndex);
 
     if(this.damageIndex != null){
       this.selectedDamage = ContextService.carParts[this.picIndex]['damages'][this.damageIndex];
-      
-      console.log('this.selectedDamage:', this.selectedDamage);
+       
 
       this.base64Image = this.selectedDamage['byteFoto'];
       this.carSubpartName = this.selectedDamage['pieza'];
-      this.carSubpartId = this.selectedDamage['nivelDano'];
+      this.carSubpartId = this.selectedDamage['codDano'];
       this.damageValue = this.selectedDamage['valor'];
 
 
       let damage = this.carDamageLevels.filter(item => {
-        return item['descDano'] === this.selectedDamage['nivelDano'];
+        return item['codDano'] === this.selectedDamage['nivelDano'];
       });
-
-      console.log('damage:', damage);
+ 
 
       this.damageLevel = damage.length > 0 ? damage[0] : null;
     }
     else{
       this.carSubpartName =  this.strings.damageSelect;
     }
-
-    console.log("this.carSubpartName: ", this.carSubpartName);
-    console.log("this.damageValue: ", this.damageValue);
+ 
 
     // if(this.getUserType() === ''){
     //   this.damageValue = '0';
@@ -194,8 +175,7 @@ export class CarDamagePage implements OnInit {
     this.carSubpartsProvider.getSubparts().subscribe(result => {
       if (result.status && result.data != null) {
         this.carSubparts = result.data;
-
-        console.log("this.carSubparts", this.carSubparts);
+ 
 
       } else {
         this.alertServiceProvider.show('Error', result.data);
@@ -234,17 +214,17 @@ export class CarDamagePage implements OnInit {
     reader.readAsDataURL(file);
     reader.onload = () => {
       var base64 = reader.result;
-      // console.log("Base64 Original");
-      // console.log(base64);
+      // //console.log("Base64 Original");
+      // //console.log(base64);
       compressImage(base64, file).then(compressed => {
         this.loadingServiceProvider.showLoading();
         var resizedBase64 = compressed as string;
         this.base64Image = resizedBase64.split(',')[1];
         this.savePending = true;
-        // console.log("Base64 comprimido");
-        // console.log(resizedBase64);
-        // console.log("Base64 final");
-        // console.log(this.base64Image);
+        // //console.log("Base64 comprimido");
+        // //console.log(resizedBase64);
+        // //console.log("Base64 final");
+        // //console.log(this.base64Image);
         this.loadingServiceProvider.hideLoading();
       })
     }
@@ -258,7 +238,7 @@ export class CarDamagePage implements OnInit {
           imageCompression.getExifOrientation(file).then(data => {
             const canvas = document.createElement('canvas');
             
-            // console.log('Tamaño original: ' + img.width + 'x' + img.height);
+            // //console.log('Tamaño original: ' + img.width + 'x' + img.height);
             
             //nuevo tamaño
           
@@ -277,7 +257,7 @@ export class CarDamagePage implements OnInit {
               var newHeight = img.height*0.15;
             } 
 
-          // console.log('Tamaño nuevo: ' + newWidth + 'x' + newHeight);
+          // //console.log('Tamaño nuevo: ' + newWidth + 'x' + newHeight);
           
           switch (data) {
             case 2: canvas.height = newHeight; canvas.width = newWidth; break;
@@ -291,8 +271,8 @@ export class CarDamagePage implements OnInit {
           }
 
           const ctx = canvas.getContext('2d');
-          // console.log("Orientacion de la imagen");
-          // console.log(data);
+          // //console.log("Orientacion de la imagen");
+          // //console.log(data);
           
           switch (data) {
             case 2: ctx.transform(-1, 0, 0, 1, newWidth, 0); ctx.drawImage(img, 0, 0, newWidth, newHeight); break;
@@ -320,9 +300,9 @@ export class CarDamagePage implements OnInit {
   //   reader.readAsDataURL(file);
   //   reader.onload = () => {
   //     this.imgURI = reader.result;
-  //     console.log(this.imgURI);
+  //     //console.log(this.imgURI);
   //     this.base64Image = this.imgURI.split(',')[1];
-  //     console.log(this.base64Image);
+  //     //console.log(this.base64Image);
   //     this.savePending = true;
   //     this.loadingServiceProvider.hideLoading();
   //   };
@@ -377,8 +357,7 @@ export class CarDamagePage implements OnInit {
   public setPicture() {
 
 
-    if(!this.base64Image || !this.carSubpartId || !this.damageLevel || 
-      (!this.damageValue && this.getUserType() === 'P' && !this.isCountry([ConstantsService.COSTARICA_CODE, ConstantsService.NICARAGUA_CODE, ConstantsService.HONDURAS_CODE]))){
+    if(!this.base64Image || !this.carSubpartName || !this.damageLevel){
       this.alertServiceProvider.show('', 'Debe ingresar todos los datos correctamente');
       return;
     }
@@ -391,130 +370,38 @@ export class CarDamagePage implements OnInit {
 
 
     if(!this.damageValue || this.damageValue === undefined || this.damageValue == ''){
-      this.damageValue = '0';
+      this.damageValue = 0;
     }
-
-    // console.log("this.damageValue2: ", this.damageValue);
-
+    console.log(ContextService.currentInspection.numeroCotizacion)
+    this.selectedDamage= new DamageRequest(ContextService.currentInspection.numeroCotizacion, this.carSubpartName, this.damageLevel.codDano, this.damageValue,this.base64Image)
  
-
-    // this.loadingServiceProvider.showLoading();
-
-    // if(this.selectedDamage != null){
-    //   this.selectedDamage['dano']['bytes'] = this.base64Image;
-    //   this.selectedDamage['dano']['observaciones'] = this.damageLevel.descDano;
-    //   this.selectedDamage['dano']['obsParte'] = this.carSubpartName;
-    //   this.selectedDamage['dano']['codDano'] = String(this.damageLevel.codDano);
-    //   this.selectedDamage['dano']['codSubParte'] = String(this.carSubpartId);
-    //   this.selectedDamage['dano']['valorReparacion'] = String(this.damageValue);
-
-    //   ContextService.carParts[this.picIndex]['damages'][this.damageIndex] = this.selectedDamage;
-    // }
-    // else{
-
-      // ContextService.carParts[this.picIndex]['damages'][this.damageIndex] = {
-        this.selectedDamage = {
-          "numeroCotizacion": ContextService.currentInspection.numeroCotizacion,
-          "pieza": this.carSubpartName,
-          "nivelDano": this.damageLevel.descDano,
-          "valor": String(this.damageValue),
-          "byteFoto": this.base64Image,
-          "pais":ContextService.location.country
-        };
-
-      // ContextService.carParts[this.picIndex]['damages'].push(
-      //   {  
-      //     'dano':{  
-      //        'codCia':'1',
-      //        'numInsp': ContextService.currentInspection.numInsp, 
-      //        'numSecu':'1',
-      //        'numRiesgo':'1',
-      //        'codParte': String(this.picIndex),
-      //        'codSubParte': String(this.carSubpartId),
-      //        'codDano': String(this.damageLevel.codDano),
-      //        'obsParte': this.carSubpartName,
-      //        'valorReparacion': String(this.damageValue),
-      //        'codReparacion':'0',
-      //        'fecReparacion':'', 
-      //        'codUsr':this.UserWebServices.username,
-      //        'fecActu':dateFormat(new Date(), 'ddmmyyyy')
-      //     },
-      //     'foto':{  
-      //       'codCia':'1',
-      //       'numInsp': ContextService.currentInspection.numInsp,
-      //       'numSecu':'1',
-      //       'numRiesgo':'1',
-      //       'tipoFoto':'DANO',
-      //       'codigo': String(this.picIndex),
-      //       'subCodigo': String(this.carSubpartId),
-      //       'latitud': String(ContextService.location.lat),
-      //       'longitud': String(ContextService.location.long),
-      //       'observaciones':this.damageLevel.descDano,
-      //       'bytes': this.base64Image,
-      //       'codUsr':this.UserWebServices.username,
-      //       'fecActu':dateFormat(new Date(), 'ddmmyyyy')
-      //    }
-      //  }
-      // );
-    // }
-
-    // console.log('ContextService.carParts[this.picIndex]:', ContextService.carParts[this.picIndex]);
-
-    this.syncPhotos();
-    // this.storageService.saveCarParts();
-    // this.savePending = false;
-    
-    // setTimeout( () => {
-    //   this.loadingServiceProvider.hideLoading();
-    //   this.callback(this.controller);
-    //   this.back();
-    // }, 500);
+    let images:DamageRequest[]=[this.selectedDamage]
+    this.uploadPhotos(images);
 
   }
 
-  // Envio de Fotos al servicio
-  public syncPhotos(){ 
+   
 
-    // var Foto = {  
-    //   'codCia':'1',
-    //   'numInsp': ContextService.currentInspection.numInsp,
-    //   'numSecu':'1',
-    //   'numRiesgo':'1',
-    //   'tipoFoto':'DANO',
-    //   'codigo': String(this.picIndex),
-    //   'subCodigo': String(this.carSubpartId),
-    //   'latitud': String(ContextService.location.lat),
-    //   'longitud': String(ContextService.location.long),
-    //   'observaciones':this.damageLevel.descDano,
-    //   'bytes': this.base64Image,
-    //   'codUsr': this.UserWebServices.username,
-    //   'fecActu':dateFormat(new Date(), 'ddmmyyyy')
-    // }
+  public uploadPhotos(carPhoto: DamageRequest[]) {
 
-    // ContextService.carParts[this.picIndex]['damages'][this.damageIndex]
-    this.uploadPhotos(this.selectedDamage);
-  }
-
-  public uploadPhotos(carPhoto: any) {
-
-    console.log('uploadPhotos carPhoto', carPhoto);
-    //console.log("Enviando Fotos")
+    //console.log('uploadPhotos carPhoto', carPhoto);
+    ////console.log("Enviando Fotos")
 
     this.loadingServiceProvider.showLoading();
 
     this.images.sendCarDamages(carPhoto).subscribe(result => {
-      //console.log(result);
+      ////console.log(result);
       this.loadingServiceProvider.hideLoading();
       if (result.status) {
 
         if(this.damageIndex != null){
-          ContextService.carParts[this.picIndex]['damages'][this.damageIndex] = carPhoto;
+          ContextService.carParts[this.picIndex]['damages'][this.damageIndex] = carPhoto[0];
         }
         else{
-          ContextService.carParts[this.picIndex]['damages'].push(carPhoto);
+          ContextService.carParts[this.picIndex]['damages'].push(carPhoto[0]);
         }
 
-        console.log('uploadPhotos ContextService.carParts[this.picIndex]:', ContextService.carParts[this.picIndex])
+        //console.log('uploadPhotos ContextService.carParts[this.picIndex]:', ContextService.carParts[this.picIndex])
 
         // this.storageService.saveCarParts();
         this.savePending = false; 
@@ -535,7 +422,7 @@ export class CarDamagePage implements OnInit {
   //         text: 'Aceptar',
   //         handler: () => {
   //           //this.loadingServiceProvider.hideLoading();
-  //           //console.log('Buy clicked');
+  //           ////console.log('Buy clicked');
   //         }
   //       }
   //     ]
@@ -559,21 +446,7 @@ export class CarDamagePage implements OnInit {
     }.bind(this), 50);
   }
 
-  public isCountry(list) {
-
-    let exist = false;
-
-    if(list && list.length > 0){
-      list.forEach(element => {
-        if(ContextService.location.country === element){
-          exist = true;
-        }
-      });
-    }
-
-    return exist;
-    // return ContextService.location.country === ConstantsProvider.GUATEMALA_CODE;
-  }
+ 
 
 
 }

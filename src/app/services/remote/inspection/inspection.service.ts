@@ -5,6 +5,11 @@ import { HttpClientService } from "../../infrastructure/http-client/http-client.
 import { TokenService } from "../../infrastructure/token/token.service";
 import { String } from 'typescript-string-operations';
 import { BaseUrl } from "src/app/shared/baseUrl";
+import { InspectionsResponse } from "src/app/shared/Dtos/Responses/inspectionsResponse.dto";
+import { InspectionRequest } from "src/app/shared/Dtos/Requests/inspectionRequest.dto";
+import { InspectionDataRequest } from "src/app/shared/Dtos/Requests/inspectionDataRequest.dto";
+import { InspectionsDataResponse } from "src/app/shared/Dtos/Responses/inspectionsDataResponse.dto";
+import { sendResponseRequest } from "src/app/shared/Dtos/Requests/sendResponseRequest.dto";
 
 @Injectable({
   providedIn: "root",
@@ -14,7 +19,7 @@ export class InspectionService {
     private httpClient: HttpClientService,
     private tokenService: TokenService
   ) {
-    // console.log("Hello InspectionProvider Provider");
+    // //console.log("Hello InspectionProvider Provider");
   }
 
   public getInspectionNumber() { 
@@ -35,14 +40,10 @@ export class InspectionService {
     });
   }
 
-  public loadInspectionsV1(document: string, plate: string, policy: string) {
-    let body = {
-      identificacion: document,
-      placa: plate,
-      numeroCotizacion: policy
-    };
+  public loadInspectionsV1(document: string, plate: string, policy: string): Observable<InspectionsResponse>  {
+    let body = new InspectionRequest(document,plate,policy)
 
-    // console.log('loadInspections body', body);
+    // //console.log('loadInspections body', body);
 
     return Observable.create((observer) => {
       this.httpClient
@@ -53,24 +54,21 @@ export class InspectionService {
               numeroCotizacion: cotizacion
             }));
 
-            // console.log('inspections', inspections);
+            // //console.log('inspections', inspections);
 
-            observer.next({ status: true, data: inspections });
+            observer.next(data);
             observer.complete();
           } else {
-            observer.next({ status: data.status, data: data.error });
+            observer.next(data);
             observer.complete();
           }
         });
     });
   }
 
-  public loadInspections(document: string, plate: string, policy: string) {
-    let body = {
-      identificacion: document,
-      placa: plate,
-      numeroCotizacion: policy
-    };
+  public loadInspections(document: string, plate: string, policy: string): Observable<InspectionsResponse> {
+    
+    let body = new InspectionRequest(document,plate,policy)
   
     let filteredBody = {};
     for (let key in body) {
@@ -84,48 +82,45 @@ export class InspectionService {
         .post(BaseUrl.loadInspections, filteredBody, false)
         .subscribe((data) => {
           if (data.status && data.data !== null) {
-            const inspections = data.data.map((cotizacion: any) => ({
-              numeroCotizacion: cotizacion.presupuesto,
+            /*const inspections = data.data.map((cotizacion: any) => ({
+              numeroCotizacion: cotizacion.numeroCotizacion,
               cotizacionCliente: cotizacion.cotizacionCliente
-            }));
+            }));*/
   
-            observer.next({ status: true, data: inspections });
+            observer.next(data);
             observer.complete();
           } else {
-            observer.next({ status: data.status, data: data.error });
+            observer.next(data);
             observer.complete();
           }
         });
     });
   }
 
-  public loadInspectionDetails(quoteNumber: string) {
-    let body = {
-      cotizacion: quoteNumber
-    };
-
+  public loadInspectionDetails(quoteNumber: string): Observable<InspectionsDataResponse> { 
+    let body = new InspectionDataRequest(quoteNumber)
     return Observable.create((observer) => {
       this.httpClient
         .post(BaseUrl.loadInspectionDetails, body, false)
         .subscribe((data) => {
+          //console.log(data)
           if (data.status && data.data !== null) {
 
-            console.log('loadInspectionDetails data', data);
-
+            //console.log('loadInspectionDetails data', data);
+/*
             var result = data.data;
-            result.numDocumento = result.numeroDocumento;
+            result.numDocumento = result.numDocumento;
             result.suma_asegurada = result.sumaAsegurada;
             result.uso_cod = result.usoCod;
             result.tipo_codigo = result.tipoCodigo; //.toString();
-            result.origen_veh = result.origenVeh; 
-            result.marca_codigo = result.marcaCodigo.toString();
-            result.linea_codigo = result.lineaCodigo.toString();
+            result.origen_veh = result.origenVeh;
+            result.marca_codigo = "result.marca.toString()";
+            result.linea_codigo = "result.lineaCodigo.toString()";
             result.ciudad_codigo = result.ciudadCodigo;
-            result.departamento_codigo = result.departamentoCodigo.toString();
-            
-            console.log('loadInspectionDetails result', result);
+            result.departamento_codigo = "result.departamentoCodigo.toString()";
+            */
 
-            observer.next({ status: true, data: result });
+            observer.next(data); 
             observer.complete();
           } else {
             observer.next({ status: data.status, data: data.error });
@@ -135,16 +130,8 @@ export class InspectionService {
     });
   }
 
-  public uploadInspection(body: any) {
-    // let prefix = ContextService.getPrefixAPI();
-    // body = ContextService.getBodyAPI(body);
-    body = {
-      "usuario": body.usuario,
-      "numeroDeCotizacion": body.numeroCotizacion,
-      "resultado": body.resultado,
-      "comentarios": body.comentarios
-    };
-
+  public uploadInspection(body: sendResponseRequest[]) { 
+    
     return Observable.create((observer) => {
       this.httpClient
         .post(BaseUrl.uploadInspection, body, false)

@@ -43,19 +43,9 @@ export class InstructionsPage implements OnInit {
     this.navCtrl.pop();
   }*/
 
-  public next(){
+  public next(){ 
 
-    console.log('ContextService.numeroCotizacionFromURL', ContextService.numeroCotizacionFromURL);
-    console.log('ContextService.location.country', ContextService.location.country);
-    console.log('ConstantsService.PANAMA_CODE', ConstantsService.PANAMA_CODE);
-
-    if(ContextService.numeroCotizacionFromURL && ContextService.numeroCotizacionFromURL.length > 0 && ContextService.location.country === ConstantsService.PANAMA_CODE){
-      ContextService.userSession.userType = 'C';
-      this.loadInspections();
-    }
-    else{
-      return this.router.navigateByUrl('/login');
-    }
+    return this.router.navigateByUrl('/login');
 
     // alert('jjj');
     // this.navCtrl.push(LoginPage);
@@ -107,8 +97,8 @@ export class InstructionsPage implements OnInit {
 
           } else {
 
-            // console.log('ContextService.location.country', ContextService.location.country);
-            // console.log('ConstantsService.GUATEMALA_CODE', ConstantsService.GUATEMALA_CODE);
+            // //console.log('ContextService.location.country', ContextService.location.country);
+            // //console.log('ConstantsService.GUATEMALA_CODE', ConstantsService.GUATEMALA_CODE);
 
             // if(ContextService.location.country === ConstantsService.GUATEMALA_CODE) {
             //   this.getInspectionNumber();
@@ -143,7 +133,7 @@ export class InstructionsPage implements OnInit {
     ).subscribe(result => {
           this.loadingServiceProvider.hideLoading();
 
-          // console.log('loadInspectionDetails result.data', result.data);
+          // //console.log('loadInspectionDetails result.data', result.data);
 
           if(result.data.numDocumento !== null){
             ContextService.currentInspection = Object.assign(ContextService.currentInspection, result.data);
@@ -156,8 +146,8 @@ export class InstructionsPage implements OnInit {
           ContextService.carDamages = [];
           ContextService.accessories = []; 
           
-          console.log('loadInspectionDetails currentInspection', ContextService.currentInspection);
-          console.log('result.data', result.data);
+          //console.log('loadInspectionDetails currentInspection', ContextService.currentInspection);
+          //console.log('result.data', result.data);
 
           // this.navController.push(CustomerDataPage);
           ContextService.footerMenuOptions[0]['status'] = 2;
@@ -179,16 +169,16 @@ export class InstructionsPage implements OnInit {
   //   this.stringsServiceProvider.getStrings(countryCode)
   //     .subscribe(result => {
 
-  //       console.log(result);
+  //       //console.log(result);
 
   //       if (result.status && result.data != null) {
   //         ContextService.location.country = countryCode;
   //         ConfigService.strings = result.data;
   //         ConfigService.apiUrl = ConfigService.strings.servicesURL;
   //         //this.helperStrings.carmaxage = parseInt(result.data.carMaxAge);
-  //         //console.log(this.helperStrings.carmaxage);
+  //         ////console.log(this.helperStrings.carmaxage);
 
-  //         console.log(ContextService.location);
+  //         //console.log(ContextService.location);
   //         // this.navCtrl.push(LoginPage);
   //       }
   //       else {

@@ -28,7 +28,7 @@ export class ModalSelectPage implements OnInit {
       private loadingServiceProvider: LoadingService
     ) {
     
-      console.log('ContextService.ModalSelectParametes', ContextService.ModalSelectParametes);
+      //console.log('ContextService.ModalSelectParametes', ContextService.ModalSelectParametes);
     
       this.listName = ContextService.ModalSelectParametes.listName; //navParams.get("listName");
       this.callbackList = ContextService.ModalSelectParametes.callbackList; //navParams.get("callbackList");
@@ -48,7 +48,7 @@ export class ModalSelectPage implements OnInit {
     this.strings = ConfigService.strings;
 
     this.loadingServiceProvider.showLoading();
-    console.log(this.listName);
+    //console.log(this.listName);
 
     if(this.listName == 'brands'){
       this.listDisplayName = this.strings.generalBrand;
@@ -81,14 +81,14 @@ export class ModalSelectPage implements OnInit {
       //   });
       // }
 
-      // console.log(this.itemList);
+      // //console.log(this.itemList);
 
       if(this.loadAtStart){
         this.itemListFiltered = this.itemList;
       }
 
-      console.log('itemListFiltered: ', this.itemListFiltered);
-      console.log('itemList: ', this.itemList);
+      //console.log('itemListFiltered: ', this.itemListFiltered);
+      //console.log('itemList: ', this.itemList);
 
       this.loadingServiceProvider.hideLoading();
     }, 500);
@@ -166,14 +166,14 @@ export class ModalSelectPage implements OnInit {
       this.itemListFiltered = this.loadAtStart ? this.itemList : [];
     }
     
-    console.log('this.itemListFiltered.length: ', this.itemListFiltered.length);
+    //console.log('this.itemListFiltered.length: ', this.itemListFiltered.length);
 
   }
 
   public onCancelSearch($event){
     this.itemListFiltered = this.loadAtStart ? this.itemList : [];
 
-    console.log('onCancelSearch this.itemListFiltered: ', this.itemListFiltered);
+    //console.log('onCancelSearch this.itemListFiltered: ', this.itemListFiltered);
   }
 
   public back() {

@@ -12,9 +12,7 @@ import { InspectionService } from 'src/app/services/remote/inspection/inspection
 import { LoadingService } from 'src/app/services/infrastructure/loading/loading.service';
 import { LogInfoService } from 'src/app/services/infrastructure/log-info/log-info.service';
 // import { StorageService } from 'src/app/services/infrastructure/storage/storage.service';
-import { AuthService } from 'src/app/services/remote/auth/auth.service';
-import { CarBrandsService } from 'src/app/services/remote/car-brands/car-brands.service';
-import { CarColorsService } from 'src/app/services/remote/car-colors/car-colors.service';
+import { AuthService } from 'src/app/services/remote/auth/auth.service'; 
 import { CarTypesService } from 'src/app/services/remote/car-types/car-types.service';
 import { CarUsesService } from 'src/app/services/remote/car-uses/car-uses.service';
 import { CitiesService } from 'src/app/services/remote/cities/cities.service';
@@ -79,9 +77,7 @@ export class CustomerDataPage implements OnInit {
       private authService: AuthService,
       public navCtrl: NavController,
       //
-      private inspectionProvider: InspectionService,
-      private carBrandsServiceProvider: CarBrandsService,
-      private carColorsServiceProvider: CarColorsService,
+      private inspectionProvider: InspectionService, 
       private carUsesServiceProvider: CarUsesService,
       private carTypesServiceProvider: CarTypesService,
       //
@@ -97,7 +93,7 @@ export class CustomerDataPage implements OnInit {
       ContextService.footerMenuOptions[this.currentPage - 1]['status'] = 1;
     }
 
-    console.log('ContextService.currentInspection', ContextService.currentInspection);
+    //console.log('ContextService.currentInspection', ContextService.currentInspection);
 
     this.constantsProvider = ConstantsService;
     this.footerState = IonPullUpFooterState.Collapsed;
@@ -120,18 +116,13 @@ export class CustomerDataPage implements OnInit {
     
     this.currentInspection.origen = this.currentInspection.origen_veh;
 
-    console.log('this.currentInspection', this.currentInspection);
+    //console.log('this.currentInspection', this.currentInspection);
 
     if(this.stateCode && this.stateCode.length > 0){
       this.getCities();
     }
 
-    console.log('this.brandCode', this.brandCode);
-    console.log('this.brandCode.length ', this.brandCode.length );
-
-    if(this.brandCode && this.brandCode.length > 0){
-      this.getCarBrandLines();
-    }
+    this.loadingServiceProvider.hideLoading();
   }
 
   ionViewDidLoad() {
@@ -140,7 +131,7 @@ export class CustomerDataPage implements OnInit {
 
   // INICIO DE COMPONENTES
   ngOnInit() {
-
+ 
     this.strings = ConfigService.strings;
     // this.currentInspection.cliente.codPais = ContextService.location.country;
 
@@ -149,17 +140,14 @@ export class CustomerDataPage implements OnInit {
     // }else{
     //   this.Usuario = ContextService.userSession;
     // }
-    // console.log(this.Usuario);
+    // //console.log(this.Usuario);
     this.setupForm();
 
     // if (this.currentInspection.cliente.nomCliente === null || this.currentInspection.cliente.nomCliente === ''){
     //   this.get_Customer();
     // }
     // else{
-
-    // console.log("country", ContextService.location.country);
-    // console.log("COSTARICA_CODE", ConstantsService.COSTARICA_CODE);
-
+ /*
     if (ContextService.location.country !== ConstantsService.COSTARICA_CODE) {
       this.getDocumentTypes();
       this.getSources();
@@ -169,7 +157,7 @@ export class CustomerDataPage implements OnInit {
       this.getCarBrands();
       this.getCarUses();
       this.getCarColors();
-    }
+    }*/
   }
 
   private getDocumentTypes() {
@@ -225,95 +213,7 @@ export class CustomerDataPage implements OnInit {
       });
     }
   }
-
-  private getCarTypes() {
-
-
-    if(this.isCountry([ConstantsService.HONDURAS_CODE, ConstantsService.GUATEMALA_CODE])){
-      this.loadingServiceProvider.showLoading();
-
-      this.carTypesServiceProvider.getCarTypes(ContextService.location.country).subscribe(result => {
-        if (result.status && result.data != null) {
-          this.carTypes = result.data;
-        } else {
-          this.alertServiceProvider.show('Error', result.data);
-        }
-  
-        this.loadingServiceProvider.hideLoading();
-      });
-    }
-    else{
-      this.carTypes = [
-        {
-          'codigo': '1',
-          'nombre': 'Automóvil'
-        },
-        {
-          'codigo': '2',
-          'nombre': 'Camioneta'
-        },
-        {
-          'codigo': '3',
-          'nombre': 'Pick Up'
-        },
-        {
-          'codigo': '4',
-          'nombre': 'Pick-Up Doble cabina'
-        },
-        {
-          'codigo': '5',
-          'nombre': 'Microbús'
-        },
-        {
-          'codigo': '6',
-          'nombre': 'Panel'
-        },
-        {
-          'codigo': '7',
-          'nombre': 'Camión'
-        },
-        {
-          'codigo': '8',
-          'nombre': 'Motocicleta'
-        },
-        {
-          'codigo': '9',
-          'nombre': 'Otro'
-        }
-      ];
-    }
-  }
-
-  private getTracks() {
-
-    // Automóvil, Camioneta, Pick Up, Pick-Up Doble cabina, Microbús, Panel, Camión, Motocicleta, Otro.
-
-    this.tracks = [
-      {
-        'id': 'Sencilla',
-        'name': 'Sencilla'
-      },
-      {
-        'id': '4X4',
-        'name': '4X4'
-      }
-    ];
-  }
-
-  private getSources() {
-    
-    this.sources = [
-      {
-        'id': 'IMPORTADO',
-        'name': 'Importado'
-      },
-      {
-        'id': 'AGENCIA',
-        'name': 'Agencia'
-      }
-    ];
-  }
-
+ 
   // CONFIGURACION DEL FORMULARIO Y VALIDACIONES
   private setupForm() {
     this.formGroup = new UntypedFormGroup({
@@ -358,70 +258,7 @@ export class CustomerDataPage implements OnInit {
       amount: new UntypedFormControl('', this.strings.carInfoVin_Mandatory == '1' ? [Validators.required] : [])
     });
   }
-  
-  private getCarBrands() {
-    this.loadingServiceProvider.showLoading();
-
-    this.carBrandsServiceProvider.getCarBrands(ContextService.location.country).subscribe(result => {
-
-      console.log('getCarBrands result', result);
-
-      if (result.status && result.data != null) {
-        this.carBrands = result.data;
-      } else {
-        this.alertServiceProvider.show('Error', result.data);
-      }
-
-      this.loadingServiceProvider.hideLoading();
-    });
-  }
-  //
-  private getCarBrandLines() {
-    this.loadingServiceProvider.showLoading();
-
-    this.carBrandsServiceProvider.getCarBrandLines(this.brandCode, ContextService.location.country).subscribe(result => {
-      if (result.status && result.data != null) {
-
-        this.carBrandLines = result.data;
-
-      } else {
-        // this.alertServiceProvider.show('Error', result.data);
-      }
-
-      this.loadingServiceProvider.hideLoading();
-    });
-  }
-  //
-  private getCarColors() {
-    this.loadingServiceProvider.showLoading();
-
-    this.colorName = this.currentInspection.color;
-
-    this.carColorsServiceProvider.getCarColors(ContextService.location.country).subscribe(result => {
-      if (result.status && result.data != null) {
-        this.carColors = result.data;
-
-      } else {
-        this.alertServiceProvider.show('Error', result.data);
-      }
-
-      this.loadingServiceProvider.hideLoading();
-    });
-  }
-  //
-  private getCarUses() {
-    this.loadingServiceProvider.showLoading();
-
-    this.carUsesServiceProvider.getCarUses(ContextService.location.country).subscribe(result => {
-      if (result.status && result.data != null) {
-        this.carUses = result.data;
-      } else {
-        this.alertServiceProvider.show('Error', result.data);
-      }
-
-      this.loadingServiceProvider.hideLoading();
-    });
-  }
+ 
 
   // BOTON ATRAS
   public back() {
@@ -435,30 +272,14 @@ export class CustomerDataPage implements OnInit {
   // BOTON CONTINUAR
   public next() {
 
-    if(this.getUserType() !== 'C' || ContextService.location.country === ConstantsService.GUATEMALA_CODE){
-      const data = this.formGroup.value;
-      //const CarAgeMax = parseInt(ConfigService.strings.carMaxAge);
-      //const EnterAgeCar = parseInt(data.model);
-
-      if(this.isDisabled()){
-        ContextService.footerMenuOptions[this.currentPage - 1]['status'] = 2;
-        // this.navController.push(CarLegalPicturesPage);
-        return this.router.navigateByUrl('/car-legal-pictures');
-      }
-      else{
-        this.updateInspection();
-      }
-    }
-    else{
-      ContextService.footerMenuOptions[this.currentPage - 1]['status'] = 2;
-      // this.navController.push(CarLegalPicturesPage);
-      return this.router.navigateByUrl('/car-legal-pictures');
-    }
+    ContextService.footerMenuOptions[this.currentPage - 1]['status'] = 2;
+    // this.navController.push(CarLegalPicturesPage);
+    return this.router.navigateByUrl('/car-legal-pictures');
   }
 
   NextFinish () {
 
-    console.log('ContextService.currentInspection', ContextService.currentInspection);
+    //console.log('ContextService.currentInspection', ContextService.currentInspection);
 
     this.loadingServiceProvider.hideLoading();
     // this.navController.push(CarLegalPicturesPage);
@@ -469,16 +290,16 @@ export class CustomerDataPage implements OnInit {
 
     var body = ContextService.currentInspection;
     body.ciudad = this.cityName;
-    body.ciudad_codigo = this.cityCode;
-    body.departamento = this.stateName;
-    body.departamento_codigo = this.stateCode;
+    //body.ciudad_codigo = this.cityCode;
+    //body.departamento = this.stateName;
+    //body.departamento_codigo = this.stateCode;
     body.marca = this.brandName;
     body.linea = this.brandLineName;
     body.color = this.colorName;
-    body.color_codigo = this.colorCode;
-    body.marca_codigo = this.brandCode;
-    body.linea_codigo = this.codLinea;
-    body.pais = ContextService.location.country;
+    //body.color_codigo = this.colorCode;
+    //body.marca_codigo = this.brandCode;
+    body.linea = this.codLinea;
+    //body.pais = ContextService.location.country;
 
     const currentYear = parseInt(dateFormat(new Date(), 'yyyy')) + 1;
     const carModel = parseInt(body.modelo);
@@ -492,7 +313,7 @@ export class CustomerDataPage implements OnInit {
     this.loadingServiceProvider.showLoading();
 
 
-
+/*
     if(!body.origen || body.origen.length == 0){
       body.origen = body.origen_veh;
     }
@@ -500,19 +321,19 @@ export class CustomerDataPage implements OnInit {
     if(!body.origen_veh || body.origen_veh.length == 0){
       body.origen_veh = body.origen;
     }
-
-    body.version_cod = body.linea_codigo;
-    body.version_codigo = body.version_cod;
+*/
+    //body.version_cod = body.linea_codigo;
+    //body.version_codigo = body.version_cod;
     body.version = body.linea;
     
     const filteredUse = this.carUses.filter(item => {
-      return item.codigo === body.uso_cod;
+      return item.codigo === body.uso;
     });
 
     if (filteredUse.length > 0) {
       body.uso = filteredUse[0].descripcion;
     }
-
+/*
     const filteredType = this.carTypes.filter(item => {
       return item.codigo === body.tipo_codigo;
     });
@@ -524,14 +345,14 @@ export class CustomerDataPage implements OnInit {
     body.tipo_cod = body.tipo_codigo;
     body.tipo_desc = body.tipo;
     body.marca_cod = body.marca_codigo;
-    body.color_cod = body.color_codigo;
+    body.color_cod = body.color_codigo;*/
 
-    console.log('updateInspection body: ', body);
+    //console.log('updateInspection body: ', body);
 
     this.inspectionProvider.updateInspection(body).subscribe(result => {
           this.loadingServiceProvider.hideLoading();
 
-          console.log('updateInspection result', result);
+          //console.log('updateInspection result', result);
   
           if(result.responseData && !result.responseData.error) {
             ContextService.footerMenuOptions[this.currentPage - 1]['status'] = 2;
@@ -550,11 +371,11 @@ export class CustomerDataPage implements OnInit {
   }
 
   footerExpanded() {
-    // console.log('Footer expanded!');
+    // //console.log('Footer expanded!');
   }
 
   footerCollapsed() {
-    // console.log('Footer collapsed!');
+    // //console.log('Footer collapsed!');
   }
 
   toggleFooter() {
@@ -568,7 +389,7 @@ export class CustomerDataPage implements OnInit {
 
   public isDisabled() {
     // return false;
-    return ContextService.location.country === ConstantsService.COSTARICA_CODE
+    return true
   }
 
   public openList(event: Event, controller: any, name: any, list: any, callback: any, loadAtStart: boolean) {
@@ -616,8 +437,8 @@ export class CustomerDataPage implements OnInit {
       controller.colorCode = item.codigo as string;
       controller.colorName = item.descripcion; 
 
-      console.log('colors selected item: ', item);
-      console.log('colors selected controller.colorCode: ', controller.colorCode);
+      //console.log('colors selected item: ', item);
+      //console.log('colors selected controller.colorCode: ', controller.colorCode);
 
     } else if (listName == 'brandLines') {
       controller.codLinea = item.codigo;
@@ -625,49 +446,20 @@ export class CustomerDataPage implements OnInit {
       // controller.codGremioPais = item.codGremioLinea;
     }
   }
-
-  // OBTENER ESTADOS
-  private getStates() {
-    this.loadingServiceProvider.showLoading();
-
-    this.statesServiceProvider.getStates(
-      ContextService.location.country
-    ).subscribe(result => {
-
-      console.log('getStates result', result);
-
-      if (result.status && result.data != null) {
-        this.states = result.data;
-
-        // const filtered = this.states.filter(item => {
-        //   return item['codProv'] === this.currentInspection.cliente.codProv;
-        // });
-
-        // if (filtered.length > 0) {
-        //   this.getCities();
-        //   this.stateName = filtered[0].nomProv;
-        // }
-
-      } else {
-        this.alertServiceProvider.show('Error', result.data);
-      }
-      this.loadingServiceProvider.hideLoading();
-    });
-  }
+ 
 
   // LLAMADO DESDE EL CALLBACKLIST PARA OBTENER CIUDADES
   private getCities() {
 
     this.loadingServiceProvider.showLoading();
 
-    this.citiesServiceProvider.getCities(
-      ContextService.location.country,
+    this.citiesServiceProvider.getCities( 
       this.stateCode
     ).subscribe(result => {
       if (result.status && result.data != null) {
         this.cities = result.data;
 
-        // console.log(this.currentInspection.cliente.codLocalidad);
+        // //console.log(this.currentInspection.cliente.codLocalidad);
 
         // const filtered = this.cities.filter(item => {
         //   return item['codLocalidad'] === this.currentInspection.cliente.codLocalidad;
@@ -685,23 +477,7 @@ export class CustomerDataPage implements OnInit {
       this.loadingServiceProvider.hideLoading();
     });
   }
-
-  public isCountry(list) {
-
-    let exist = false;
-
-    if(list && list.length > 0){
-      list.forEach(element => {
-        if(ContextService.location.country === element){
-          exist = true;
-        }
-      });
-    }
-
-    return exist;
-    // return ContextService.location.country === ConstantsService.GUATEMALA_CODE;
-  }
-
+ 
   public isReadOnly(){
     return false;
   }

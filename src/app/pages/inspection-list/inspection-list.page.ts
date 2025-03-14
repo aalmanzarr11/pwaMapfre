@@ -34,9 +34,9 @@ export class InspectionListPage implements OnInit {
 
     this.inspections = ContextService.inspectionList; 
     //navParams.get('inspections');
-    console.log(this.inspections);
-    // console.log(ContextService.accessories);
-    // console.log(ContextService.currentInspection);
+    //console.log(this.inspections);
+    // //console.log(ContextService.accessories);
+    // //console.log(ContextService.currentInspection);
   }
 
   ngOnInit() {
@@ -53,12 +53,12 @@ export class InspectionListPage implements OnInit {
     //                      ContextService.currentInspection.inspeccion.numInsp != '';
     // this.inspections = hasInspections ? [ContextService.currentInspection] : [];
 
-    console.log("ContextService.footerMenuOptions1:", ContextService.footerMenuOptions);
+    //console.log("ContextService.footerMenuOptions1:", ContextService.footerMenuOptions);
   }
 
   // public loadInspectionsByInspector(){
 
-  //   // console.log(ContextService.userSession);
+  //   // //console.log(ContextService.userSession);
 
   //   // if(this.formGroup.valid){
 
@@ -91,7 +91,7 @@ export class InspectionListPage implements OnInit {
       // ContextService.init();
       // inspection.new = false;
       // ContextService.currentInspection = inspection;
-      // console.log('ContextService.currentInspection: ', ContextService.currentInspection);
+      // //console.log('ContextService.currentInspection: ', ContextService.currentInspection);
 
       if(inspection.numeroCotizacion != null) {
         ContextService.currentInspection.numeroCotizacion = inspection.numeroCotizacion;
@@ -115,7 +115,7 @@ export class InspectionListPage implements OnInit {
       // this.getPartImages(inspection.inspeccion);
     }
 
-    // console.log(ContextService.carParts);
+    // //console.log(ContextService.carParts);
 
 
 
@@ -153,8 +153,8 @@ export class InspectionListPage implements OnInit {
 
   // public loadInspectionDetails() {
 
-  //   // console.log('ContextService.currentInspection.numeroCotizacion', ContextService.currentInspection['numeroCotizacion']);
-  //   // console.log('ContextService.currentInspection.numeroCotizacion', ContextService.currentInspection.numeroCotizacion);
+  //   // //console.log('ContextService.currentInspection.numeroCotizacion', ContextService.currentInspection['numeroCotizacion']);
+  //   // //console.log('ContextService.currentInspection.numeroCotizacion', ContextService.currentInspection.numeroCotizacion);
 
   //   this.loadingServiceProvider.showLoading();
 
@@ -166,12 +166,12 @@ export class InspectionListPage implements OnInit {
 
   //         ContextService.currentInspection = Object.assign(ContextService.currentInspection, result.data);
 
-  //         console.log('loadInspections result', result);
-  //         console.log('ContextService.currentInspection', ContextService.currentInspection);
+  //         //console.log('loadInspections result', result);
+  //         //console.log('ContextService.currentInspection', ContextService.currentInspection);
 
   //         // ContextService.footerMenuOptions[1]['status'] = 2;
 
-  //         console.log("ContextService.footerMenuOptions:", ContextService.footerMenuOptions);
+  //         //console.log("ContextService.footerMenuOptions:", ContextService.footerMenuOptions);
 
   //         this.navController.push(CustomerDataPage);
 
@@ -184,46 +184,44 @@ export class InspectionListPage implements OnInit {
 
   // }
 
-
+/*
   private getAccessories(inspection: any) {
 
     this.loadingServiceProvider.showLoading();
     this.carAccessoriesProvider.getAccessories(inspection).subscribe(result => {
 
-      console.log(result);
+      //console.log(result);
 
       if (result.status && result.data != null && result.data.accesorios) {
 
         for (const accesorio of result.data.accesorios) {
           ContextService.accessories.push({
-            'accesorio': accesorio
+              accesorio
           });
         }
 
         this.loadingServiceProvider.showLoading();
         this.imagesServiceProvider.getImages(inspection, 'ACCESORIO').subscribe(result => {
 
-          console.log(result);
+          //console.log(result);
 
           if (result.status && result.data != null && result.data.fotos) {
             for (const accessory of ContextService.accessories) {
 
-              // console.log(result.data.fotos);
+              // //console.log(result.data.fotos);
 
               const image = result.data.fotos.filter(item => {
 
-                console.log(item.codigo);
-                console.log(item.subCodigo);
-                console.log(accessory.accesorio.codTipAccesorio);
-                console.log(accessory.accesorio.codAccesorio);
+                //console.log(item.codigo);
+                //console.log(item.subCodigo); 
 
-                // return String(item.codigo) === String(accessory.accesorio.codTipAccesorio) &&
-                //         String(item.subCodigo) === String(accessory.accesorio.codAccesorio);
+                // return String(item.codigo) === String(accessory.codTipAccesorio) &&
+                //         String(item.subCodigo) === String(accessory.codAccesorio);
 
-                return String(item.subCodigo) === String(accessory.accesorio.codAccesorio);
+                return String(item.subCodigo) === String(accessory.codAccesorio);
               });
 
-              // console.log(image);
+              // //console.log(image);
 
               if (image.length > 0) {
                 accessory['foto'] = image[0];
@@ -312,5 +310,5 @@ export class InspectionListPage implements OnInit {
     });
 
   }
-
+*/
 }

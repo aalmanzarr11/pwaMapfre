@@ -50,16 +50,14 @@ export class StringsService {
   //   return 
   // }
 
-  public getStringsStatic(countryCode: string) {
-    console.log(countryCode," CODE")
+  public getStringsStatic( ) { 
       let data = null;
 
       data = CrStringsService.data;
- 
-      ContextService.location.country = 506;
+  
       ConfigService.strings = data;
 
-      console.log(ConfigService.strings," DATA") 
+      //console.log(ConfigService.strings," DATA") 
       return Observable.create(observer => {
         observer.next({ status: true, data: data});
       });
@@ -70,7 +68,7 @@ export class StringsService {
   public getConfig() {
 
     
-    console.log("OUTPUT: ",  environment.urlBase);
+    //console.log("OUTPUT: ",  environment.urlBase);
     ConfigService.apiUrl = environment.urlBase; 
     
   }

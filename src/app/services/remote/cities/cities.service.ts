@@ -12,7 +12,7 @@ export class CitiesService {
 
   constructor(public httpClient: HttpClientService, private tokenService : TokenService) {}
 
-  public getCities(countryCode: string, stateCode: string) {
+  public getCities( stateCode: string) {
 
     var body = {
       "codigo": stateCode

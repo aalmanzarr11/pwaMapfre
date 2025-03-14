@@ -48,7 +48,7 @@ export class ConnectionService {
 
   public getNetworkStatus(): Observable<ConnectionStatus> {
 
-      console.log(this.status);
+      //console.log(this.status);
       return this._status.asObservable();
   }
   

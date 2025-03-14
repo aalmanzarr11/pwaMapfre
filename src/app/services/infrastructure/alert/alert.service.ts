@@ -33,14 +33,14 @@ export class AlertService {
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            // console.log('Cancel clicked');
+            // //console.log('Cancel clicked');
             cancelCallback();
           }
         },
         {
           text: 'Aceptar',
           handler: () => {
-            // console.log('Buy clicked');
+            // //console.log('Buy clicked');
             confirmCallback(controller);
           }
         }

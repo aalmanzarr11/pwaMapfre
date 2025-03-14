@@ -26,14 +26,14 @@
 
               <ion-item *ngIf="registerCredentials.userType != 'C'" color="primary">
                 <ion-label color="light" position="stacked">{{strings.loginLabelUsername}}:</ion-label>
-                <ion-input type="text" placeholder="" name="email" #emailInput formControlName="email" autocapitalize="none" autocorrect="none" position="stacked"
-                  autocomplete="none" spellcheck="none" minLength="0" maxLength="50" [(ngModel)]="registerCredentials.email" (keyup.enter)="onKeyupEnter($event)"></ion-input>
+                <ion-input type="text" placeholder="" name="Username" #emailInput formControlName="Username" autocapitalize="none" autocorrect="none" position="stacked"
+                  autocomplete="none" spellcheck="none" minLength="0" maxLength="50" [(ngModel)]="registerCredentials.Username" (keyup.enter)="onKeyupEnter($event)"></ion-input>
               </ion-item>
 
               <ion-item *ngIf="registerCredentials.userType != 'C'" color="primary">
                 <ion-label color="light"  position="stacked">{{strings.loginLabelPassword}}:</ion-label>
-                <ion-input type="password" placeholder="" name="password" #passwordInput formControlName="password" position="stacked"
-                minLength="0" maxLength="50" [(ngModel)]="registerCredentials.password"
+                <ion-input type="Password" placeholder="" name="Password" #passwordInput formControlName="Password" position="stacked"
+                minLength="0" maxLength="50" [(ngModel)]="registerCredentials.Password"
                   (keyup.enter)="onKeyupEnter($event)"></ion-input>
               </ion-item>
 

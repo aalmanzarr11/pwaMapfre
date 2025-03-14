@@ -60,7 +60,7 @@ export class CarDamageService {
       this.httpClient.post(BaseUrl.getDamages, body, false).subscribe(
         data => {
 
-          console.log(data);
+          //console.log(data);
 
           if(data.status && data !== null && data.data !== null && data.data.danos !== null){
             data.data.danos.forEach(element => {
@@ -68,7 +68,7 @@ export class CarDamageService {
             });
           }
 
-          // console.log(data);
+          // //console.log(data);
 
           observer.next(data);
           observer.complete();

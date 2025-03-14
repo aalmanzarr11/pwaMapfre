@@ -35,15 +35,12 @@ export class CarInspectionSuccessPage implements OnInit {
     // }
 
     if(ContextService.currentInspection != null && 
-        ContextService.currentInspection.inspeccion){
+        ContextService.currentInspection){
       
       // numInsp
-      this.currentInspection = ContextService.currentInspection.inspeccion;
+      this.currentInspection = ContextService.currentInspection;
     }
-
-    console.log('this.currentInspection', this.currentInspection);
-    console.log('ContextService.currentInspection', ContextService.currentInspection);
-    console.log('ContextService.userSession', ContextService.userSession);
+ 
   }
 
   ionViewDidLoad() {
@@ -69,7 +66,7 @@ export class CarInspectionSuccessPage implements OnInit {
   //       {
   //         text: 'Aceptar',
   //         handler: () => {
-  //           console.log('Acepted clicked');
+  //           //console.log('Acepted clicked');
   //           window.location.replace(this.helperStrings.ReturnURL);
   //         }
   //       },
@@ -77,7 +74,7 @@ export class CarInspectionSuccessPage implements OnInit {
   //         text: 'Rechazar',
   //         role: 'cancel',
   //         handler: () => {
-  //           console.log('Cancel clicked');
+  //           //console.log('Cancel clicked');
   //         }
   //       }
   //     ]
@@ -90,8 +87,8 @@ export class CarInspectionSuccessPage implements OnInit {
   }
 
   public getInspectionStatus(){
-    return ContextService.currentInspection != null && ContextService.currentInspection.tipSituInsp ?
-    ContextService.currentInspection.tipSituInsp :
+    return ContextService.currentInspection != null && ContextService.currentInspection.uso ?
+    ContextService.currentInspection.uso :
     '';
   }
 

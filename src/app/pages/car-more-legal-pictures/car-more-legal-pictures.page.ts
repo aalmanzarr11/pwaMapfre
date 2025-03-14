@@ -53,81 +53,18 @@ export class CarMoreLegalPicturesPage implements OnInit {
   setCarType(type) {
     this.currentCarType = type;
     this.getCarParts();
-    console.log('this.currentCarType', this.currentCarType);
+    //console.log('this.currentCarType', this.currentCarType);
   }
 
-  getCarParts() {
-    // this.loadingServiceProvider.showLoading();
-
-    // this.carPartsProvider.getParts().subscribe(result => {
-    //   if (result.status && result.data != null) {
-    //     this.carParts = result.data.partes.filter(item => {
-    //       return item['codParte'].toLowerCase() > 11;
-    //     });
-    //   }
-    //   else {
-    //     this.alertServiceProvider.show('Error', result.data);
-    //   }
-
-    //   // this.loadingServiceProvider.hideLoading();
-    // });
-
-    if (ContextService.location.country === ConstantsService.PANAMA_CODE) {
-      this.carDocuments = [
-        {
-          'codParte': '15',
-          'descParte': 'Proforma o Registro Vehicular)'
-        },
-        {
-          'codParte': '16',
-          'descParte': 'Foto de cédula (nacionales) o fotocopia de pasaporte (extranjeros)'
-        },
-        {
-          'codParte': '17',
-          'descParte': 'Licencia vehicular'
-        }
-      ];
-    }
-    else if (ContextService.location.country === ConstantsService.NICARAGUA_CODE) {
-      this.carDocuments = [
-        {
-          'codParte': '15',
-          'descParte': 'Número de chasis (obligatorio)'
-        },
-        {
-          'codParte': '16',
-          'descParte': 'Foto de cédula (nacionales) o fotocopia de pasaporte (extranjeros) anverso (opcional)'
-        },
-        {
-          'codParte': '17',
-          'descParte': 'Foto de cédula (nacionales) o fotocopia de pasaporte (extranjeros) reverso (opcional)'
-        }
-      ];
-    }
-
-    // if (this.currentCarType === 0) {
-    //   this.carDocuments.push(
-    //     {
-    //       'codParte': '17',
-    //       'descParte': 'Proforma ó factura de compra'
-    //     }
-    //   );
-    // } else {
-    //   this.carDocuments.push(
-    //     {
-    //     'codParte': '17',
-    //     'descParte': 'Fotocopia de registro de propiedad vehicular del auto asegurar'
-    //     }
-    //   );
-    // }
+  getCarParts() { 
   }
 
   footerExpanded() {
-    // console.log("Footer expanded!");
+    // //console.log("Footer expanded!");
   }
 
   footerCollapsed() {
-    // console.log("Footer collapsed!");
+    // //console.log("Footer collapsed!");
   }
 
   toggleFooter() {
@@ -152,7 +89,7 @@ export class CarMoreLegalPicturesPage implements OnInit {
 
   public checkLegalImage(index) {
     
-    // console.log("checkLegalImage", index, ContextService.carDocuments[index]);
+    // //console.log("checkLegalImage", index, ContextService.carDocuments[index]);
 
     return ContextService.carDocuments != null &&
            ContextService.carDocuments[index] != null &&
@@ -189,13 +126,13 @@ export class CarMoreLegalPicturesPage implements OnInit {
     // }
     // this.logInfoClient.createLogInfo('toma  fotografía documentación', this.currentInspection.riesgo.codPlaca, ContextService.currentInspection.inspeccion.numInsp, '')
     //                                 .subscribe(res => {
-    //                                   console.log('Respuesta', res)
+    //                                   //console.log('Respuesta', res)
     //                                 }, err => {
-    //                                   console.log('Error at log', err)
+    //                                   //console.log('Error at log', err)
     //                                 });
 
     // ContextService.footerMenuOptions[this.currentPage - 1]['status'] = 2;
-    // console.log(ContextService.userSession);
+    // //console.log(ContextService.userSession);
     // this.navCtrl.push(CarPicturesPage);
 
     // if(ContextService.userSession.tipUsuario === 'P'){
@@ -240,7 +177,7 @@ export class CarMoreLegalPicturesPage implements OnInit {
 
   //           this.carDamageProvider.uploadDamage(damage.dano).subscribe(result => {
 
-  //             // console.log(result);
+  //             // //console.log(result);
 
   //             if (result && result.status) {
 
@@ -266,7 +203,7 @@ export class CarMoreLegalPicturesPage implements OnInit {
 
   //       this.carAccessoriesProvider.uploadAccessory(accessory.accesorio).subscribe(result => {
 
-  //         // console.log(result);
+  //         // //console.log(result);
 
   //         if (result && result.status) {
 
@@ -312,7 +249,7 @@ export class CarMoreLegalPicturesPage implements OnInit {
 
   //   this.imagesServiceProvider.uploadImage(carPhoto).subscribe(result => {
 
-  //     // console.log(result);
+  //     // //console.log(result);
 
   //     if (result && result.status) {
 

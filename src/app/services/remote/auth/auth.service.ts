@@ -6,6 +6,8 @@ import { HttpClientService } from '../../infrastructure/http-client/http-client.
 import { TokenService } from '../../infrastructure/token/token.service';
 import { HttpParams } from '@angular/common/http';  
 import { BaseUrl } from 'src/app/shared/baseUrl';
+import { TokenForm } from 'src/app/shared/Dtos/Requests/tokenForm.dto'; 
+import { TokenResponse } from 'src/app/shared/Dtos/Responses/tokenResponse.dto';
 export class User {
   name: string;
   email: string;
@@ -28,114 +30,24 @@ export class AuthService {
   ) {}
  
 
-  public token(credentials): Observable<any> {
-
-    console.log('credentials', credentials);
-
-    if (credentials.email === null || credentials.password === null) {
-      return Observable.throw('Please insert credentials');
-    } else {
-      return Observable.create(observer => {
-        let userType = 'Cliente';
-        switch(credentials.userType) { 
-          case 'P': { 
-            userType = 'Perito';
-             break; 
-          } 
-          case 'I': { 
-            userType = 'Intermediario';
-             break; 
-          }
-        } 
-
-        const body = {
-          "user": btoa(credentials.email),
-          "pass": btoa(credentials.password),
-          "tipo": userType,
-          "grant_type": credentials.grantType 
-        };
-
-        this.httpClient.post(BaseUrl.multipaistoken, body, false).subscribe(
-          data => {
-            observer.next({status: true, data: data.data});
-            observer.complete();
-          }
-        );
-      });
-    }
-  }
+  public token(credentials:TokenForm): Observable<TokenResponse> {
  
-  public tokenForm(credentials) : Observable<any>{
-
-    return Observable.create(observer => {
-
-      const payload = new HttpParams()
-        .set('Username', btoa(credentials.email))
-        .set('Password', btoa(credentials.password))
-        .set('grant_type', 'password');
-
-      console.log('formData', payload);
-
-      // this.http.post(url, payload);
-
-
-      this.httpClient.postForm(BaseUrl.token, payload).subscribe(
-        data => {
-          observer.next({status: true, data: data.data});
-          observer.complete();
-        }
-      );
-    });
-
-  }
-
-  public login(credentials) : Observable<any>{
-
-    if (credentials.email === null || credentials.password === null) {
+    if (credentials.Username === null || credentials.Password === null) {
       return Observable.throw('Please insert credentials');
     } else {
       return Observable.create(observer => {
-
-        // var body = {
-        //   "login" : {
-        //     "nomUsuario" : credentials.email, //"JPEREZ",
-        //     "txtClaveMd5": CryptoJS.MD5(credentials.password).toString(CryptoJS.enc.Hex), //"7e577f4f49b24ea60483424cd0915474",
-        //     "txtClave": credentials.password,
-        //     "tipUsuario" : credentials.userType
-        //   },
-        //   "token" : this.tokenService.getAuthentication()
-        // };
-
-        const body = {
-          'usuario': credentials.email, // 'JPEREZ',
-          'txtClaveMd5': credentials.password,
-          // 'txtClaveMd5': CryptoJS.MD5(credentials.password).toString(CryptoJS.enc.Hex), //  '7e577f4f49b24ea60483424cd0915474',
-          'tipUsuario': credentials.userType, //  'I',
-          'pais': ContextService.location.country
-        };
-
-        console.log('login body', body);
-
-        this.httpClient.post(BaseUrl.login, body, false).subscribe(
-          data => {
-            observer.next({status: true, data: data.data});
+       
+        this.httpClient.post(BaseUrl.token, credentials).subscribe(
+          data => {   
+            observer.next(data);
             observer.complete();
           }
         );
       });
     }
   }
-
-  public register(credentials): Observable<any> {
-    if (credentials.email === null || credentials.password === null) {
-      return Observable.throw('Please insert credentials');
-    } else {
-      return Observable.create(observer => {
-        observer.next(true);
-        observer.complete();
-      });
-    }
-  }
+  
+ 
 
   public getUserInfo(): User {
     return this.currentUser;

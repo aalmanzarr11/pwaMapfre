@@ -11,6 +11,8 @@ import { HelperStringsService } from 'src/app/services/infrastructure/helper-str
 import { LoadingService } from 'src/app/services/infrastructure/loading/loading.service';
 import { AuthService } from 'src/app/services/remote/auth/auth.service';
 import { UserinfoWebService } from 'src/app/services/remote/userinfo-web/userinfo-web.service';
+import { TokenForm } from 'src/app/shared/Dtos/Requests/tokenForm.dto';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -27,71 +29,19 @@ export class LoginPage implements OnInit {
   strings: any = {};
   userTypes: any;
   OSName = 'Unknown OS';
-  isMobile = false;
-  registerCredentials_PRO  = { email: '', password: '', userType : '', grantType: '' };
-  // registerCredentials_PRO = { email: 'cso_sa07@yahoo.com', password: '542823a4e9acbac64ec21659c5a7c415', userType: 'P', grantType: '' };
-
-  // registerCredentials_PRO  = { email: 'UTEST1', password: '123456', userType : 'I' };
-  // registerCredentials_DEV = { email: '', password: '', userType : '', grantType: '' };
+  isMobile = false; 
+  termsFile = ''; 
+  registerCredentials :TokenForm=new TokenForm(); 
 
 
-  // El Salvador
-  // registerCredentials_DEV = { email: 'dortega', password: 'Mapfre123', userType: 'P', grantType: '' };
-  // registerCredentials_DEV = { email: 'interTest', password: 'Mapfre$123', userType: 'I', grantType: '' };
-  // registerCredentials_DEV = { email: 'eamenji', password: 'Mapfre$123', userType: 'C', grantType: '' };
-
-  // HONDURAS
-  registerCredentials_DEV = { email: 'AGENTE2006', password: '*Alfa123', userType: 'I', grantType: '' };
-  // registerCredentials_DEV = { email: 'LGLEON1', password: '*Alfa123', userType: 'P', grantType: '' };
-  // registerCredentials_DEV = { email: 'AGENTE2006', password: '*Alfa123', userType: 'I', grantType: '' };
-  // registerCredentials_DEV = { email: 'OSLOPEZ', password: '*Alfa123', userType: 'I', grantType: '' };
-  // registerCredentials_DEV = { email: 'KDIAZ', password: '*Alfa123', userType: 'C', grantType: '' };
-  // registerCredentials_DEV = { email: '423205', password: '*Alfa123', userType: 'C', grantType: '' };
-
-
-  // Panamá
-  // registerCredentials_DEV = { email: 'UTEST1', password: '123456', userType : 'I' }; 
-  // registerCredentials_DEV = { email: 'UTEST2', password: 'Test123456', userType : 'I' };
-  // registerCredentials_DEV = { email: 'UTEST3', password: '123456', userType : 'P' };
-  // registerCredentials_DEV = { email: 'UTEST4', password: 'Test123456', userType : 'P' };
-
- // Guatemala
-  // registerCredentials_DEV = { email: 'grodriguez', password: 'Mapfregt01', userType : 'P', grantType: '' };
-
-
-  // CR
-  // registerCredentials_DEV = { email: 'perito.pwa', password: 'PWAPerit21.', userType: 'P', grantType: '' };
-  // registerCredentials_DEV = { email: 'intermediario.pwa', password: 'PWAInterm21.', userType: 'I', grantType: '' };
-
-
-  // NICARAGUA
-  // registerCredentials_DEV = { email: 'cso_sa07@yahoo.com', password: '542823a4e9acbac64ec21659c5a7c415', userType: 'P', grantType: '' };
-
-
-  // registerCredentials_DEV = { email: '', password: '', userType: 'P', grantType: '' };
-
-
-
-  termsFile = '';
-  // termsFile = this.isCurrentCountryPA() ? 'assets/docs/MAPFRE-PANAMA-S.A.-POLITICA-DE-PRIVACIDAD-01-02-2021.pdf' : 
-  //   'assets/docs/Politica_privacidad_MAPFRE_Guatemala.pdf';
-
-  registerCredentials = EnvironmentService.isProduction ?
-                        this.registerCredentials_PRO : this.registerCredentials_DEV;
-
-
-  constructor(
-    // private navController: NavController,
-    private authService: AuthService,
-    // private contextService: ContextServiceProvider,
+  constructor( 
+    private authService: AuthService, 
     private loadingServiceProvider: LoadingService,
     private alertServiceProvider: AlertService,
-    private helperStrings: HelperStringsService,
-    // public keyboard: Keyboard,
+    private helperStrings: HelperStringsService, 
     private userWebService: UserinfoWebService,
     private router: Router,
-    public formBuilder: UntypedFormBuilder) {
-      // console.log(keyboard);
+    public formBuilder: UntypedFormBuilder) { 
   }
 
   ionViewDidLoad() {
@@ -101,24 +51,16 @@ export class LoginPage implements OnInit {
   }
 
   // INICIO DE COMPONENTES
-  ngOnInit() {
-    // this.formGroup = new FormGroup({
-      // email: new FormControl('', [Validators.required]),
-      // password: new FormControl('', [Validators.required]),
-      // userType: new FormControl('', [Validators.required])
-    // });
-
+  ngOnInit() { 
     this.formGroup = this.formBuilder.group({
-      email: new UntypedFormControl('', [Validators.required]),
-      password: new UntypedFormControl('', [Validators.required]),
+      Username: new UntypedFormControl('', [Validators.required]),
+      Password: new UntypedFormControl('', [Validators.required]),
       userType: new UntypedFormControl('', [Validators.required])
     });
 
     this.strings = ConfigService.strings;
     this.termsFile = 'assets/docs/' + this.strings.privacy_file;
-
-    // console.log('this.strings:', this.strings);
-    // console.log('ContextServiceProvider.location.country', ContextServiceProvider.location.country);
+ 
     
     this.userTypes = this.strings.userTypes;
 
@@ -137,12 +79,10 @@ export class LoginPage implements OnInit {
     //     'name' : this.strings.loginLabelUserTypeCustomer
     //   }
     // ];
-
-    console.log('ContextServiceProvider.location.country', ContextService.location.country);
+ 
 
     this.DetectOS();
-
-    console.log('ContextServiceProvider.location.country', ContextService.location.country);
+ 
   }
 
   // NO ESTA HABILITADO PARA CREAR CUENTAS
@@ -152,36 +92,14 @@ export class LoginPage implements OnInit {
   }
 
   public submitForm() {
-
-    console.log('ContextServiceProvider.location.country', ContextService.location.country);
-
-    // if (this.registerCredentials.userType == 'C') {
-    //   this.autoInspect()
-    // } else {
-    //   this.token();
-    // }
-
+ 
     this.token();
-
-    // console.log('ConfigServiceProvider.strings.countryName', ConfigServiceProvider.strings.countryName);
-    // ConfigServiceProvider.strings
+ 
   }
-
-  public submitFormClient() {
-
-    console.log('submitFormClient');
-
-    ContextService.userSession.userType = 'C';
-    this.helperStrings.UsuarioActivo = ContextService.userSession.userType;
-    this.registerCredentials.userType = ContextService.userSession.userType;
-    this.token();
-    // setTimeout(this.token.bind(this), 500);
-  }
+ 
 
   token() {
-
-    console.log('token');
-
+ 
     if (!this.formGroup.valid && this.registerCredentials.userType != 'C') {
       this.alertServiceProvider.show('', this.strings.generalFormValidationError);
       return;
@@ -193,17 +111,13 @@ export class LoginPage implements OnInit {
     }
 
 
-    if(this.registerCredentials.userType != 'C'){
+    if(this.registerCredentials.userType == 'C'){ 
+      this.registerCredentials=new TokenForm(environment.user,environment.pss,"C");
+    }
       this.loadingServiceProvider.showLoading();
 
       this.registerCredentials.grantType = this.strings.grant_type;
-      this.authService.token(this.registerCredentials).subscribe(result => {
-  
-        console.log('ContextServiceProvider.location.country', ContextService.location.country);
-        
-        console.log('token result', result);
-        console.log('token result.data.access_token', result.data.access_token);
-  
+      this.authService.token(this.registerCredentials).subscribe(result => { 
   
         this.loadingServiceProvider.hideLoading();
   
@@ -214,7 +128,7 @@ export class LoginPage implements OnInit {
             this.accessSuccess(result);
           }
           else{
-            const description = result.data.error_description ? result.data.error_description : "Se presentó un error, por favor intente nuevamente";
+            const description = result.error? result.error: "Se presentó un error, por favor intente nuevamente";
             this.alertServiceProvider.show('Error', description);
           }
         }
@@ -227,54 +141,10 @@ export class LoginPage implements OnInit {
           this.loadingServiceProvider.hideLoading();
           this.alertServiceProvider.show('Error', error);
         }
-      );
-    }
-    else{
- 
-        this.autoInspect(); 
-      
-    }
+      ); 
 
   }
-
-  // // CLASE LLAMADA POR EL BOTON DE LOGIN
-  // public login() {
-
-  //   console.log('login registerCredentials', this.registerCredentials);
-
-  //   if (this.registerCredentials.userType === 'C') {
-
-  //     this.autoInspect()
-  //   } else {
-  //     if (!this.formGroup.valid) {
-  //       this.alertServiceProvider.show('', this.strings.generalFormValidationError);
-  //       return;
-  //     }
-
-  //     // if (!this.isMobile && EnvironmentServiceProvider.isProduction) {
-  //     //   this.alertServiceProvider.show('', 'Por integridad de la información lo invitamos a realizar su inspección desde un smartphone');
-  //     //   return;
-  //     // }
-
-  //     this.loadingServiceProvider.showLoading();
-
-  //     this.authService.login(this.registerCredentials).subscribe(result => {
-
-
-  //         console.log('result: ', result);
-  //         console.log('result.data.acceso: ', result.data.acceso);
-
-  //         this.loadingServiceProvider.hideLoading();
-  //         this.accessSuccess(result);
-  //       }
-  //       , error => {
-  //         this.loadingServiceProvider.hideLoading();
-  //         this.alertServiceProvider.show('Error', error);
-  //       }
-  //     );
-  //   }
-  // }
-
+ 
   public accessSuccess(result) {
   
     let userTypeName = "Cliente";
@@ -293,18 +163,18 @@ export class LoginPage implements OnInit {
     if (result.status) {
     // if (result.acceso  === 'true') {
 
-      localStorage.setItem('user', this.registerCredentials.email);
+      localStorage.setItem('user', this.registerCredentials.Username);
 
-      ContextService.userSession.nomUsuario = this.registerCredentials.email;
+      ContextService.userSession.nomUsuario = this.registerCredentials.Username;
       ContextService.userSession.userType = this.registerCredentials.userType;
       ContextService.userSession.userTypeName = userTypeName;
 
       // Guardando parametros de usuario para PWA
-      this.userWebService.username = this.registerCredentials.email;
+      this.userWebService.username = this.registerCredentials.Username;
       // this.userWebService.namecompleteduser = result.data.usuario.nomTercero;
       // this.userWebService.apellidocompleteuser = result.data.usuario.ape1Tercero;
 
-      console.log('ContextServiceProvider.location.country', ContextService.location.country);
+      ////console.log('ContextServiceProvider.location.country', ContextService.location.country);
 
       // this.navController.push(EnterCarPage);
       ContextService.isMenuVisible = true;
@@ -363,21 +233,18 @@ export class LoginPage implements OnInit {
 
   DetectOS() {
 
-    console.log(navigator.userAgent);
-    console.log(navigator.platform);
+    ////console.log(navigator.userAgent);
+    ////console.log(navigator.platform);
     if ( /Mobile|Android|iPhone/i.test(navigator.userAgent) ) {
        if (navigator.platform.indexOf('Android') != -1) { this.OSName = 'Android', this.isMobile = true; }
        if (navigator.platform.indexOf('Linux') != -1) { this.OSName = 'Android', this.isMobile = true; }
        if (navigator.platform.indexOf('null') != -1) { this.OSName = 'Android', this.isMobile = true; }
        if (navigator.platform.indexOf('iPhone') != -1) { this.OSName = 'iOS', this.isMobile = true; }
 
-      console.log(this.isMobile);
-      console.log('Your OS: ' + this.OSName);
+      ////console.log(this.isMobile);
+      ////console.log('Your OS: ' + this.OSName);
     }
   }
-
-  public isCurrentCountryPA() {
-    return ContextService.location.country === ConstantsService.PANAMA_CODE;
-  }
+ 
 
 }

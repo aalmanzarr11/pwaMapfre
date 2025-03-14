@@ -37,18 +37,10 @@
               <ion-item color="primary">
                   <ion-label color="secondary" position="stacked">{{strings.customerLabelDocumentType}}:</ion-label>
 
-                  <ion-input type="text" placeholder="" formControlName="documentType" [disabled]="isDisabled()" *ngIf="isCountry([constantsProvider.COSTARICA_CODE])"
+                  <ion-input type="text" placeholder="" formControlName="documentType" [disabled]="isDisabled()" 
                       [(ngModel)]="currentInspection.tipoDocumento" [readonly]="isReadOnly()" (ionFocus)="onFocusInput()" minLength="0"
                       MaxLength="20"></ion-input>
-
-                  <ion-select formControlName="documentType" [(ngModel)]="currentInspection.tipoDocumento" *ngIf="!isCountry([constantsProvider.COSTARICA_CODE])"
-                      okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}" [disabled]="isDisabled()">
-
-                      <ion-select-option *ngFor="let documentType of documentTypes" [value]="documentType.id">
-                          {{documentType.name}}
-                      </ion-select-option>
-
-                  </ion-select>
+ 
               </ion-item>
               <ion-label class="error" position="stacked" class="error" *ngIf="formGroup.get('documentType').hasError('required') && formGroup.get('documentType').touched">
                   {{strings.customerDocumentTypeError}}
@@ -155,7 +147,7 @@
                   </ion-label> -->
               </ion-item>
 
-              <ion-item style="margin-bottom: 20px;" *ngIf="isCountry([constantsProvider.COSTARICA_CODE])" color="primary">
+              <ion-item style="margin-bottom: 20px;"  color="primary">
                   <ion-label color="secondary" position="stacked">Distrito:</ion-label>
                   <ion-input type="text" placeholder="" formControlName="districtCode" [disabled]="isDisabled()"
                     [(ngModel)]="districtName" (click)="!isDisabled() ? openList($event, this, 'cities', cities, callbackList, true) : null" [readonly]="true"
@@ -202,79 +194,15 @@
       <ion-row style="margin-bottom: 100px;">
           <ion-col>
               <!-- <ion-list inset> -->
-
-                  <!-- TODO -->
-                  <ion-item *ngIf="isCountry([constantsProvider.GUATEMALA_CODE, constantsProvider.HONDURAS_CODE, constantsProvider.ELSALVADOR_CODE])" color="primary">
-                      <ion-label color="secondary" position="stacked">{{strings.carLabelSource}}:</ion-label>
-                      <!-- <ion-input type="text" placeholder="" formControlName="documentType" [disabled]="isDisabled()"
-                          [(ngModel)]="currentInspection.tipoDocumento" [readonly]="isReadOnly()" (ionFocus)="onFocusInput()" minLength="0"
-                          MaxLength="20"></ion-input> -->
-  
-                      <ion-select formControlName="carSource" [(ngModel)]="currentInspection.origen"
-                          okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}" [disabled]="isDisabled()">
-  
-                          <!-- <ion-select-option [value]="Importado">
-                              Importado
-                          </ion-select-option>
-                          <ion-select-option [value]="Agencia">
-                              Agencia
-                          </ion-select-option> -->
-
-                          <ion-select-option *ngFor="let source of sources" [value]="source.id">
-                              {{source.name}}
-                          </ion-select-option>
-  
-                      </ion-select>
-
-
-                      
-
-                  </ion-item>
-
+ 
               
 
                   <ion-item color="primary">
                       <ion-label color="secondary" position="stacked">{{strings.carLabelPlate}}:</ion-label>
                       <ion-input [(ngModel)]="currentInspection.placa" [readonly]="isReadOnly()" [disabled]="isDisabled()"
                           formControlName="plate" type="text" placeholder=""></ion-input>
-                  </ion-item>
-
-                  <!-- TODO -->
-
-                  <ion-item *ngIf="isCountry([constantsProvider.GUATEMALA_CODE, constantsProvider.ELSALVADOR_CODE, constantsProvider.HONDURAS_CODE])" color="primary">
-                      <ion-label color="secondary" position="stacked">{{strings.carLabelType}}:</ion-label>
-                      <!-- <ion-input type="text" placeholder="" formControlName="documentType" [disabled]="isDisabled()"
-                          [(ngModel)]="currentInspection.tipoDocumento" [readonly]="isReadOnly()" (ionFocus)="onFocusInput()" minLength="0"
-                          MaxLength="20"></ion-input> -->
-  
-                      <ion-select formControlName="carType" [(ngModel)]="currentInspection.tipo_codigo" *ngIf="carTypes?.length"
-                          okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}" [disabled]="isDisabled()">
-  
-                          <ion-select-option *ngFor="let carType of carTypes" [value]="carType.codigo">
-                              {{carType.nombre}}
-                          </ion-select-option>
-  
-                      </ion-select>
-                  </ion-item>
-                  <!-- <ion-label class="error" position="stacked" class="error" *ngIf="formGroup.get('documentType').hasError('required') && formGroup.get('documentType').touched">
-                      {{strings.customerDocumentTypeError}}
-                  </ion-label> -->
-
-                  <ion-item *ngIf="isCountry([constantsProvider.ELSALVADOR_CODE, constantsProvider.HONDURAS_CODE])" color="primary">
-                      <ion-label color="secondary" position="stacked">{{strings.carLabelTrack}}:</ion-label>
-                      <!-- <ion-input type="text" placeholder="" formControlName="documentType" [disabled]="isDisabled()"
-                          [(ngModel)]="currentInspection.tipoDocumento" [readonly]="isReadOnly()" (ionFocus)="onFocusInput()" minLength="0"
-                          MaxLength="20"></ion-input> -->
-  
-                      <ion-select formControlName="tracks" [(ngModel)]="currentInspection.tracks"
-                          okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}" [disabled]="isDisabled()">
-  
-                          <ion-select-option *ngFor="let documentType of tracks" [value]="documentType.id">
-                              {{documentType.name}}
-                          </ion-select-option>
-  
-                      </ion-select>
-                  </ion-item>
+                  </ion-item> 
+ 
 
                   <ion-item color="primary">
                       <ion-label color="secondary" position="stacked">{{strings.carLabelInfoBrand}}:</ion-label>
@@ -329,27 +257,11 @@
                   </ion-label>
 
 
-
-
-                  <ion-item color="primary" *ngIf="!isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">{{strings.carInfoLabelChasis}}:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.chasis" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="chasis" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-                  <ion-label class="error" position="stacked" class="error" *ngIf="formGroup.get('chasis').hasError('required') && formGroup.get('chasis').touched && !isCountry([constantsProvider.HONDURAS_CODE])" >
-                      {{strings.carInfoChasisError}}
-                  </ion-label>
-
+ 
 
                   <ion-item color="primary">
-                      <ion-label color="secondary" position="stacked">{{strings.carInfoLabelUse}}:</ion-label>
-                      <ion-select formControlName="uses" [(ngModel)]="currentInspection.uso_cod" okText="{{strings.generalButtonOk}}" *ngIf="!isCountry([constantsProvider.COSTARICA_CODE]) && carUses?.length > 0"
-                          cancelText="{{strings.generalButtonCancel}}" [disabled]="isDisabled()">
-                          <ion-select-option *ngFor="let use of carUses" [value]="use.codigo">
-                              {{use.descripcion}}
-                          </ion-select-option>
-                      </ion-select>
-                      <ion-input type="text" placeholder="" formControlName="uses" [disabled]="isDisabled()" *ngIf="isCountry([constantsProvider.COSTARICA_CODE])"
+                      <ion-label color="secondary" position="stacked">{{strings.carInfoLabelUse}}:</ion-label> 
+                      <ion-input type="text" placeholder="" formControlName="uses" [disabled]="isDisabled()" 
                           [(ngModel)]="currentInspection.uso" [readonly]="isReadOnly()" (ionFocus)="onFocusInput()" minLength="0"
                           MaxLength="20"></ion-input>
                   </ion-item>
@@ -403,12 +315,7 @@
                           placeholder="" 
                           maxlength="10"></ion-input>
                   </ion-item>
-
-                  <!-- <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">{{strings.carInfoLabelPassenger}}:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.passenger" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item> -->
+ 
 
                   <ion-item color="primary">
                       <ion-label color="secondary" position="stacked">{{strings.carInfoLabelVIN}}:</ion-label>
@@ -416,152 +323,7 @@
                           [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
                   </ion-item>
 
-                  <!-- <ion-item *ngIf="isCountry([constantsProvider.ELSALVADOR_CODE, constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Numero de asientos:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.sits" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" pattern="[0-9]*" type="tel" inputmode="numeric" 
-                          placeholder="" 
-                          maxlength="4"></ion-input>
-                  </ion-item> -->
-
-                  <!-- <ion-item *ngIf="isCountry([constantsProvider.ELSALVADOR_CODE, constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Tonelaje (Aplica en camiones):</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.weight" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" pattern="[0-9]*" type="tel" inputmode="numeric" 
-                          placeholder="" 
-                          maxlength="4"></ion-input>
-                  </ion-item> -->
-
-                  <!-- <ion-item *ngIf="isCountry([constantsProvider.ELSALVADOR_CODE, constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Combustible:</ion-label>
-  
-                      <ion-select formControlName="documentType" [(ngModel)]="currentInspection.gas"
-                          okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}" [disabled]="isDisabled()">
-  
-                          <ion-select-option [value]="1">
-                              Gasolina
-                          </ion-select-option>
-                          <ion-select-option [value]="2">
-                              Diésel
-                          </ion-select-option>
-                          <ion-select-option [value]="3">
-                              Eléctrico
-                          </ion-select-option>
-                          <ion-select-option [value]="4">
-                              Hibrido
-                          </ion-select-option>
-  
-                      </ion-select>
-                  </ion-item> -->
-
-                  <!-- <ion-item *ngIf="isCountry([constantsProvider.ELSALVADOR_CODE, constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Herramientas:</ion-label>
-  
-                      <ion-select formControlName="documentType" [(ngModel)]="currentInspection.toolbox"
-                          okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}" [disabled]="isDisabled()">
-  
-                          <ion-select-option [value]="1">
-                              SÍ
-                          </ion-select-option>
-                          <ion-select-option [value]="2">
-                              NO
-                          </ion-select-option>
-  
-                      </ion-select>
-                  </ion-item> -->
-
-                  <!-- <ion-item *ngIf="isCountry([constantsProvider.ELSALVADOR_CODE, constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Llanta de repuesto:</ion-label>
-  
-                      <ion-select formControlName="documentType" [(ngModel)]="currentInspection.spare"
-                          okText="{{strings.generalButtonOk}}" cancelText="{{strings.generalButtonCancel}}" [disabled]="isDisabled()">
-  
-                          <ion-select-option [value]="1">
-                              Fuera Rin Normal
-                          </ion-select-option>
-                          <ion-select-option [value]="2">
-                              Fuera Rin Especial
-                          </ion-select-option>
-                          <ion-select-option [value]="3">
-                              Dentro Rin Normal
-                          </ion-select-option>
-                          <ion-select-option [value]="4">
-                              Dentro Rin Especial
-                          </ion-select-option>
-                          <ion-select-option [value]="5">
-                              Dona
-                          </ion-select-option>
-                          <ion-select-option [value]="6">
-                              Otro
-                          </ion-select-option>
-  
-                      </ion-select>
-                  </ion-item> -->
-                  
-
-                  <!-- <ion-item>
-                      <ion-label color="secondary" position="stacked">{{strings.carInfoLabelUnion}}:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.codGremioPais" [readonly]="isReadOnly()" [disabled]="isDisabled()"
-                          formControlName="countryUnionCode" type="text" placeholder=""></ion-input>
-                  </ion-item> -->
-
-                  <!-- <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Sistema de protección o alarma:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.tieneAlarma" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-
-                  <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Blindaje:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.blindaje" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-
-                  <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Valor del blindaje:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.valorBlindaje" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-
-                  <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Vidrios polarizados:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.polarizados" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-
-                  <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Nombre de conductor habitual:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.nombreConductor" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-
-                  <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Genero Conductor habitual:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.generoConductor" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-
-                  <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Conducirán  menores el vehículo:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.menores" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-
-                  <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Edades de los menores:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.edadMenores" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item>
-
-                  <ion-item *ngIf="isCountry([constantsProvider.HONDURAS_CODE])">
-                      <ion-label color="secondary" position="stacked">Nombre persona que llevó el vehículo:</ion-label>
-                      <ion-input [(ngModel)]="currentInspection.nombreLleva" (ionFocus)="onFocusInput()" [readonly]="isReadOnly()"
-                          [disabled]="isDisabled()" formControlName="vin" type="text" placeholder="" MaxLength="30"></ion-input>
-                  </ion-item> -->
-
-                  <!-- <ion-label>&nbsp;</ion-label> -->
-
-              <!-- </ion-list> -->
+                   
           </ion-col>
       </ion-row>
 

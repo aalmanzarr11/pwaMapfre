@@ -4,6 +4,7 @@ import { ContextService } from '../../infrastructure/context/context.service';
 import { HttpClientService } from '../../infrastructure/http-client/http-client.service';
 import { TokenService } from '../../infrastructure/token/token.service';
 import { BaseUrl } from 'src/app/shared/baseUrl';
+import { PartsResponse } from 'src/app/shared/Dtos/Responses/partsResponse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class CarSubpartsService {
 
   constructor(public httpClient: HttpClientService, private tokenService : TokenService) {}
 
-  public getSubparts() {
+  public getSubparts():Observable<PartsResponse>{
 
     let body = null;
 
@@ -21,20 +22,9 @@ export class CarSubpartsService {
       this.httpClient.post(BaseUrl.getSubparts, body, false).subscribe(
         data => {
           // const inspections = [];
-
-          if (data.status && data.data !== null) {
-
-            const transformedData = data.data.map(item => ({
-              codigo: item.codigo,
-              nombrePieza: item.nombre
-            }));
-
-            observer.next({ status: true, data: transformedData });
-            observer.complete();
-          } else {
-            observer.next({ status: data.status, data: data.error });
+          observer.next(data);
             observer.complete(); 
-          }
+          
         }
       );
     });

@@ -46,7 +46,7 @@ export class CarLegalPicturesPage implements OnInit {
   ngOnInit() {
     this.strings = ConfigService.strings;
 
-    console.log('ContextService.currentInspection', ContextService.currentInspection);
+    //console.log('ContextService.currentInspection', ContextService.currentInspection);
   }
 
   ionViewDidLoad() {}
@@ -71,42 +71,10 @@ export class CarLegalPicturesPage implements OnInit {
     //   // this.loadingServiceProvider.hideLoading();
     // });
 
-    // console.log("country", ContextService.location.country);
-    // console.log("NICARAGUA_CODE_ISO", ConstantsService.NICARAGUA_CODE_ISO);
+    // //console.log("country", ContextService.location.country);
+    // //console.log("NICARAGUA_CODE_ISO", ConstantsService.NICARAGUA_CODE_ISO);
 
-    if (ContextService.location.country === ConstantsService.PANAMA_CODE) {
-      this.carDocuments = [
-        {
-          'codParte': '13',
-          'descParte': 'NÚMERO DE CHASIS'
-        },
-        {
-          'codParte': '14',
-          'descParte': 'NÚMERO DE MOTOR <br />(Tomada del registro vehicular)'
-        },
-        {
-          'codParte': '',
-          'descParte': 'MÁS DOCUMENTOS'
-        }
-      ];
-    }
-    else if (ContextService.location.country === ConstantsService.NICARAGUA_CODE) {
-      this.carDocuments = [
-        {
-          'codParte': '13',
-          'descParte': 'Anverso de circulación'
-        },
-        {
-          'codParte': '14',
-          'descParte': 'Reverso de circulación'
-        },
-        {
-          'codParte': '',
-          'descParte': 'MÁS DOCUMENTOS'
-        }
-      ];
-    }
-    else if (ContextService.location.country === ConstantsService.COSTARICA_CODE){
+    
       this.carDocuments = [
         {
           'codParte': '15',
@@ -133,82 +101,16 @@ export class CarLegalPicturesPage implements OnInit {
           'descParte': 'RITEVE'
         }
       ];
-    } 
-    else if (ContextService.location.country === ConstantsService.HONDURAS_CODE){
-      this.carDocuments = [
-        {
-          'codParte': '13',
-          'descParte': 'BOLETA DE CIRCULACIÓN* <br />(Cara frontal)'
-        },
-        {
-          'codParte': '14',
-          'descParte': 'BOLETA DE CIRCULACIÓN* <br />(Cara posterior)'
-        },
-        {
-          'codParte': '15',
-          'descParte': 'LICENCIA DE CONDUCIR* <br />(Cara frontal)'
-        },
-        {
-          'codParte': '16',
-          'descParte': 'LICENCIA DE CONDUCIR* <br />(Cara posterior)'
-        },
-        {
-          'codParte': '17',
-          'descParte': 'CHASIS VIN*'
-        },
-        {
-          'codParte': '18',
-          'descParte': 'CÉDULA DE IDENTIDAD<br />(Cara frontal)'
-        },
-        {
-          'codParte': '19',
-          'descParte': 'CÉDULA DE IDENTIDAD<br />(Cara posterior)'
-        }
-      ];
-    }
-    else {
-      this.carDocuments = [
-        {
-          'codParte': '13',
-          'descParte': 'TARJETA DE CIRCULACIÓN <br />(Cara frontal)'
-        },
-        {
-          'codParte': '14',
-          'descParte': 'TARJETA DE CIRCULACIÓN <br />(Cara posterior)'
-        },
-        {
-          'codParte': '15',
-          'descParte': 'LICENCIA DE CONDUCIR <br />(Cara frontal)'
-        },
-        {
-          'codParte': '16',
-          'descParte': 'LICENCIA DE CONDUCIR <br />(Cara posterior)'
-        },
-        {
-          'codParte': '17',
-          'descParte': 'CHASIS/VIN'
-        },
-        // {
-        //   'codParte': '18',
-        //   'descParte': 'CÉDULA DE IDENTIDAD<br />(Cara frontal)'
-        // },
-        // {
-        //   'codParte': '19',
-        //   'descParte': 'CÉDULA DE IDENTIDAD<br />(Cara posterior)'
-        // }
-      ];
-    }
-
-    console.log('this.carDocuments', this.carDocuments);
+      
 
   }
 
   footerExpanded() {
-    // console.log("Footer expanded!");
+    // //console.log("Footer expanded!");
   }
 
   footerCollapsed() {
-    // console.log("Footer collapsed!");
+    // //console.log("Footer collapsed!");
   }
 
   toggleFooter() {
@@ -240,7 +142,7 @@ export class CarLegalPicturesPage implements OnInit {
 
   public checkLegalImage(index) {
     
-    // console.log("checkLegalImage", index, ContextService.carDocuments[index]);
+    // //console.log("checkLegalImage", index, ContextService.carDocuments[index]);
 
     return ContextService.carDocuments != null &&
            ContextService.carDocuments[index] != null &&
@@ -259,19 +161,14 @@ export class CarLegalPicturesPage implements OnInit {
   }
 
   public next() {
-   
-    console.log("ContextService.carDocuments", ContextService.carDocuments); 
-    console.log('ContextService.currentInspection next', ContextService.currentInspection);
+    
 
     let documentImages = [];
 
     for (let i = 13; i < 21; i++) { 
-
-      console.log('i', i);
+ 
       let checkLegalImage = this.checkLegalImage(i);
-
-      console.log("checkLegalImage", checkLegalImage); 
-      console.log("carPicsPart_Mandatory", i, this.strings['carPicsPart_Mandatory_' + i]); 
+ 
 
       // if(checkLegalImage){
       //   documentImages.push({
@@ -294,7 +191,7 @@ export class CarLegalPicturesPage implements OnInit {
         //   return item['codParte'] === String(i);
         // });
 
-        // console.log("part", part, String(i));
+        // //console.log("part", part, String(i));
 
         // if(part.length > 0 && part[0]){
         //   // this.alertServiceProvider.show('', this.strings.carPicsError + part[0].descParte.toLowerCase());
@@ -346,7 +243,7 @@ export class CarLegalPicturesPage implements OnInit {
   //         text: 'Aceptar',
   //         handler: () => {
   //           //this.loadingServiceProvider.hideLoading();
-  //           //console.log('Buy clicked');
+  //           ////console.log('Buy clicked');
   //         }
   //       }
   //     ]
@@ -388,7 +285,7 @@ export class CarLegalPicturesPage implements OnInit {
 
   //           this.carDamageProvider.uploadDamage(damage.dano).subscribe(result => {
 
-  //             // console.log(result);
+  //             // //console.log(result);
 
   //             if (result && result.status) {
 
@@ -414,7 +311,7 @@ export class CarLegalPicturesPage implements OnInit {
 
   //       this.carAccessoriesProvider.uploadAccessory(accessory.accesorio).subscribe(result => {
 
-  //         // console.log(result);
+  //         // //console.log(result);
 
   //         if (result && result.status) {
 
@@ -460,7 +357,7 @@ export class CarLegalPicturesPage implements OnInit {
 
   //   this.imagesServiceProvider.uploadImage(carPhoto).subscribe(result => {
 
-  //     // console.log(result);
+  //     // //console.log(result);
 
   //     if (result && result.status) {
 

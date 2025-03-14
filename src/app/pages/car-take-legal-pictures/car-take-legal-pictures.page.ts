@@ -7,6 +7,7 @@ import { ContextService } from 'src/app/services/infrastructure/context/context.
 import { LoadingService } from 'src/app/services/infrastructure/loading/loading.service';
 import { ImagesService } from 'src/app/services/remote/images/images.service';
 import { UserinfoWebService } from 'src/app/services/remote/userinfo-web/userinfo-web.service';
+import { DocumentationRequest } from 'src/app/shared/Dtos/Requests/DocumentationRequest.dto';
 
 @Component({
   selector: 'app-car-take-legal-pictures',
@@ -23,7 +24,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
   public base64Image: any = ''; //ImagesServiceProvider.image;
   public picIndex: any;
   public title: string;
-  public currentDocument: any;
+  public currentDocument: DocumentationRequest;
 
   constructor(public navCtrl: NavController,
               // public navParams: NavParams,
@@ -48,13 +49,12 @@ export class CarTakeLegalPicturesPage implements OnInit {
     this.picIndex = ContextService.SelectedCarPicture ? ContextService.SelectedCarPicture.picIndex : 0; // navParams.get('picIndex');
     this.title = ContextService.SelectedCarPicture ? ContextService.SelectedCarPicture.title : 'Title'; // navParams.get('title');
 
-    this.currentDocument = {
-      "usuario": ContextService.userSession.nomUsuario ? ContextService.userSession.nomUsuario : 'cliente',
-      "numeroCotizacion": ContextService.currentInspection.numeroCotizacion,
-      "tipoDocumento": this.title.replace('<br />', ''),
-      "byteFoto": "",
-      "pais": ContextService.location.country
-    };
+    this.currentDocument = new DocumentationRequest(
+      ContextService.userSession.nomUsuario ? ContextService.userSession.nomUsuario : 'cliente',
+       ContextService.currentInspection.numeroCotizacion,
+       this.title.replace('<br />', ''),
+       "")
+    
 
     if (ContextService.carDocuments[this.picIndex] == null) {
 
@@ -75,7 +75,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
       //   "pais": ContextService.location.country
       // }
 
-      // console.log('ContextService.userSession.nomUsuario', ContextService.userSession.nomUsuario);
+      // //console.log('ContextService.userSession.nomUsuario', ContextService.userSession.nomUsuario);
 
       // this.currentDocument = {
       //   "usuario": ContextService.userSession.nomUsuario ? ContextService.userSession.nomUsuario : 'cliente',
@@ -102,8 +102,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
     //        'codUsr': this.UserWebServices.username,
     //        'fecActu': dateFormat(new Date(), 'ddmmyyyy')
     //     }
-    //  };
-      console.log(ContextService.carDocuments[this.picIndex]);
+    //  }; 
     } 
     else {
       this.base64Image = ContextService.carDocuments[this.picIndex]['byteFoto'];
@@ -122,26 +121,9 @@ export class CarTakeLegalPicturesPage implements OnInit {
     //     this.capture();
     //   }
     // }, 500);
-
-    this.getCurrentLocation();
+ 
   }
-
-  getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-
-        // ContextService.location = {
-        //   'lat' : position.coords.latitude,
-        //   'long' : position.coords.longitude
-        // };
-
-        ContextService.location['lat'] = position.coords.latitude;
-        ContextService.location['long'] = position.coords.longitude;
-
-      },
-      function (error) { }
-    );
-  }
+ 
 
   public checkLegalImage(index) {
     return ContextService.carDocuments != null &&
@@ -155,18 +137,12 @@ export class CarTakeLegalPicturesPage implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const base64 = reader.result;
-      console.log('Base64 Original');
-      console.log(base64);
+      const base64 = reader.result; 
       compressImage(base64, file).then(compressed => {
         this.loadingServiceProvider.showLoading();
         const resizedBase64 = compressed as string;
         this.base64Image = resizedBase64.split(',')[1];
-        this.savePending = true;
-        console.log('Base64 comprimido');
-        console.log(resizedBase64);
-        console.log('Base64 final');
-        console.log(this.base64Image);
+        this.savePending = true; 
         this.loadingServiceProvider.hideLoading();
       })
     }
@@ -180,7 +156,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
           imageCompression.getExifOrientation(file).then(data => {
             const canvas = document.createElement('canvas');
 
-            console.log('Tamaño original: ' + img.width + 'x' + img.height);
+            //console.log('Tamaño original: ' + img.width + 'x' + img.height);
 
             // nuevo tamaño
             let newWidth;
@@ -197,7 +173,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
                 newHeight = img.height * 0.15;
               }
 
-            console.log('Tamaño nuevo: ' + newWidth + 'x' + newHeight);
+            //console.log('Tamaño nuevo: ' + newWidth + 'x' + newHeight);
 
             switch (data) {
               case 2: canvas.height = newHeight; canvas.width = newWidth; break;
@@ -211,8 +187,8 @@ export class CarTakeLegalPicturesPage implements OnInit {
             }
 
             const ctx = canvas.getContext('2d');
-            console.log('Orientacion de la imagen');
-            console.log(data);
+            //console.log('Orientacion de la imagen');
+            //console.log(data);
 
             switch (data) {
               case 2: ctx.transform(-1, 0, 0, 1, newWidth, 0); ctx.drawImage(img, 0, 0, newWidth, newHeight); break;
@@ -235,11 +211,11 @@ export class CarTakeLegalPicturesPage implements OnInit {
     }
   }
 
-    // console.log(blob);
+    // //console.log(blob);
   //   var image = new Image();
   //   image.src = URL.createObjectURL(file);
   //   this.loadingServiceProvider.showLoading();
-  //   console.log(image);
+  //   //console.log(image);
   //   var imagebase64 = imageToDataUri(image, 800, 800);
   //   //Se procesa la imagen de image URL a canvas y por ultimo base64
   //   function imageToDataUri(image, width, height) {
@@ -253,15 +229,15 @@ export class CarTakeLegalPicturesPage implements OnInit {
 
   //     // encode image to data-uri with base64 version of compressed image
   //     var b64 = canvas.toDataURL();
-  //     console.log(b64);
+  //     //console.log(b64);
   //     return canvas.toDataURL();
   // }
 
-  // console.log(imagebase64);
+  // //console.log(imagebase64);
     //
-    // console.log("convertir a base64 3 metodo");
+    // //console.log("convertir a base64 3 metodo");
     // this.base64Image = capture.split(',')[1];
-    // console.log(this.base64Image);
+    // //console.log(this.base64Image);
 
 
       // Convirtiendo a base64
@@ -269,15 +245,15 @@ export class CarTakeLegalPicturesPage implements OnInit {
       // reader.readAsDataURL(blob);
       // reader.onload = () => {
       //  var resultDATA = reader.result;
-      //  console.log("Resultado de Base64");
-      //  console.log(resultDATA);
+      //  //console.log("Resultado de Base64");
+      //  //console.log(resultDATA);
       // }
 
 
 
     /*this.loadingServiceProvider.showLoading();
     let image = event.target.files[0];
-      //console.log(image);
+      ////console.log(image);
       this.ng2PicaService.resize([image], 700, 500).subscribe(url =>{
 
         fileToBase64(url).then( img => {
@@ -286,7 +262,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
             result => {
               this.base64Image = result.split(',')[1];
               this.savePending = true;
-              //console.log(this.base64Image);
+              ////console.log(this.base64Image);
               this.loadingServiceProvider.hideLoading();
             }
           );
@@ -299,9 +275,9 @@ export class CarTakeLegalPicturesPage implements OnInit {
   //   reader.readAsDataURL(result);
   //   reader.onload = () => {
   //     this.imgURI = reader.result;
-  //     //console.log(this.imgURI);
+  //     ////console.log(this.imgURI);
   //     this.imgbase = this.imgURI.split(',')[1];
-  //     console.log(this.imgbase);
+  //     //console.log(this.imgbase);
   //     //this.savePending = true;
   //     //this.loadingServiceProvider.hideLoading();
   //   };
@@ -338,7 +314,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
 
   public setPicture() {
 
-    console.log("ContextService.carDocuments legal", this.picIndex, ContextService.carDocuments);
+    //console.log("ContextService.carDocuments legal", this.picIndex, ContextService.carDocuments);
 
     if (this.base64Image === '' || this.base64Image == null) {
       this.alertServiceProvider.show('', this.strings.generalTakePicError);
@@ -360,7 +336,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
   }
 
   public syncPhotos() {
-    console.log('Sincronizando Fotos'); 
+    //console.log('Sincronizando Fotos'); 
 
     // this.uploadPhotos(ContextService.carDocuments[this.picIndex]);
     this.uploadPhotos(this.currentDocument);
@@ -373,16 +349,16 @@ export class CarTakeLegalPicturesPage implements OnInit {
     } */
   }
 
-  public uploadPhotos(carPhoto: any) {
-    // console.log('carPhoto', carPhoto);
-    // console.log("Enviando Fotos")
+  public uploadPhotos(carPhoto: DocumentationRequest) {
+    // //console.log('carPhoto', carPhoto);
+    // //console.log("Enviando Fotos")
 
     this.loadingServiceProvider.showLoading();
 
     this.images.sendCarDocuments(carPhoto).subscribe(result => {
       this.loadingServiceProvider.hideLoading();
 
-      // console.log('sendCarDocuments result', result);
+      // //console.log('sendCarDocuments result', result);
 
       if (result.status) {
         // this.storageService.saveCarParts();
@@ -405,7 +381,7 @@ export class CarTakeLegalPicturesPage implements OnInit {
   //         text: 'Aceptar',
   //         handler: () => {
   //           // this.loadingServiceProvider.hideLoading();
-  //           // console.log('Buy clicked');
+  //           // //console.log('Buy clicked');
   //         }
   //       }
   //     ]
